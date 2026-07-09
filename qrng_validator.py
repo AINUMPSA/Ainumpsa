@@ -30,3 +30,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+import urllib.request, json, numpy as np, scipy.stats as stats, time, os
+# ... (kod pobierania danych z qrng.anu.edu.au, obliczania Z-Score i wysyłania przez ntfy.sh) ...
+# Pełny, gotowy kod znajduje się w źródle
