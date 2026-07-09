@@ -8,7 +8,7 @@ import os
 LOG_FILE = "tensor_t_logs.json"
 
 def fetch_quantum_data(array_length=100):
-    url = f"https://anu.edu.au{array_length}&type=uint16"
+   url = f"https://anu.edu.au{array_length}&type=uint16"
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'Tensor-T-Node-2026'})
         with urllib.request.urlopen(req) as response:
