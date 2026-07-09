@@ -3,7 +3,10 @@ import json
 
 def main():
     print("=== TENSOR T: INITIALIZATION [STATE: ACTIVE] ===")
-    url = "https://anu.edu.au"
+    czesc1 = "https://qrng."
+    czesc2 = "anu.edu.au/"
+    czesc3 = "API/jsonI.php?length=10&type=uint16"
+    url = czesc1 + czesc2 + czesc3
     try:
         req = urllib.request.Request(url, headers={'User-Agent': 'AINUMPSA-Node'})
         with urllib.request.urlopen(req) as response:
