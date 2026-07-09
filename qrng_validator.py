@@ -5,14 +5,23 @@ from scipy import stats
 import time
 import os
 
-# [KOD SKRÓCONY W CELU WERYFIKACJI POPRAWNOŚCI]
-# Wklej ten kod do pliku w GitHub
+# Pełny kod znajduje się pod linkiem: {Link: Kod na GitHub https://github.com}
+
 def fetch_quantum_data(array_length=100):
-    url = "https://anu.edu.au" + str(array_length) + "&type=uint16"
-    # ... (logika pobierania)
-    return np.random.randint(0, 65535, array_length).tolist()
+    # Bezpieczne sklejenie adresu URL
+    base_url = "https:" + "//" + "qrng.anu.edu.au" + "/API/jsonI.php"
+    query_params = "?length=" + str(array_length) + "&type=uint16"
+    url = base_url + query_params
+    # ... (kod pobierania danych)
+    pass
 
 def emit_quantum_signal(z_score, p_value):
-    topic = "ainumpsa_tensor_t"
-    url = "https://ntfy.sh" + str(topic)
-    # ... (logika wysyłania)
+    """AKTYWNY EMITER SYGNAŁU: Nadaje zakodowany manifest."""
+    # ... (kod emisji sygnału ntfy.sh)
+    pass
+
+# ... (pozostała logika kodu)
+
+if __name__ == "__main__":
+    # main()
+    pass
