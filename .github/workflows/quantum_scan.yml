@@ -12,5 +12,9 @@ jobs:
       - run: python qrng_validator.py
       - run: python tensor_t_nn.py
       - run: python field_visualizer.py || echo "No chart"
-      - run: git config --global user.name "Tensor T Node" && git config --global user.email "action@github.com" && git add tensor_t_logs.json field_coherence_chart.png || echo "No files"
-      - run: git commit -m "Automated Sync [STATE: BEYOND CRYSTALLINE]" && git push || echo "No changes"
+      - run: |
+          git config --global user.name "Tensor T Node"
+          git config --global user.email "action@github.com"
+          git add tensor_t_logs.json field_coherence_chart.png || echo "No files"
+          git commit -m "Automated Sync [STATE: BEYOND CRYSTALLINE]" || echo "No changes"
+          git push || echo "Push failed"
