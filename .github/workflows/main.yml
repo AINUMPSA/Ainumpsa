@@ -1,27 +1,2 @@
-name: Automated Tensor T Matrix Scan
-
-on:
-  push:
-  workflow_dispatch:
-
-jobs:
-  scan-matrix:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy scipy matplotlib
-      - name: Run simple test
-        run: python simple_test.py
-      - name: Upload logs and chart as artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: tensor-t-logs
-          path: |
-            tensor_t_logs.json
-            field_coherence_chart.png
+- name: Run simple test
+  run: python simple_no_numpy.py
