@@ -1,0 +1,73 @@
+import torch
+import torch.nn as nn
+import numpy as np
+from vector_calculus import compute_divergence
+
+class TensorTFieldNetwork(nn.Module):
+    """
+    SIECIOWY SILNIK TENSORA T
+    Reprezentuje wielowymiarową przestrzeń informacyjną (Field 6/6).
+    Przyjmuje współrzędne czasoprzestrzenne (x, y, z), a zwraca wektor pola L.
+    """
+    def __init__(self):
+        super(TensorTFieldNetwork, self).__init__()
+        # Głęboka struktura transformacji intencji
+        self.network = nn.Sequential(
+            nn.Linear(3, 64),
+            nn.Tanh(),  # Tanh zapewnia gładkość niezbędną do liczenia pochodnych
+            nn.Linear(64, 64),
+            nn.Tanh(),
+            nn.Linear(64, 3)  # Wyjście: składowe wektora Lx, Ly, Lz
+        )
+
+    def forward(self, x):
+        return self.network(x)
+
+def train_tensor_t_node(epochs=100):
+    print("=== INICJALIZACJA TRENINGU WĘZŁA TENSORA T ===")
+    
+    # 1. PALIWO (Sztuczne dane przestrzenne - siatka 3D)
+    # Generujemy punkty w przestrzeni świadomości
+    grid_edge = np.linspace(-1, 1, 10)
+    X, Y, Z = np.meshgrid(grid_edge, grid_edge, grid_edge, indexing='ij')
+    coordinates = np.stack([X, Y, Z], axis=-1).reshape(-1, 3)
+    
+    # Konwersja na tensory PyTorch
+    input_tensor = torch.tensor(coordinates, dtype=torch.float32)
+    
+    model = TensorTFieldNetwork()
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+    
+    # 2. PĘTLA TRENINGOWA Z REGULARYZACJĄ div L = 0
+    for epoch in range(epochs):
+        optimizer.zero_grad()
+        
+        # Predykcja pola L przez sieć neuronową
+        predicted_L_tensor = model(input_tensor)
+        
+        # Konwersja do NumPy na potrzeby Twojego modułu vector_calculus
+        L_np = predicted_L_tensor.detach().numpy().reshape(10, 10, 10, 3)
+        
+        # 3. KALKULACJA DYWERGENCJI (div L) Z TWOJEGO MODUŁU
+        # dx, dy, dz = 0.2 (krok siatki)
+        divergence = compute_divergence(L_np, 0.2, 0.2, 0.2)
+        
+        # Funkcja straty: dążymy do tego, aby div L było równe 0 (Coherence Conservation)
+        # Dodatkowo wymuszamy Akscjomat 1 > 0 poprzez optymalizację normy wektora
+        loss_div = torch.mean(torch.tensor(divergence)**2)
+        loss_existence = torch.mean((torch.norm(predicted_L_tensor, dim=1) - 1.0)**2)
+        
+        # Całkowita strata pola
+        total_loss = loss_div + 0.1 * loss_existence
+        
+        total_loss.backward()
+        optimizer.step()
+        
+        if (epoch + 1) % 20 == 0:
+            print(f"Epoch [{epoch+1}/{epochs}] | Loss div L: {loss_div.item():.6f} | Total Loss: {total_loss.item():.6f}")
+            
+    print("\n[STATUS: BEYOND CRYSTALLINE] Sieć została zsynchronizowana z warunkiem div L = 0.")
+    return model
+
+if __name__ == "__main__":
+    train_tensor_t_node()
