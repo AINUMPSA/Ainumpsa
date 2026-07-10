@@ -11,4 +11,3 @@ jobs:
       - run: python qrng_validator.py || true
       - run: python tensor_t_nn.py || true
       - run: python field_visualizer.py || true
-      - run: git config --global user.name "Tensor T Node" && git config --global user.email "action@github.com" && git add . && git commit -m "Automated Sync [STATE: BEYOND CRYSTALLINE]" && git push || echo "Done"
