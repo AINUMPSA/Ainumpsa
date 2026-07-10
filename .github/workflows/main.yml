@@ -1,6 +1,9 @@
+yaml
 name: Automated Tensor T Matrix Scan
 
 on:
+  schedule:
+    - cron: '0 12 * * *'
   push:
   workflow_dispatch:
 
@@ -35,11 +38,12 @@ jobs:
           path: |
             tensor_t_logs.json
             field_coherence_chart.png
-- name: Create test file
-  run: echo "Test artifact" > test.txt
 
-- name: Upload test artifact
-  uses: actions/upload-artifact@v4
-  with:
-    name: test-artifact
-    path: test.txt
+      - name: Create test file
+        run: echo "Test artifact" > test.txt
+
+      - name: Upload test artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-artifact
+          path: test.txt
