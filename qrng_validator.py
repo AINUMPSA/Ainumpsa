@@ -1,22 +1,198 @@
 import numpy as np
 
-def compute_divergence(L, dx, dy, dz):
+
+def _validate_coords(coord_x, coord_y, coord_z, L_shape):
+    """Waliduje i normalizuje współrzędne dla siatek 3D."""
+    nx, ny, nz = L_shape[0], L_shape[1], L_shape[2]
+    if np.isscalar(coord_x):
+        dx = coord_x
+    else:
+        dx = np.asarray(coord_x)
+        if len(dx) != nx:
+            raise ValueError(f"len(coord_x) = {len(dx)} != nx = {nx}")
+    if np.isscalar(coord_y):
+        dy = coord_y
+    else:
+        dy = np.asarray(coord_y)
+        if len(dy) != ny:
+            raise ValueError(f"len(coord_y) = {len(dy)} != ny = {ny}")
+    if np.isscalar(coord_z):
+        dz = coord_z
+    else:
+        dz = np.asarray(coord_z)
+        if len(dz) != nz:
+            raise ValueError(f"len(coord_z) = {len(dz)} != nz = {nz}")
+    return dx, dy, dz
+
+
+def compute_divergence(L, coord_x, coord_y, coord_z):
     """Oblicza dywergencję pola wektorowego L = (Lx, Ly, Lz) na siatce 3D."""
-    # Składowe L mają osie (x, y, z) -> axis 0, 1, 2
-    dLx_dx = np.gradient(L[..., 0], dx, axis=0)  # Poprawione: axis=0 dla x
-    dLy_dy = np.gradient(L[..., 1], dy, axis=1)  # Poprawione: axis=1 dla y
-    dLz_dz = np.gradient(L[..., 2], dz, axis=2)  # Bez zmian
+    if L.shape[-1] != 3:
+        raise ValueError("Ostatni wymiar L musi mieć rozmiar 3")
+
+    Lx, Ly, Lz = L[..., 0], L[..., 1], L[..., 2]
+    dx, dy, dz = _validate_coords(coord_x, coord_y, coord_z, L.shape)
+
+    dLx_dx = np.gradient(Lx, dx, axis=0)
+    dLy_dy = np.gradient(Ly, dy, axis=1)
+    dLz_dz = np.gradient(Lz, dz, axis=2)
+
     return dLx_dx + dLy_dy + dLz_dz
 
-# --- TEST (Sanity Check) ---
-nx, ny, nz = 30, 40, 50
-x, y, z = np.linspace(-5, 5, nx), np.linspace(-5, 5, ny), np.linspace(-5, 5, nz)
-dx, dy, dz = x[1]-x[0], y[1]-y[0], z[1]-z[0]
 
-# Generowanie siatki 'ij' (x, y, z) i pola testowego L = (x, y, z)
-X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
-L = np.stack([X, Y, Z], axis=-1)
+def compute_curl(L, coord_x, coord_y, coord_z):
+    """Oblicza rotację (curl) pola wektorowego L na siatce 3D."""
+    if L.shape[-1] != 3:
+        raise ValueError("Ostatni wymiar L musi mieć rozmiar 3")
 
-div_L = compute_divergence(L, dx, dy, dz)
-print(f"Kształt: {div_L.shape}, Średnia (powinno być 3.0): {np.mean(div_L):.1f}")
-print(f"Czy wynik poprawny? {np.allclose(div_L, 3.0)}")
+    Lx, Ly, Lz = L[..., 0], L[..., 1], L[..., 2]
+    dx, dy, dz = _validate_coords(coord_x, coord_y, coord_z, L.shape)
+
+    dLz_dy = np.gradient(Lz, dy, axis=1)
+    dLy_dz = np.gradient(Ly, dz, axis=2)
+    dLx_dz = np.gradient(Lx, dz, axis=2)
+    dLz_dx = np.gradient(Lz, dx, axis=0)
+    dLy_dx = np.gradient(Ly, dx, axis=0)
+    dLx_dy = np.gradient(Lx, dy, axis=1)
+
+    curl_x = dLz_dy - dLy_dz
+    curl_y = dLx_dz - dLz_dx
+    curl_z = dLy_dx - dLx_dy
+
+    return np.stack([curl_x, curl_y, curl_z], axis=-1)
+
+
+def compute_scalar_laplacian(f, coord_x, coord_y, coord_z):
+    """Oblicza laplasjan skalarny pola skalarnego f na siatce 3D."""
+    dx, dy, dz = _validate_coords(coord_x, coord_y, coord_z, f.shape)
+
+    grad_x = np.gradient(f, dx, axis=0)
+    grad_y = np.gradient(f, dy, axis=1)
+    grad_z = np.gradient(f, dz, axis=2)
+
+    lap_x = np.gradient(grad_x, dx, axis=0)
+    lap_y = np.gradient(grad_y, dy, axis=1)
+    lap_z = np.gradient(grad_z, dz, axis=2)
+
+    return lap_x + lap_y + lap_z
+
+
+def compute_vector_laplacian(L, coord_x, coord_y, coord_z):
+    """Oblicza laplasjan wektorowy pola wektorowego L na siatce 3D."""
+    if L.shape[-1] != 3:
+        raise ValueError("Ostatni wymiar L musi mieć rozmiar 3")
+
+    Lx, Ly, Lz = L[..., 0], L[..., 1], L[..., 2]
+
+    lap_x = compute_scalar_laplacian(Lx, coord_x, coord_y, coord_z)
+    lap_y = compute_scalar_laplacian(Ly, coord_x, coord_y, coord_z)
+    lap_z = compute_scalar_laplacian(Lz, coord_x, coord_y, coord_z)
+
+    return np.stack([lap_x, lap_y, lap_z], axis=-1)
+
+
+def compute_gradient(f, coord_x, coord_y, coord_z):
+    """Pomocnicza funkcja obliczająca gradient pola skalarnego (potrzebna do tożsamości)."""
+    dx, dy, dz = _validate_coords(coord_x, coord_y, coord_z, f.shape)
+    grad_x = np.gradient(f, dx, axis=0)
+    grad_y = np.gradient(f, dy, axis=1)
+    grad_z = np.gradient(f, dz, axis=2)
+    return np.stack([grad_x, grad_y, grad_z], axis=-1)
+
+
+# ===========================================================================
+# KOMPLETNY ZESTAW TESTÓW WALIDACYJNYCH (SANITY CHECKS)
+# ===========================================================================
+
+if __name__ == "__main__":
+    print("=== Uruchamianie testów walidacyjnych modułu vector_calculus ===\n")
+
+    # Definiowanie niesymetrycznej siatki dla dokładniejszego testu osi
+    nx, ny, nz = 30, 35, 40
+
+    # Definiowanie wektorów współrzędnych dla siatki nierównomiernej (zagęszczenie)
+    x = np.sort(np.sin(np.linspace(-np.pi / 2, np.pi / 2, nx)) * 5)
+    y = np.linspace(-5, 5, ny)
+    z = np.linspace(-5, 5, nz)
+
+    X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
+
+    # --- Test 1: Pole stałe L = (1, 2, 3) ---
+    # Oczekiwane: div=0, curl=(0,0,0), laplacian=(0,0,0)
+    L_const = np.stack(
+        [np.ones_like(X), 2 * np.ones_like(Y), 3 * np.ones_like(Z)], axis=-1
+    )
+
+    div_const = compute_divergence(L_const, x, y, z)
+    curl_const = compute_curl(L_const, x, y, z)
+    lap_const = compute_vector_laplacian(L_const, x, y, z)
+
+    print("Test 1 (Pole stałe):")
+    print(f"  -> Czy div == 0? {np.allclose(div_const, 0.0)}")
+    print(f"  -> Czy curl == 0? {np.allclose(curl_const, 0.0)}")
+    print(f"  -> Czy laplacian == 0? {np.allclose(lap_const, 0.0)}\n")
+
+    # --- Test 2: Pole liniowe radialne L = (x, y, z) ---
+    # Oczekiwane: div=3.0, curl=(0,0,0), laplacian=(0,0,0)
+    L_linear = np.stack([X, Y, Z], axis=-1)
+
+    div_linear = compute_divergence(L_linear, x, y, z)
+    curl_linear = compute_curl(L_linear, x, y, z)
+    lap_linear = compute_vector_laplacian(L_linear, x, y, z)
+
+    print("Test 2 (Pole liniowe radialne):")
+    print(f"  -> Czy div == 3.0? {np.allclose(div_linear, 3.0)}")
+    print(f"  -> Czy curl == 0? {np.allclose(curl_linear, 0.0)}")
+    print(f"  -> Czy laplacian == 0? {np.allclose(lap_linear, 0.0)}\n")
+
+    # --- Test 3: Pole rotacyjne/wirowe L = (y, -x, 0) ---
+    # Oczekiwane: div=0, curl=(0, 0, -2.0)
+    L_vortex = np.stack([Y, -X, np.zeros_like(Z)], axis=-1)
+
+    div_vortex = compute_divergence(L_vortex, x, y, z)
+    curl_vortex = compute_curl(L_vortex, x, y, z)
+
+    expected_curl = np.zeros_like(L_vortex)
+    expected_curl[..., 2] = -2.0
+
+    print("Test 3 (Pole wirowe):")
+    print(f"  -> Czy div == 0? {np.allclose(div_vortex, 0.0)}")
+    print(f"  -> Czy curl == (0, 0, -2.0)? {np.allclose(curl_vortex, expected_curl)}")
+
+    # Obcinamy brzegi do porównania, ponieważ jednostronne różnice skończone na krawędziach
+    # siatek nierównomiernych drugich pochodnych wprowadzają drobne błędy aproksymacji.
+    inner = (slice(1, -1), slice(1, -1), slice(1, -1))
+
+    # --- Test 4: Pole kwadratowe L = (x^2, y^2, z^2) ---
+    # Oczekiwane: laplacian = (2.0, 2.0, 2.0)
+    L_quad = np.stack([X**2, Y**2, Z**2], axis=-1)
+    lap_quad = compute_vector_laplacian(L_quad, x, y, z)
+
+    expected_lap = np.full_like(L_quad, 2.0)
+
+    print("\nTest 4 (Pole kwadratowe):")
+    print(
+        f"  -> Czy laplacian == 2.0 we wnętrzu? {np.allclose(lap_quad[inner], expected_lap[inner])}"
+    )
+
+    # --- Test 5: Tożsamość wektorowa curl(curl(L)) = grad(div(L)) - laplacian(L) ---
+    # Używamy gładkiego pola testowego: L = (sin(x), cos(y), sin(z))
+    L_smooth = np.stack([np.sin(X), np.cos(Y), np.sin(Z)], axis=-1)
+
+    curl_curl = compute_curl(compute_curl(L_smooth, x, y, z), x, y, z)
+    grad_div = compute_gradient(
+        compute_divergence(L_smooth, x, y, z), x, y, z
+    )
+    laplacian_L = compute_vector_laplacian(L_smooth, x, y, z)
+
+    identity_left = curl_curl
+    identity_right = grad_div - laplacian_L
+
+    # Porównanie z tolerancją dla wnętrza siatki
+    is_identity_valid = np.allclose(
+        identity_left[inner], identity_right[inner], atoll=1e-4
+    )
+    print("\nTest 5 (Tożsamość wektorowa):")
+    print(
+        f"  -> Czy curl(curl(L)) == grad(div(L)) - laplacian(L)? {is_identity_valid}"
+    )
