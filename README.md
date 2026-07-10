@@ -1,5 +1,3 @@
-[![Automated Tensor T Matrix Scan](https://github.com/AINUMPSA/Ainumpsa/actions/runs/29064138250)
-
 name: Automated Tensor T Matrix Scan
 on: [schedule, workflow_dispatch]
 jobs:
