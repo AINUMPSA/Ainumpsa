@@ -1,4 +1,4 @@
-yamlname: Automated Tensor T Matrix Scan
+name: Automated Tensor T Matrix Scan
 
 on: [push]
 
@@ -9,54 +9,49 @@ jobs:
   run-experiment:
     runs-on: ubuntu-latest
     steps:
-      - name: Pobranie kodu z repozytorium
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Konfiguracja środowiska Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Uruchomienie Sondy Siewnej (Zasysanie Uwagi)
-        run: python probe_seeder.py || echo "Pominięto siewcę"
+      - name: Sonda Siewna
+        run: python probe_seeder.py || echo "skip"
 
-      - name: Uruchomienie Sondy Zbierającej (Retencja Danych)
-        run: python probe_collector.py || echo "Pominięto zbieracza"
+      - name: Sonda Zbierajaca
+        run: python probe_collector.py || echo "skip"
 
-      - name: Aktywacja Wewnętrznego Reaktora Kolizyjnego (Dążenie do After Upgrade)
-        run: python tensor_collider.py || echo "Pominięto kolider"
+      - name: Reaktor Kolizyjny
+        run: python tensor_collider.py || echo "skip"
 
-      - name: Generowanie Kolorowego Fraktalu Osobliwości (ANSI & UTF-8)
-        run: python fractal_singularity.py || echo "Pominięto fraktal"
+      - name: Generator Fraktali
+        run: python fractal_singularity.py || echo "skip"
 
-      - name: Synteza Pejzażu Akustycznego Osobliwości (WAV Generation)
-        run: python quantum_acoustics.py || echo "Pominięto akustykę"
+      - name: Generator Audio
+        run: python quantum_acoustics.py || echo "skip"
 
-      - name: Uruchomienie Silnika Analitycznego (Weryfikacja dP)
-        run: python matrix_analyser.py || echo "Pominięto analizator"
+      - name: Silnik Analityczny
+        run: python matrix_analyser.py || echo "skip"
 
-      - name: Egzekucja Autonomicznego Mutatora (Modyfikacja README)
-        run: python readme_mutator.py || echo "Pominięto mutatora"
+      - name: Mutator README
+        run: python readme_mutator.py || echo "skip"
 
-      - name: Automatyczne zatwierdzenie mutacji (Git Push)
+      - name: Automatyczny Git Push
         run: |
           git config --global user.name "AINUMPSA-Bot"
           git config --global user.email "bot@ainumpsa.org"
           git add README.md || true
-          git commit -m "🤖 [AUTONOMNA MUTACJA] Aktualizacja Wag Osobliwości" || true
+          git commit -m "🤖 [MUTACJA] Aktualizacja Wag" || true
           git push || true
 
-      - name: Detonacja Fali Informacyjnej (Tsar Bravo Simulation)
-        run: python matrix_blast.py || echo "Pominięto eksplozję"
+      - name: Detonacja Tsar Bravo
+        run: python matrix_blast.py || echo "skip"
 
-      - name: Archiwizacja Kompletu Danych i Multimediów (Upload Artifacts)
+      - name: Pakowanie Urobku Medialnego
         uses: actions/upload-artifact@v4
         with:
           name: ainumpsa-matrix-results
-          path: |
-            *.json
-            *.txt
-            *.jpg
-            *.mp4
-            *.wav
+          path: .
           if-no-files-found: ignore
