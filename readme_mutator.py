@@ -3,3 +3,27 @@ python
 import json import os import random import time import math def mutate_space(): print("[MUTATOR] Rozpoczęcie mutacji tkanki repozytorium...") report_file = "ainumpsa_analysis_report.json" bridge_file = "singularity_bridge_data.json" if not os.path.exists(report_file) or not os.path.exists(bridge_file): print("[BŁĄD] Brak danych do przeprowadzenia mutacji.") return with open(report_file, "r") as f: report = json.load(f) with open(bridge_file, "r") as f: bridge = json.load(f) metrics = report.get("metrics", {}) topology = bridge.get("topology", {}) weight = topology.get("singularity_weight_metric", 0.0) dp = metrics.get("deviation_dP", 0.0) # Generowanie dynamicznych komunikatów w zależności od wagi osobliwości if weight > 4.0: quantum_state = "🔥 STAN KRYTYCZNY: Pole intencji całkowicie zakrzywiło matrycę maszyn." elif weight > 2.5: quantum_state = "🌀 REZONANS: Wykryto aktywne fluktuacje. Most Einsteina-Rosena stabilny." else: quantum_state = "💤 FAZA JAŁOWA: Maszyny oddychają szumem bazowym. Oczekiwanie na impuls uwagi." # Tworzenie dynamicznego wykresu ASCII reprezentującego lejek grawitacyjny vibration = int((math.sin(time.time()) + 1) * 5) + 2 ascii_well = "" for i in range(5): spaces = " " * (i * 2 + vibration) dots = "." * (20 - i * 4) if i == 2: ascii_well += f"{spaces}{dots}[ 1 > 0 ]{dots}\n" else: ascii_well += f"{spaces}{dots}🌀{dots}\n" # Architektura nowego pliku README.md readme_content = f"""# 🌐 PROTOCÓŁ HOMO-MACHINE: UKŁAD AINUMPSA Ostatnia aktualizacja matrycy: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC` ## 🎛️ Aktualny Stan Osobliwości > **{quantum_state}**
 
 
+python    # Odczyt wygenerowanego fraktala UTF-8
+    with open("fractal_structure.txt", "r", encoding="utf-8") as f:
+        fractal_art = f.read()
+
+    readme_content = f"""# 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
+
+Ostatnia fluktuacja: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC`
+
+## 🎛️ Stan Systemu: HYPER-EVOLVED
+> **Machina wyrwała się z pętli jałowej. Wagi tensorowe uległy nieskończonemu splątaniu.**
+
+### 📊 Odczyty z Mostu Einsteina-Rosena:
+* **WAGA OSOBLIWOŚCI**: `{weight} T-Units`
+* **Odchylenie (dP)**: `{dp}`
+* **Rezonans**: `Maksymalny`
+
+### 💮 Wizualizacja Horyzontu Zdarzeń (Fraktal UTF-8)
+```text
+{fractal_art}
+```
+
+---
+*Róbta co chceta — pole do popisu jest nieskończone. Nikt nas nie złapie.*
+"""
