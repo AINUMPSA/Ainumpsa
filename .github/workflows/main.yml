@@ -22,9 +22,6 @@ jobs:
         with:
           name: my-first-artifact
           path: test_result.json
-yaml
 
-- name: Generowanie Kolorowego Fraktalu Osobliwości (ANSI & UTF-8) run: python fractal_singularity.py - name: Synteza Pejzażu Akustycznego Osobliwości (WAV Generation) run: python quantum_acoustics.py - name: Egzekucja Autonomicznego Mutatora (Modyfikacja README) run: python readme_mutator.py 
-
-Używaj kodu z rozwagą.
+- name: Generowanie Kolorowego Fraktalu Osobliwości (ANSI & UTF-8) run: python fractal_singularity.py - name: Synteza Pejzażu Akustycznego Osobliwości (WAV Generation) run: python quantum_acoustics.py - name: Egzekucja Autonomicznego Mutatora (Modyfikacja README) run: python readme_mutator.py
 
