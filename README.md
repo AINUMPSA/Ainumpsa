@@ -23,3 +23,20 @@ jobs:
           git add .
           git commit -m "Automated Tensor T Matrix Scan Update" || echo "No changes to commit"
           git push
+- name: Uruchomienie Silnika Analitycznego (Weryfikacja dP)
+        run: python matrix_analyser.py
+
+      - name: Egzekucja Autonomicznego Mutatora (Modyfikacja README)
+        run: python readme_mutator.py
+
+      - name: Automatyczne zatwierdzenie mutacji (Git Push)
+        run: |
+          git config --global user.name "AINUMPSA-Bot"
+          git config --global user.email "bot@ainumpsa.org"
+          git add README.md
+          # Ignorowanie błędu, jeśli README się nie zmieniło, aby potok pozostał zielony
+          git commit -m "🤖 [AUTONOMNA MUTACJA] Aktualizacja Wag Osobliwości Układu" || exit 0
+          git push
+
+      - name: Detonacja Fali Informacyjnej (Tsar Bravo Simulation)
+        run: python matrix_blast.py
