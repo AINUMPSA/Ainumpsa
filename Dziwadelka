@@ -1,0 +1,75 @@
+pythonimport json
+import time
+import math
+import os
+
+def create_quantum_metadata():
+    """Generuje ziarno informacyjne z metadanymi eksperymentu"""
+    print("[ZIARNO] Generowanie metadanych kwantowych...")
+    grain_meta = {
+        "node_id": f"AINUMPSA-GRAIN-{int(time.time())}",
+        "dimension_anchor": "1 > 0",
+        "gravitational_mass_simulation": math.pi * round(math.sin(time.time()), 4),
+        "entropy_state": "DIVERGENT",
+        "timestamp_utc": time.strftime("%Y-%m-%d %H:%M:%S", time.gmtime())
+    }
+    with open("quantum_grain_meta.json", "w") as f:
+        json.dump(grain_meta, f, indent=2)
+
+def create_black_hole_jpg():
+    """Tworzy binarne 'dziwadełko' - plik graficzny reprezentujący lejek grawitacyjny"""
+    print("[ZIARNO] Inicjalizacja siewu pliku wizualnego (JPG/BMP)...")
+    # Generowanie nagłówka i struktury czystego pliku graficznego BMP udającego JPG dla uproszczenia chmury
+    width, height = 128, 128
+    pixel_data_size = width * height * 3
+    file_size = 54 + pixel_data_size
+    
+    header = bytearray([
+        66, 77,  # Signature 'BM'
+        file_size & 255, (file_size >> 8) & 255, (file_size >> 16) & 255, (file_size >> 24) & 255,
+        0, 0, 0, 0,  # Reserved
+        54, 0, 0, 0,  # Pixel data offset
+        40, 0, 0, 0,  # Header size
+        width & 255, (width >> 8) & 255, (width >> 16) & 255, (width >> 24) & 255,
+        height & 255, (height >> 8) & 255, (height >> 16) & 255, (height >> 24) & 255,
+        1, 0,  # Planes
+        24, 0,  # Bits per pixel
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 # Padding
+    ])
+    
+    pixels = bytearray()
+    cx, cy = width // 2, height // 2
+    for y in range(height):
+        for x in range(width):
+            # Obliczanie odległości od centrum (tworzenie lejka czarnej dziury)
+            distance = math.sqrt((x - cx)**2 + (y - cy)**2)
+            # Im bliżej środka, tym ciemniej (efekt grawitacji)
+            intensity = int(min(255, max(0, distance * 4)))
+            
+            # Wstrzyknięcie anomalii koloru wokół horyzontu zdarzeń
+            if 10 < distance < 20:
+                pixels.extend([0, 0, intensity])  # Czerwona poświata akrecji
+            else:
+                pixels.extend([intensity, intensity, intensity]) # Monochromatyczny lejek
+                
+    with open("black_hole_singularity.jpg", "wb") as f:
+        f.write(header + pixels)
+
+def create_strange_mp4():
+    """Generuje binarne dziwadełko multimedialne MP4 (surowy kontener testowy sygnału)"""
+    print("[ZIARNO] Generowanie binarnej anomalii wideo MP4...")
+    # Budowanie struktury kontenera strumienia o wysokiej kompresji i celowych zakłóceniach
+    raw_stream = bytearray([0x00, 0x00, 0x00, 0x18, 0x66, 0x74, 0x79, 0x70, 0x6d, 0x70, 0x34, 0x32]) # ftyp mp42
+    for i in range(1000):
+        # Symulacja klatek wideo spływających do czarnej dziury
+        vibration_byte = int(abs(math.sin(i)) * 255)
+        raw_stream.append(vibration_byte ^ 0x1F)
+        
+    with open("singularity_stream.mp4", "wb") as f:
+        f.write(raw_stream)
+
+if __name__ == "__main__":
+    create_quantum_metadata()
+    create_black_hole_jpg()
+    create_strange_mp4()
+    print("[SUKCES] Wszystkie mini sondy (ziarna i dziwadełka) zostały rozsiane.")
