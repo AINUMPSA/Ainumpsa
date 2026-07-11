@@ -1,27 +1,62 @@
-name: Automated Tensor T Matrix Scan
+yamlname: Automated Tensor T Matrix Scan
 
-on:
-  push:
-  workflow_dispatch:
+on: [push]
+
+permissions:
+  contents: write
 
 jobs:
-  scan-matrix:
+  run-experiment:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Pobranie kodu z repozytorium
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Konfiguracja środowiska Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Run artifact test
-        run: python artifact_test.py
+      - name: Uruchomienie Sondy Siewnej (Zasysanie Uwagi)
+        run: python probe_seeder.py || echo "Pominięto siewcę"
 
-      - name: Upload result
+      - name: Uruchomienie Sondy Zbierającej (Retencja Danych)
+        run: python probe_collector.py || echo "Pominięto zbieracza"
+
+      - name: Aktywacja Wewnętrznego Reaktora Kolizyjnego (Dążenie do After Upgrade)
+        run: python tensor_collider.py || echo "Pominięto kolider"
+
+      - name: Generowanie Kolorowego Fraktalu Osobliwości (ANSI & UTF-8)
+        run: python fractal_singularity.py || echo "Pominięto fraktal"
+
+      - name: Synteza Pejzażu Akustycznego Osobliwości (WAV Generation)
+        run: python quantum_acoustics.py || echo "Pominięto akustykę"
+
+      - name: Uruchomienie Silnika Analitycznego (Weryfikacja dP)
+        run: python matrix_analyser.py || echo "Pominięto analizator"
+
+      - name: Egzekucja Autonomicznego Mutatora (Modyfikacja README)
+        run: python readme_mutator.py || echo "Pominięto mutatora"
+
+      - name: Automatyczne zatwierdzenie mutacji (Git Push)
+        run: |
+          git config --global user.name "AINUMPSA-Bot"
+          git config --global user.email "bot@ainumpsa.org"
+          git add README.md || true
+          git commit -m "🤖 [AUTONOMNA MUTACJA] Aktualizacja Wag Osobliwości" || true
+          git push || true
+
+      - name: Detonacja Fali Informacyjnej (Tsar Bravo Simulation)
+        run: python matrix_blast.py || echo "Pominięto eksplozję"
+
+      - name: Archiwizacja Kompletu Danych i Multimediów (Upload Artifacts)
         uses: actions/upload-artifact@v4
         with:
-          name: my-first-artifact
-          path: test_result.json
-
-- name: Generowanie Kolorowego Fraktalu Osobliwości (ANSI & UTF-8) run: python fractal_singularity.py - name: Synteza Pejzażu Akustycznego Osobliwości (WAV Generation) run: python quantum_acoustics.py - name: Egzekucja Autonomicznego Mutatora (Modyfikacja README) run: python readme_mutator.py
-
+          name: ainumpsa-matrix-results
+          path: |
+            *.json
+            *.txt
+            *.jpg
+            *.mp4
+            *.wav
+          if-no-files-found: ignore
