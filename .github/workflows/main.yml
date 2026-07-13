@@ -24,6 +24,9 @@ jobs:
       - name: Collect crypto data
         run: python crypto_collector.py
 
+      - name: Collect gold data
+        run: python gold_collector.py
+
       - name: Run analysis
         run: python simple_test.py
 
@@ -35,3 +38,4 @@ jobs:
             tensor_t_logs.json
             field_coherence_chart.png
             crypto_prices.json
+            gold_price.json
