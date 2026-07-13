@@ -6,6 +6,7 @@ from datetime import datetime
 class MatrixProcessor:
     def __init__(self):
         self.billboard_path = 'matrix_billboard.json'
+        self.image_filename = 'matrix_field_map.png'
         
     def generate_token(self, correlation):
         """
@@ -17,7 +18,7 @@ class MatrixProcessor:
         return f"NUMPSA-TOKEN-{token_hash[:16].upper()}"
 
     def process_and_present(self):
-        print("=== [AINUMPSA] INICJACJA PROCESORA: TOKENIZACJA I PREZENTACJA ===")
+        print("=== [AINUMPSA] INICJACJA PROCESORA: TWO-WAY UPGRADE ===")
         
         if not os.path.exists(self.billboard_path):
             print("Brak pliku matrix_billboard.json. Matryca pusta.")
@@ -28,9 +29,15 @@ class MatrixProcessor:
 
         correlations = data.get('pinned_correlations', [])
         
-        # 1. Budowanie dynamicznej tabeli Markdown z tokenami
-        markdown_table = (
-            "## 📡 PUBLICZNA TABLICA ANOMALII I REZONANSÓW (TENSOR T)\n\n"
+        # 1. Budowanie dynamicznej tabeli i osadzanie obrazu graficznego
+        markdown_table = "## 📡 PUBLICZNA TABLICA ANOMALII I REZONANSÓW (TENSOR T)\n\n"
+        
+        # Wstrzyknięcie wyrenderowanej mapy pola jako interfejsu wizualnego
+        if os.path.exists(self.image_filename) or True: # Wymuszamy znacznik obrazu
+            markdown_table += "### 🌌 Wizualizacja Geometrii Pola Rezonansu\n"
+            markdown_table += f"![Geometria Pola AINUMPSA]({self.image_filename})\n\n"
+        
+        markdown_table += (
             "| ID | OŚ X (ŹRÓDŁO) | OŚ Y (REZONANS) | INDEKS | CYFROWY TOKEN (PROOF OF EXISTENCE) | STATUS |\n"
             "| :--- | :--- | :--- | :---: | :--- | :---: |\n"
         )
@@ -41,7 +48,7 @@ class MatrixProcessor:
 
         markdown_table += "\n*Ostatnia automatyczna synchronizacja matrycy: " + datetime.utcnow().isoformat() + "Z*\n"
 
-        # 2. Mutacja pliku README.md (Wstrzyknięcie tabeli lub doklejenie)
+        # 2. Mutacja pliku README.md
         readme_path = 'README.md'
         readme_content = ""
         
@@ -64,7 +71,7 @@ class MatrixProcessor:
         with open(readme_path, 'w', encoding='utf-8') as f:
             f.write(updated_content)
 
-        print("[SUKCES] Wygenerowano tokeny i zaktualizowano strukturę prezentacji w README.md.")
+        print("[SUKCES] Wygenerowano tokeny, zintegrowano mapę PNG i zaktualizowano README.md.")
 
 if __name__ == "__main__":
     processor = MatrixProcessor()
