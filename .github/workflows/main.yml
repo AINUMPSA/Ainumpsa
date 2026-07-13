@@ -34,7 +34,16 @@ jobs:
 
       - name: Silnik Analityczny
         run: python matrix_analyser.py || echo "skip"
-
+- name: Backup logs to GitLab
+  run: |
+    git clone https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/numpsa/ainumpsa-mirror.git gitlab-backup
+    cp tensor_t_logs.json field_coherence_chart.png gitlab-backup/
+    cd gitlab-backup
+    git config --global user.name "AINUMPSA-Bot"
+    git config --global user.email "bot@ainumpsa.org"
+    git add *.json *.png || echo "No files to add"
+    git commit -m "Automated backup: $(date)" || echo "No changes to commit"
+    git push || echo "Push failed"
       - name: Mutator README
         run: python readme_mutator.py || echo "skip"
 
