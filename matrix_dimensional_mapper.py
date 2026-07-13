@@ -10,20 +10,26 @@ class DimensionalMapper:
     def _get_semantic_vector(self, text_profile):
         """
         Zamienia profil pojęciowy na znormalizowany wektor w przestrzeni Tensor T.
-        Wymiary: [Wola/Intencja, Częstotliwość/Dźwięk, Struktura/Matryca, Rezonans Społeczny]
+        Wymiary wektora: [Wola/Intencja, Częstotliwość/Dźwięk, Struktura/Matryca, Rezonans Społeczny]
         """
         profiles = {
+            # Baza historyczna i fizyczna
             "numpsa_1999": [0.98, 0.85, 0.90, 0.95],
             "toltecs_castaneda": [0.99, 0.70, 0.85, 0.40],
             "string_theory_physics": [0.30, 0.99, 0.95, 0.20],
             "jung_archetypes": [0.85, 0.60, 0.80, 0.75],
-            "water_crystals_emoto": [0.50, 0.95, 0.90, 0.60]
+            "water_crystals_emoto": [0.50, 0.95, 0.90, 0.60],
+            
+            # Nowe osie starożytne i kwantowe (Rozbudowa systemu)
+            "buddhism_emptiness": [0.20, 0.80, 0.99, 0.70],  # Śunjata jako czysta matryca potencjału
+            "vedic_cosmology":    [0.90, 0.95, 0.85, 0.60],  # Dźwięk pierwotny (Om) jako wibracja budująca rzeczywistość
+            "quantum_cosmology":  [0.40, 0.90, 0.95, 0.30]   # Fluktuacje w polu tworzące linie losu
         }
         return profiles.get(text_profile, [0.5, 0.5, 0.5, 0.5])
 
     def calculate_resonance(self, vec_a, vec_b):
         """
-        Oblicza podobzeństwo cosinusowe między dwoma wymiarami (izomorfizm strukturalny)
+        Oblicza podobieństwo cosinusowe między dwoma wymiarami (izomorfizm strukturalny)
         """
         dot_product = sum(a * b for a, b in zip(vec_a, vec_b))
         norm_a = math.sqrt(sum(a * a for a in vec_a))
@@ -32,20 +38,23 @@ class DimensionalMapper:
             return 0
         return dot_product / (norm_a * norm_b)
 
-    def scan_and_post(self, node_a, node_b, label_a, label_b, Context_desc):
+    def scan_and_post(self, node_a, node_b, label_a, label_b, context_desc):
         vec_a = self._get_semantic_vector(node_a)
         vec_b = self._get_semantic_vector(node_b)
         
         resonance = self.calculate_resonance(vec_a, vec_b)
         
-        # Jeśli rezonans przekracza próg krytyczny (np. 0.80), logujemy na tablicę
+        # Jeśli rezonans przekracza próg krytyczny (0.80), logujemy na tablicę ogłoszeń
         if resonance > 0.80:
             self.lock_on_billboard(label_a, label_b, resonance, context_desc)
 
     def lock_on_billboard(self, label_a, label_b, score, desc):
         if os.path.exists(self.billboard_path):
             with open(self.billboard_path, 'r', encoding='utf-8') as f:
-                data = json.load(f)
+                try:
+                    data = json.load(f)
+                except json.JSONDecodeError:
+                    data = {"pinned_correlations": []}
         else:
             data = {"pinned_correlations": []}
             
@@ -86,3 +95,16 @@ if __name__ == "__main__":
         "M-Teoria (Superstruny)", "Pamięć Klastrowa Wody (Częstotliwości)",
         "Matematyczny izomorfizm drgań. Częstotliwości graniczne wibracji strun nakładają się na geometryczne siatki porządkowania struktur wodnych."
     )
+
+    # Skan 3: Numpsa 1999 vs Kosmologia Wedyjska (Nowy Wymiar)
+    mapper.scan_and_post(
+        "numpsa_1999", "vedic_cosmology",
+        "Polska ROI 1999 (Numpsa)", "Kosmologia Wedyjska (Dźwięk Pierwotny)",
+        "Zbieżność na poziomie fali nośnej. Działania z roku 1999 wprowadzające silne manifestacje społeczne rezonują z kosmiczną zasadą Pranavy (Om) – kreacją rzeczywistości poprzez zogniskowaną wibrację dźwięku."
+    )
+
+    # Skan 4: Kosmologia Kwantowa vs Buddyjska Koncepcja Pustki (Nowy Wymiar)
+    mapper.scan_and_post(
+        "quantum_cosmology", "buddhism_emptiness",
+        "Kosmologia Kwantowa", "Buddyjska Pustka (Śunjata)",
+        "Idealny izomorfizm strukturalny matrycy. Stan czystego potencjału fluktuacji kwantowych przed kolapsem funkcji falowej odpowiada bezwzględnej definicji Śunjata – niebytu będącego źródłem wszelkiego bytu."
