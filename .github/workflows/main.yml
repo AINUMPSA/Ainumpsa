@@ -30,6 +30,9 @@ jobs:
       - name: Collect nasdaq data
         run: python nasdaq_collector.py
 
+      - name: Collect unicef data
+        run: python unicef_collector.py
+
       - name: Run analysis
         run: python simple_test.py
 
@@ -43,3 +46,4 @@ jobs:
             crypto_prices.json
             gold_price.json
             nasdaq_price.json
+            unicef_raw.json
