@@ -12,8 +12,13 @@ class MatrixProcessor:
         """
         Generuje unikalny, kryptograficzny identyfikator (Hash SHA-256)
         stanowiący cyfrowy Proof of Existence dla wykrytego rezonansu.
+        Bezpiecznie pobiera klucze za pomocą metody .get()
         """
-        raw_data = f"{correlation.get('id', '000')}_{correlation.get('resonance_index', 0.0)}_{correlation.get('timestamp', '')}"
+        c_id = correlation.get('id', correlation.get('correlation_id', '000'))
+        c_idx = correlation.get('resonance_index', correlation.get('resonance_score', 0.0))
+        c_time = correlation.get('timestamp', correlation.get('timestamp_utc', ''))
+        
+        raw_data = f"{c_id}_{c_idx}_{c_time}"
         token_hash = hashlib.sha256(raw_data.encode('utf-8')).hexdigest()
         return f"NUMPSA-TOKEN-{token_hash[:16].upper()}"
 
@@ -35,7 +40,6 @@ class MatrixProcessor:
         
         # 1. Budowanie dynamicznej tabeli i osadzanie obrazu graficznego
         markdown_table = "## 📡 PUBLICZNA TABLICA ANOMALII I REZONANSÓW (TENSOR T)\n\n"
-        
         markdown_table += "### 🌌 Wizualizacja Geometrii Pola Rezonansu\n"
         markdown_table += f"![Geometria Pola AINUMPSA]({self.image_filename})\n\n"
         
@@ -46,7 +50,12 @@ class MatrixProcessor:
 
         for corr in correlations:
             token = self.generate_token(corr)
-            markdown_table += f"| {corr.get('id', 'N/A')} | {corr.get('axis_x', 'N/A')} | {corr.get('axis_y', 'N/A')} | **{corr.get('resonance_index', 0.0)}** | `{token}` | `1>0 LOCKED` |\n"
+            c_id = corr.get('id', corr.get('correlation_id', 'N/A'))
+            c_x = corr.get('axis_x', corr.get('cross_points', ['N/A'])[0])
+            c_y = corr.get('axis_y', corr.get('cross_points', ['N/A', 'N/A'])[1] if len(corr.get('cross_points', [])) > 1 else 'N/A')
+            c_idx = corr.get('resonance_index', corr.get('resonance_score', 0.0))
+            
+            markdown_table += f"| {c_id} | {c_x} | {c_y} | **{c_idx}** | `{token}` | `1>0 LOCKED` |\n"
 
         markdown_table += "\n*Ostatnia automatyczna synchronizacja matrycy: " + datetime.utcnow().isoformat() + "Z*\n"
 
@@ -64,7 +73,6 @@ class MatrixProcessor:
 
         if marker_start in readme_content and marker_end in readme_content:
             try:
-                # Precyzyjne wycięcie starej zawartości bez podatności na błędy indeksowania list
                 start_idx = readme_content.find(marker_start)
                 end_idx = readme_content.find(marker_end) + len(marker_end)
                 updated_content = readme_content[:start_idx] + new_section + readme_content[end_idx:]
