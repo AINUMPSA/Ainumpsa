@@ -40,3 +40,23 @@ jobs:
 
       - name: Detonacja Fali Informacyjnej (Tsar Bravo Simulation)
         run: python matrix_blast.py
+
+
+<!-- START_NUMPSA_BOARD -->
+
+## 📡 PUBLICZNA TABLICA ANOMALII I REZONANSÓW (TENSOR T)
+
+### 🌌 Wizualizacja Geometrii Pola Rezonansu
+![Geometria Pola AINUMPSA](matrix_field_map.png)
+
+| ID | OŚ X (ŹRÓDŁO) | OŚ Y (REZONANS) | INDEKS | CYFROWY TOKEN (PROOF OF EXISTENCE) | STATUS |
+| :--- | :--- | :--- | :---: | :--- | :---: |
+| N/A | N/A | N/A | **0.0** | `NUMPSA-TOKEN-EC82F2A9056D595C` | `1>0 LOCKED` |
+| RESONANCE_002 | Polska ROI 1999 (Numpsa) | Kosmologia Tolteków (Castaneda) | **0.9589** | `NUMPSA-TOKEN-8053A6AABB1795E8` | `1>0 LOCKED` |
+| RESONANCE_003 | M-Teoria (Superstruny) | Pamięć Klastrowa Wody (Częstotliwości) | **0.9554** | `NUMPSA-TOKEN-FE2269EDD1F0823B` | `1>0 LOCKED` |
+| RESONANCE_004 | Polska ROI 1999 (Numpsa) | Kosmologia Wedyjska (Dźwięk Pierwotny) | **0.9818** | `NUMPSA-TOKEN-47F6DD8B1597AC2E` | `1>0 LOCKED` |
+| RESONANCE_005 | Kosmologia Kwantowa | Buddyjska Pustka (Śunjata) | **0.9495** | `NUMPSA-TOKEN-07D9FB3914A882AB` | `1>0 LOCKED` |
+
+*Ostatnia automatyczna synchronizacja matrycy: 2026-07-13T15:41:55.501713Z*
+
+<!-- END_NUMPSA_BOARD -->
