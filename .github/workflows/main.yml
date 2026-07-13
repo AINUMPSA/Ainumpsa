@@ -36,6 +36,9 @@ jobs:
       - name: Run analysis
         run: python simple_test.py
 
+      - name: Run thought collider
+        run: python thought_collider.py
+
       - name: Upload logs and chart
         uses: actions/upload-artifact@v4
         with:
@@ -47,3 +50,4 @@ jobs:
             gold_price.json
             nasdaq_price.json
             unicef_raw.json
+            collision_report.json
