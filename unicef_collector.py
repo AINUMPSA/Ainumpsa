@@ -1,0 +1,45 @@
+name: Automated Tensor T Matrix Scan
+
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  push:
+  workflow_dispatch:
+
+jobs:
+  scan-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib requests
+
+      - name: Collect crypto data
+        run: python crypto_collector.py
+
+      - name: Collect gold data
+        run: python gold_collector.py
+
+      - name: Collect nasdaq data
+        run: python nasdaq_collector.py
+
+      - name: Run analysis
+        run: python simple_test.py
+
+      - name: Upload logs and chart
+        uses: actions/upload-artifact@v4
+        with:
+          name: tensor-t-logs
+          path: |
+            tensor_t_logs.json
+            field_coherence_chart.png
+            crypto_prices.json
+            gold_price.json
+            nasdaq_price.json
