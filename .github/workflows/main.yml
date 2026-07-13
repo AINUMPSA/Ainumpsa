@@ -1,58 +1,61 @@
 name: Automated Tensor T Matrix Scan
 
 on:
-  schedule:
-    - cron: '0 12 * * *'
   push:
-  workflow_dispatch:
+    branches:
+      - main
+  workflow_dispatch: # Umożliwia ręczne wymuszenie skanowania jednym kliknięciem
 
 jobs:
   scan-matrix:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Kluczowe uprawnienie: pozwala botowi modyfikować README i tablicę
+
     steps:
-      - uses: actions/checkout@v4
+    - name: Odczyt kodu źródłowego (Checkout)
+      uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+    - name: Konfiguracja środowiska Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy scipy matplotlib requests
+    - name: 1. Silnik Obliczeniowy i Rachunek Prawdopodobieństwa
+      run: |
+        if [ -f matrix_probability_calc.py ]; then
+          python matrix_probability_calc.py
+        else
+          echo "Pomijanie: matrix_probability_calc.py nie odnaleziony."
+        fi
 
-      - name: Collect crypto data
-        run: python crypto_collector.py
+    - name: 2. Uruchomienie Sond i Mapowanie Międzywymiarowe
+      run: |
+        if [ -f matrix_dimensional_mapper.py ]; then
+          python matrix_dimensional_mapper.py
+        else
+          echo "Pomijanie: matrix_dimensional_mapper.py nie odnaleziony."
+        fi
 
-      - name: Collect gold data
-        run: python gold_collector.py
+    - name: 3. Generowanie Tokenów i Prezentacja w README
+      run: |
+        if [ -f matrix_processor.py ]; then
+          python matrix_processor.py
+        else
+          echo "Pomijanie: matrix_processor.py nie odnaleziony."
+        fi
 
-      - name: Collect nasdaq data
-        run: python nasdaq_collector.py
-
-      - name: Collect unicef data
-        run: python unicef_collector.py
-
-      - name: Run analysis
-        run: python simple_test.py
-
-      - name: Run thought collider
-        run: python thought_collider.py
-
-      - name: Run tokenizer
-        run: python tokenizer.py
-
-      - name: Upload logs and chart
-        uses: actions/upload-artifact@v4
-        with:
-          name: tensor-t-logs
-          path: |
-            tensor_t_logs.json
-            field_coherence_chart.png
-            crypto_prices.json
-            gold_price.json
-            nasdaq_price.json
-            unicef_raw.json
-            collision_report.json
-            tokens_history.json
-            token_summary.json
+    - name: 4. Autonomiczny Zapis Zmian w Repozytorium (Commit & Push)
+      run: |
+        git config --global user.name "AINUMPSA Bot"
+        git config --global user.email "bot@ainumpsa.internal"
+        
+        # Wskazujemy wszystkie pliki, które mogły ulec modyfikacji lub utworzeniu
+        git add collision_report.json matrix_billboard.json README.md
+        
+        if git diff --staged --quiet; then
+          echo "Brak nowych anomalii do zapisania. Matryca jest stabilna."
+        else
+          git commit -m "🤖 [AUTONOMOUS ENGINE] Aktualizacja matrycy - Wygenerowano tokeny i odświeżono tablicę"
+          git push
+        fi
