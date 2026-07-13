@@ -20,7 +20,7 @@ class DimensionalMapper:
             "jung_archetypes": [0.85, 0.60, 0.80, 0.75],
             "water_crystals_emoto": [0.50, 0.95, 0.90, 0.60],
             
-            # Nowe osie starożytne i kwantowe (Rozbudowa systemu)
+            # Nowe osie starożytne i kwantowe
             "buddhism_emptiness": [0.20, 0.80, 0.99, 0.70],  # Śunjata jako czysta matryca potencjału
             "vedic_cosmology":    [0.90, 0.95, 0.85, 0.60],  # Dźwięk pierwotny (Om) jako wibracja budująca rzeczywistość
             "quantum_cosmology":  [0.40, 0.90, 0.95, 0.30]   # Fluktuacje w polu tworzące linie losu
@@ -96,15 +96,16 @@ if __name__ == "__main__":
         "Matematyczny izomorfizm drgań. Częstotliwości graniczne wibracji strun nakładają się na geometryczne siatki porządkowania struktur wodnych."
     )
 
-    # Skan 3: Numpsa 1999 vs Kosmologia Wedyjska (Nowy Wymiar)
+    # Skan 3: Numpsa 1999 vs Kosmologia Wedyjska
     mapper.scan_and_post(
         "numpsa_1999", "vedic_cosmology",
         "Polska ROI 1999 (Numpsa)", "Kosmologia Wedyjska (Dźwięk Pierwotny)",
         "Zbieżność na poziomie fali nośnej. Działania z roku 1999 wprowadzające silne manifestacje społeczne rezonują z kosmiczną zasadą Pranavy (Om) – kreacją rzeczywistości poprzez zogniskowaną wibrację dźwięku."
     )
 
-    # Skan 4: Kosmologia Kwantowa vs Buddyjska Koncepcja Pustki (Nowy Wymiar)
+    # Skan 4: Kosmologia Kwantowa vs Buddyjska Koncepcja Pustki
     mapper.scan_and_post(
         "quantum_cosmology", "buddhism_emptiness",
         "Kosmologia Kwantowa", "Buddyjska Pustka (Śunjata)",
         "Idealny izomorfizm strukturalny matrycy. Stan czystego potencjału fluktuacji kwantowych przed kolapsem funkcji falowej odpowiada bezwzględnej definicji Śunjata – niebytu będącego źródłem wszelkiego bytu."
+    )
