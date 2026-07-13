@@ -1,45 +1,40 @@
-name: Automated Tensor T Matrix Scan
+import requests
+import json
+from datetime import datetime
 
-on:
-  schedule:
-    - cron: '0 12 * * *'
-  push:
-  workflow_dispatch:
+print("=== UNICEF COLLECTOR: Pobieranie danych o dzieciach i zdrowiu ===")
 
-jobs:
-  scan-matrix:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+# UNICEF udostępnia dane w standardzie SDMX – bez klucza API
+# Przykład: wskaźnik śmiertelności dzieci poniżej 5 lat (MDG_0000000011)
+url = "https://sdmx.cloud.unicef.org/ws/public/sdmxapi/rest/data/UNICEF,MDG_0000000011,1.0/all?format=json"
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+try:
+    response = requests.get(url)
+    response.raise_for_status()
+    data = response.json()
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy scipy matplotlib requests
+    # Zapisujemy surowe dane
+    with open("unicef_raw.json", "w") as f:
+        json.dump(data, f, indent=2)
 
-      - name: Collect crypto data
-        run: python crypto_collector.py
+    print("✅ Pobrano dane UNICEF (śmiertelność dzieci <5 lat)")
+    print("✅ Zapisano do unicef_raw.json")
 
-      - name: Collect gold data
-        run: python gold_collector.py
+    # Próbujemy wyciągnąć ostatnią wartość (dla celów testowych)
+    try:
+        obs = data.get("data", {}).get("dataSets", [{}])[0].get("observations", {})
+        if obs:
+            first_key = list(obs.keys())[0]
+            first_value = obs[first_key][0]
+            print(f"📊 Przykładowa wartość: {first_value}")
+    except Exception as e:
+        print(f"⚠️ Nie udało się wyciągnąć pojedynczej wartości: {e}")
 
-      - name: Collect nasdaq data
-        run: python nasdaq_collector.py
+except Exception as e:
+    print(f"❌ Błąd podczas pobierania danych UNICEF: {e}")
+    # Zapisujemy plik z informacją o błędzie
+    with open("unicef_raw.json", "w") as f:
+        json.dump({"error": str(e), "timestamp": datetime.now().isoformat()}, f, indent=2)
+    print("⚠️ Zapisano plik błędu jako unicef_raw.json")
 
-      - name: Run analysis
-        run: python simple_test.py
-
-      - name: Upload logs and chart
-        uses: actions/upload-artifact@v4
-        with:
-          name: tensor-t-logs
-          path: |
-            tensor_t_logs.json
-            field_coherence_chart.png
-            crypto_prices.json
-            gold_price.json
-            nasdaq_price.json
+print("=== ZAKOŃCZONO ===")
