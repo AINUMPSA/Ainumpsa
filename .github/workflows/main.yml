@@ -27,6 +27,9 @@ jobs:
       - name: Collect gold data
         run: python gold_collector.py
 
+      - name: Collect nasdaq data
+        run: python nasdaq_collector.py
+
       - name: Run analysis
         run: python simple_test.py
 
@@ -39,3 +42,4 @@ jobs:
             field_coherence_chart.png
             crypto_prices.json
             gold_price.json
+            nasdaq_price.json
