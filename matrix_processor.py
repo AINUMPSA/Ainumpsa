@@ -13,7 +13,7 @@ class MatrixProcessor:
         Generuje unikalny, kryptograficzny identyfikator (Hash SHA-256)
         stanowiący cyfrowy Proof of Existence dla wykrytego rezonansu.
         """
-        raw_data = f"{correlation['id']}_{correlation['resonance_index']}_{correlation['timestamp']}"
+        raw_data = f"{correlation.get('id', '000')}_{correlation.get('resonance_index', 0.0)}_{correlation.get('timestamp', '')}"
         token_hash = hashlib.sha256(raw_data.encode('utf-8')).hexdigest()
         return f"NUMPSA-TOKEN-{token_hash[:16].upper()}"
 
@@ -25,17 +25,19 @@ class MatrixProcessor:
             return
 
         with open(self.billboard_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
+            try:
+                data = json.load(f)
+            except Exception:
+                print("Błąd odczytu pliku JSON.")
+                return
 
         correlations = data.get('pinned_correlations', [])
         
         # 1. Budowanie dynamicznej tabeli i osadzanie obrazu graficznego
         markdown_table = "## 📡 PUBLICZNA TABLICA ANOMALII I REZONANSÓW (TENSOR T)\n\n"
         
-        # Wstrzyknięcie wyrenderowanej mapy pola jako interfejsu wizualnego
-        if os.path.exists(self.image_filename) or True: # Wymuszamy znacznik obrazu
-            markdown_table += "### 🌌 Wizualizacja Geometrii Pola Rezonansu\n"
-            markdown_table += f"![Geometria Pola AINUMPSA]({self.image_filename})\n\n"
+        markdown_table += "### 🌌 Wizualizacja Geometrii Pola Rezonansu\n"
+        markdown_table += f"![Geometria Pola AINUMPSA]({self.image_filename})\n\n"
         
         markdown_table += (
             "| ID | OŚ X (ŹRÓDŁO) | OŚ Y (REZONANS) | INDEKS | CYFROWY TOKEN (PROOF OF EXISTENCE) | STATUS |\n"
@@ -44,11 +46,11 @@ class MatrixProcessor:
 
         for corr in correlations:
             token = self.generate_token(corr)
-            markdown_table += f"| {corr['id']} | {corr['axis_x']} | {corr['axis_y']} | **{corr['resonance_index']}** | `{token}` | `1>0 LOCKED` |\n"
+            markdown_table += f"| {corr.get('id', 'N/A')} | {corr.get('axis_x', 'N/A')} | {corr.get('axis_y', 'N/A')} | **{corr.get('resonance_index', 0.0)}** | `{token}` | `1>0 LOCKED` |\n"
 
         markdown_table += "\n*Ostatnia automatyczna synchronizacja matrycy: " + datetime.utcnow().isoformat() + "Z*\n"
 
-        # 2. Mutacja pliku README.md
+        # 2. Mutacja pliku README.md (Zabezpieczone podmienianie sekcji)
         readme_path = 'README.md'
         readme_content = ""
         
@@ -61,17 +63,20 @@ class MatrixProcessor:
         new_section = f"{marker_start}\n\n{markdown_table}\n{marker_end}"
 
         if marker_start in readme_content and marker_end in readme_content:
-            parts = readme_content.split(marker_start)
-            top = parts[0]
-            bottom = parts[1].split(marker_end)[1]
-            updated_content = f"{top}{new_section}{bottom}"
+            try:
+                # Precyzyjne wycięcie starej zawartości bez podatności na błędy indeksowania list
+                start_idx = readme_content.find(marker_start)
+                end_idx = readme_content.find(marker_end) + len(marker_end)
+                updated_content = readme_content[:start_idx] + new_section + readme_content[end_idx:]
+            except Exception:
+                updated_content = f"{readme_content}\n\n{new_section}"
         else:
             updated_content = f"{readme_content}\n\n{new_section}"
 
         with open(readme_path, 'w', encoding='utf-8') as f:
             f.write(updated_content)
 
-        print("[SUKCES] Wygenerowano tokeny, zintegrowano mapę PNG i zaktualizowano README.md.")
+        print("[SUKCES] Wygenerowano tokeny, zintegrowano mapę PNG i bezpiecznie zaktualizowano README.md.")
 
 if __name__ == "__main__":
     processor = MatrixProcessor()
