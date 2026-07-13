@@ -1,66 +1,37 @@
 name: Automated Tensor T Matrix Scan
 
-on: [push]
-
-permissions:
-  contents: write
+on:
+  schedule:
+    - cron: '0 12 * * *'
+  push:
+  workflow_dispatch:
 
 jobs:
-  run-experiment:
+  scan-matrix:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Sonda Siewna
-        run: python probe_seeder.py || echo "skip"
-
-      - name: Sonda Zbierajaca
-        run: python probe_collector.py || echo "skip"
-
-      - name: Reaktor Kolizyjny
-        run: python tensor_collider.py || echo "skip"
-
-      - name: Generator Fraktali
-        run: python fractal_singularity.py || echo "skip"
-
-      - name: Generator Audio
-        run: python quantum_acoustics.py || echo "skip"
-
-      - name: Silnik Analityczny
-        run: python matrix_analyser.py || echo "skip"
-- name: Backup logs to GitLab
-  run: |
-    git clone https://oauth2:${{ secrets.GITLAB_TOKEN }}@gitlab.com/numpsa/ainumpsa-mirror.git gitlab-backup
-    cp tensor_t_logs.json field_coherence_chart.png gitlab-backup/
-    cd gitlab-backup
-    git config --global user.name "AINUMPSA-Bot"
-    git config --global user.email "bot@ainumpsa.org"
-    git add *.json *.png || echo "No files to add"
-    git commit -m "Automated backup: $(date)" || echo "No changes to commit"
-    git push || echo "Push failed"
-      - name: Mutator README
-        run: python readme_mutator.py || echo "skip"
-
-      - name: Automatyczny Git Push
+      - name: Install dependencies
         run: |
-          git config --global user.name "AINUMPSA-Bot"
-          git config --global user.email "bot@ainumpsa.org"
-          git add README.md || true
-          git commit -m "🤖 [MUTACJA] Aktualizacja Wag" || true
-          git push || true
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib requests
 
-      - name: Detonacja Tsar Bravo
-        run: python matrix_blast.py || echo "skip"
+      - name: Collect crypto data
+        run: python crypto_collector.py
 
-      - name: Pakowanie Urobku Medialnego
+      - name: Run analysis
+        run: python simple_test.py
+
+      - name: Upload logs and chart
         uses: actions/upload-artifact@v4
         with:
-          name: ainumpsa-matrix-results
-          path: .
-          if-no-files-found: ignore
+          name: tensor-t-logs
+          path: |
+            tensor_t_logs.json
+            field_coherence_chart.png
+            crypto_prices.json
