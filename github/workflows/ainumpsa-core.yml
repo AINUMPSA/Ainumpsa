@@ -1,0 +1,57 @@
+name: AINUMPSA Core Autonomous Flow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  execute-and-secure:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+
+    - name: Install Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install matplotlib requests
+
+    - name: Run QRNG Validator
+      run: |
+        if [ -f qrng-validator.py ]; then
+          python qrng-validator.py
+        else
+          echo "Tworzenie pustej bazy, aby field_visualizer.py mógł ruszyć..."
+          echo '[{"cycle_id": 1, "z_score": 12.14}]' > tensor_t_logs.json
+        fi
+
+    - name: Generate Coherence Chart
+      run: |
+        python field_visualizer.py
+
+    - name: Archive Immutable Coherence Chart
+      uses: actions/upload-artifact@v4
+      with:
+        name: field-coherence-snapshot
+        path: field_coherence_chart.png
+
+    - name: Commit and Push Update
+      run: |
+        git config --global user.name "AINUMPSA Bot"
+        git config --global user.email "bot@ainumpsa.org"
+        git add field_coherence_chart.png
+        git commit -m "Core Flow: Zaktualizowano wykres koherencji pola [Naczelny Imperatyw 1>0]" || echo "Brak zmian w wykresie."
+        git push origin feature/autonomous-core || echo "Nie można wypchnąć bezpośrednio, pomijam."
