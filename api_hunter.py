@@ -26,7 +26,7 @@ class AsyncQuantumDiscoveryBot:
                 if response.status == 200:
                     data = await response.json()
                     return data.get("features", [])
-        exceptException:
+        except Exception:
             pass
         return []
 
@@ -94,7 +94,7 @@ class AsyncQuantumDiscoveryBot:
                     extracted = []
                     for neo in asteroids_today[:3]:
                         close_data = neo.get("close_approach_data", [{}])
-                        first_approach = close_data[0] if close_data else {}
+                        first_approach = close_data if close_data else {}
                         extracted.append({
                             "name": neo.get("name"),
                             "potentially_hazardous": neo.get("is_potentially_hazardous_asteroid"),
@@ -113,8 +113,8 @@ class AsyncQuantumDiscoveryBot:
             async with session.get(self.wb_onu_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
-                    if len(data) > 1 and data[1]:
-                        latest_record = data[1][0]
+                    if len(data) > 1 and data:
+                        latest_record = data
                         return {
                             "indicator_name": latest_record.get("indicator", {}).get("value"),
                             "global_value": latest_record.get("value"),
@@ -154,8 +154,8 @@ class AsyncQuantumDiscoveryBot:
             active_events = seismic_events[:2]
             
             for event in active_events:
-                coords = event.get("geometry", {}).get("coordinates", [0, 0])
-                lon, lat = coords[0], coords[1]
+                coords = event.get("geometry", {}).get("coordinates",)
+                lon, lat = coords, coords
                 weather_tasks.append(self.fetch_weather_for_event(session, lat, lon))
             
             weather_results = await asyncio.gather(*weather_tasks)
