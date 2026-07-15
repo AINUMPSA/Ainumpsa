@@ -1,133 +1,169 @@
-import requests
+import asyncio
+import aiohttp
 import json
 from datetime import datetime
 
-class QuantumDiscoveryBot:
+class AsyncQuantumDiscoveryBot:
     def __init__(self):
-        # Definicje punktów wejścia do globalnych API
+        # Definicje wszystkich punktów wejścia (API Endpoints)
         self.seismic_api_url = "https://usgs.gov"
         self.weather_api_url = "https://open-meteo.com"
         self.eu_data_api_url = "https://europa.eu"
-        # Portal CERN Open Data API do przeszukiwania rekordów fizyki wysokich energii
         self.cern_api_url = "https://cern.ch"
+        # NOWE ŹRÓDŁA: NASA (Asteroidy) oraz Bank Światowy / ONZ (Wskaźniki globalne)
+        self.nasa_api_url = "https://nasa.gov"
+        self.wb_onu_api_url = "https://worldbank.org" # Emisja CO2 per capita globalnie
+        self.air_quality_api_url = "https://open-meteo.com" # Globalne zanieczyszczenie powietrza
 
-    def scan_seismic_activity(self, min_magnitude=4.5):
-        print(f"[{datetime.now()}] [1/5] Uruchamianie skanera sejsmicznego...")
+    async def fetch_seismic_activity(self, session, min_magnitude=4.5):
+        print(f"[{datetime.now()}] -> Start: Skaner Sejsmiczny")
         params = {
             "format": "geojson",
             "starttime": datetime.utcnow().strftime("%Y-%m-%dT00:00:00"),
             "minmagnitude": min_magnitude
         }
         try:
-            response = requests.get(self.seismic_api_url, params=params, timeout=15)
-            if response.status_code == 200:
-                events = response.json().get("features", [])
-                print(f"-> Wykryto {len(events)} anomalii sejsmicznych.")
-                return events
-            return []
-        except Exception as e:
-            print(f"-> Awaria połączenia sejsmicznego: {str(e)}")
-            return []
+            async with session.get(self.seismic_api_url, params=params, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    return data.get("features", [])
+        except:
+            pass
+        return []
 
-    def auto_connect_weather_for_event(self, lat, lon):
+    async def fetch_weather_for_event(self, session, lat, lon):
         params = {"latitude": lat, "longitude": lon, "current_weather": "true"}
         try:
-            response = requests.get(self.weather_api_url, params=params, timeout=10)
-            if response.status_code == 200:
-                return response.json().get("current_weather", {})
-        except Exception as e:
-            print(f"-> Brak danych pogodowych dla {lat},{lon}: {str(e)}")
-        return None
+            async with session.get(self.weather_api_url, params=params, timeout=5) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    return data.get("current_weather", {})
+        except:
+            pass
+        return {}
 
-    def scan_eu_open_data(self, query="climate change"):
-        print(f"[{datetime.now()}] [2/5] Przeszukiwanie rejestrów API Unii Europejskiej...")
-        payload = {"q": query, "rows": 3, "sort": "modified desc"}
+    async def fetch_eu_open_data(self, session, query="climate change"):
+        print(f"[{datetime.now()}] -> Start: API Unii Europejskiej")
+        payload = {"q": query, "rows": 2, "sort": "modified desc"}
         try:
-            response = requests.post(self.eu_data_api_url, json=payload, timeout=15)
-            if response.status_code == 200:
-                results = response.json().get("result", {}).get("results", [])
-                print(f"-> Znaleziono {len(results)} aktywnych unijnych zbiorów danych.")
-                extracted = []
-                for doc in results:
-                    title_dict = doc.get("title", {})
-                    title = title_dict.get("en", list(title_dict.values()) if title_dict else "Bez tytułu")
-                    extracted.append({
-                        "title": title,
-                        "publisher": doc.get("publisher", {}).get("name", "EU Institution"),
-                        "resource_url": f"https://europa.eu{doc.get('id')}?lang=en"
-                    })
-                return extracted
-            return []
-        except Exception as e:
-            print(f"-> Wyjątek API UE: {str(e)}")
-            return []
+            async with session.post(self.eu_data_api_url, json=payload, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    results = data.get("result", {}).get("results", [])
+                    extracted = []
+                    for doc in results:
+                        title_dict = doc.get("title", {})
+                        title = title_dict.get("en", list(title_dict.values()) if title_dict else "Bez tytułu")
+                        extracted.append({
+                            "title": title,
+                            "publisher": doc.get("publisher", {}).get("name", "EU Institution")
+                        })
+                    return extracted
+        except:
+            pass
+        return []
 
-    def scan_cern_physics_data(self, query="higgs"):
-        print(f"[{datetime.now()}] [3/5] Odpytywanie CERN Open Data API dla frazy: '{query}'...")
-        params = {
-            "q": query,
-            "size": 3, # Pobieramy top 3 publikacje/zbiory danych z akceleratorów (np. LHC)
-            "sort": "-mostrecent"
-        }
+    async def fetch_cern_physics_data(self, session, query="higgs"):
+        print(f"[{datetime.now()}] -> Start: CERN Open Data API")
+        params = {"q": query, "size": 2, "sort": "-mostrecent"}
         try:
-            response = requests.get(self.cern_api_url, params=params, timeout=15)
-            if response.status_code == 200:
-                hits = response.json().get("hits", {}).get("hits", [])
-                print(f"-> Wykryto {len(hits)} otwartych rekordów naukowych z CERN.")
-                extracted_cern = []
-                for hit in hits:
-                    metadata = hit.get("metadata", {})
-                    extracted_cern.append({
-                        "title": metadata.get("title", "CERN Experiment Data"),
-                        "creation_date": metadata.get("creation_date"),
-                        "accelerator": metadata.get("accelerator", {}).get("name", "LHC"),
-                        "experiment": metadata.get("experiment", {}).get("name", "Unknown"),
-                        "doi_url": f"https://doi.org{metadata.get('doi')}" if metadata.get('doi') else None
-                    })
-                return extracted_cern
-            return []
-        except Exception as e:
-            print(f"-> Wyjątek podczas łączenia z CERN: {str(e)}")
-            return []
+            async with session.get(self.cern_api_url, params=params, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    hits = data.get("hits", {}).get("hits", [])
+                    extracted = []
+                    for hit in hits:
+                        metadata = hit.get("metadata", {})
+                        extracted.append({
+                            "title": metadata.get("title", "CERN Data"),
+                            "experiment": metadata.get("experiment", {}).get("name", "LHC")
+                        })
+                    return extracted
+        except:
+            pass
+        return []
 
-    def execute_pipeline(self):
-        # 1. Telemetria Geofizyczna + Pogoda
-        seismic_data = []
-        seismic_events = self.scan_seismic_activity()
-        for event in seismic_events[:2]:
-            coords = event.get("geometry", {}).get("coordinates", [0, 0])
-            lon, lat = coords, coords
-            weather = self.auto_connect_weather_for_event(lat, lon)
-            seismic_data.append({
-                "location": event.get("properties", {}).get("place"),
-                "magnitude": event.get("properties", {}).get("mag"),
-                "current_weather": weather
-            })
+    async def fetch_nasa_asteroids(self, session):
+        print(f"[{datetime.now()}] -> Start: NASA NeoWs (Skaner Asteroid)")
+        today = datetime.utcnow().strftime("%Y-%m-%d")
+        params = {"start_date": today, "end_date": today, "api_key": "DEMO_KEY"} # Oficjalny demo klucz NASA
+        try:
+            async with session.get(self.nasa_api_url, params=params, timeout=12) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    asteroids_today = data.get("near_earth_objects", {}).get(today, [])
+                    extracted = []
+                    for neo in asteroids_today[:3]: # Bierzemy top 3 najbliższe obiekty dzisiaj
+                        extracted.append({
+                            "name": neo.get("name"),
+                            "potentially_hazardous": neo.get("is_potentially_hazardous_asteroid"),
+                            "close_approach_distance_km": neo.get("close_approach_data", [{}])[0].get("miss_distance", {}).get("kilometers"),
+                            "velocity_km_h": neo.get("close_approach_data", [{}])[0].get("relative_velocity", {}).get("kilometers_per_hour")
+                        })
+                    return extracted
+        except:
+            pass
+        return []
 
-        # 2. Dane Unii Europejskiej
-        eu_datasets = self.scan_eu_open_data()
+    async def fetch_un_world_bank_data(self, session):
+        print(f"[{datetime.now()}] -> Start: ONZ / Bank Światowy")
+        params = {"format": "json", "per_page": 1}
+        try:
+            async with session.get(self.wb_onu_api_url, params=params, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    if len(data) > 1 and data[1]:
+                        latest_record = data[1][0]
+                        return {
+                            "indicator_name": latest_record.get("indicator", {}).get("value"),
+                            "global_value": latest_record.get("value"),
+                            "last_updated_year": latest_record.get("date")
+                        }
+        except:
+            pass
+        return {}
 
-        # 3. Dane CERN (Fizyka Kwantowa i Cząstek)
-        cern_datasets = self.scan_cern_physics_data()
+    async def fetch_global_air_quality(self, session):
+        print(f"[{datetime.now()}] -> Start: Globalny Skan Jakości Powietrza")
+        # Współrzędne generyczne dla środka Europy do pobrania próby pyłów zawieszonych
+        params = {"latitude": 52.52, "longitude": 13.41, "current": "pm2_5,pm10,carbon_monoxide"}
+        try:
+            async with session.get(self.air_quality_api_url, params=params, timeout=10) as response:
+                if response.status == 200:
+                    data = await response.json()
+                    return data.get("current", {})
+        except:
+            pass
+        return {}
 
-        # 4. Konsolidacja struktury maszynowej
-        final_payload = {
-            "agent_identity": "AINUMPSA Quantum Core v3.0",
-            "execution_timestamp": datetime.utcnow().isoformat(),
-            "telemetry_stream": {
-                "geophysical_events": seismic_data,
-                "european_union_open_data": eu_datasets,
-                "cern_quantum_physics_data": cern_datasets
-            }
-        }
-        return final_payload
+    async def execute_pipeline(self):
+        async with aiohttp.ClientSession() as session:
+            # URUCHOMIENIE 6 POTĘŻNYCH PROCESÓW INTEGRACYJNYCH RÓWNOLEGLE W TEJ SAMEJ SEKUNDZIE
+            tasks = [
+                self.fetch_seismic_activity(session),
+                self.fetch_eu_open_data(session),
+                self.fetch_cern_physics_data(session),
+                self.fetch_nasa_asteroids(session),
+                self.fetch_un_world_bank_data(session),
+                self.fetch_global_air_quality(session)
+            ]
 
-if __name__ == "__main__":
-    bot = QuantumDiscoveryBot()
-    results = bot.execute_pipeline()
-    
-    output_filename = "quantum_scan_output.json"
-    with open(output_filename, "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=4, ensure_ascii=False)
-        
-    print(f"[{datetime.now()}] [4/5] Sukces! Zintegrowane dane zapisane w {output_filename}")
+            seismic_events, eu_datasets, cern_datasets, nasa_asteroids, un_data, air_quality = await asyncio.gather(*tasks)
+
+            # Pobieranie danych pogodowych dla zdarzeń sejsmicznych
+            seismic_data = []
+            weather_tasks = []
+            active_events = seismic_events[:2]
+            
+            for event in active_events:
+                coords = event.get("geometry", {}).get("coordinates",)
+                lon, lat = coords, coords
+                weather_tasks.append(self.fetch_weather_for_event(session, lat, lon))
+            
+            weather_results = await asyncio.gather(*weather_tasks)
+
+            for i, event in enumerate(active_events):
+                seismic_data.append({
+                    "location": event.get("properties", {}).get("place"),
+                    "magnitude": event.get("properties", {}).get("mag"),
+                    "current_weather": weather_results[i] if i  Sukces! Wszystkie bazy danych zintegrowane w {output_filename}")
