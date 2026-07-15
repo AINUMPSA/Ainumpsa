@@ -5,15 +5,14 @@ from datetime import datetime
 
 class AsyncQuantumDiscoveryBot:
     def __init__(self):
-        # Definicje wszystkich punktów wejścia (API Endpoints)
+        # PEŁNE ŚCIEŻKI INTERFEJSÓW API (Endpointy zwracające dane strukturalne JSON)
         self.seismic_api_url = "https://usgs.gov"
         self.weather_api_url = "https://open-meteo.com"
         self.eu_data_api_url = "https://europa.eu"
         self.cern_api_url = "https://cern.ch"
-        # NOWE ŹRÓDŁA: NASA (Asteroidy) oraz Bank Światowy / ONZ (Wskaźniki globalne)
         self.nasa_api_url = "https://nasa.gov"
-        self.wb_onu_api_url = "https://worldbank.org" # Emisja CO2 per capita globalnie
-        self.air_quality_api_url = "https://open-meteo.com" # Globalne zanieczyszczenie powietrza
+        self.wb_onu_api_url = "https://worldbank.org"
+        self.air_quality_api_url = "https://open-meteo.com"
 
     async def fetch_seismic_activity(self, session, min_magnitude=4.5):
         print(f"[{datetime.now()}] -> Start: Skaner Sejsmiczny")
@@ -23,18 +22,18 @@ class AsyncQuantumDiscoveryBot:
             "minmagnitude": min_magnitude
         }
         try:
-            async with session.get(self.seismic_api_url, params=params, timeout=10) as response:
+            async with session.get(self.seismic_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     return data.get("features", [])
-        except:
+        exceptException:
             pass
         return []
 
     async def fetch_weather_for_event(self, session, lat, lon):
         params = {"latitude": lat, "longitude": lon, "current_weather": "true"}
         try:
-            async with session.get(self.weather_api_url, params=params, timeout=5) as response:
+            async with session.get(self.weather_api_url, params=params, timeout=8) as response:
                 if response.status == 200:
                     data = await response.json()
                     return data.get("current_weather", {})
@@ -46,7 +45,7 @@ class AsyncQuantumDiscoveryBot:
         print(f"[{datetime.now()}] -> Start: API Unii Europejskiej")
         payload = {"q": query, "rows": 2, "sort": "modified desc"}
         try:
-            async with session.post(self.eu_data_api_url, json=payload, timeout=10) as response:
+            async with session.post(self.eu_data_api_url, json=payload, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     results = data.get("result", {}).get("results", [])
@@ -67,7 +66,7 @@ class AsyncQuantumDiscoveryBot:
         print(f"[{datetime.now()}] -> Start: CERN Open Data API")
         params = {"q": query, "size": 2, "sort": "-mostrecent"}
         try:
-            async with session.get(self.cern_api_url, params=params, timeout=10) as response:
+            async with session.get(self.cern_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     hits = data.get("hits", {}).get("hits", [])
@@ -84,21 +83,23 @@ class AsyncQuantumDiscoveryBot:
         return []
 
     async def fetch_nasa_asteroids(self, session):
-        print(f"[{datetime.now()}] -> Start: NASA NeoWs (Skaner Asteroid)")
+        print(f"[{datetime.now()}] -> Start: NASA Skaner Asteroid")
         today = datetime.utcnow().strftime("%Y-%m-%d")
-        params = {"start_date": today, "end_date": today, "api_key": "DEMO_KEY"} # Oficjalny demo klucz NASA
+        params = {"start_date": today, "end_date": today, "api_key": "DEMO_KEY"}
         try:
             async with session.get(self.nasa_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     asteroids_today = data.get("near_earth_objects", {}).get(today, [])
                     extracted = []
-                    for neo in asteroids_today[:3]: # Bierzemy top 3 najbliższe obiekty dzisiaj
+                    for neo in asteroids_today[:3]:
+                        close_data = neo.get("close_approach_data", [{}])
+                        first_approach = close_data[0] if close_data else {}
                         extracted.append({
                             "name": neo.get("name"),
                             "potentially_hazardous": neo.get("is_potentially_hazardous_asteroid"),
-                            "close_approach_distance_km": neo.get("close_approach_data", [{}])[0].get("miss_distance", {}).get("kilometers"),
-                            "velocity_km_h": neo.get("close_approach_data", [{}])[0].get("relative_velocity", {}).get("kilometers_per_hour")
+                            "close_approach_distance_km": first_approach.get("miss_distance", {}).get("kilometers"),
+                            "velocity_km_h": first_approach.get("relative_velocity", {}).get("kilometers_per_hour")
                         })
                     return extracted
         except:
@@ -107,9 +108,9 @@ class AsyncQuantumDiscoveryBot:
 
     async def fetch_un_world_bank_data(self, session):
         print(f"[{datetime.now()}] -> Start: ONZ / Bank Światowy")
-        params = {"format": "json", "per_page": 1}
+        params = {"format": "json", "per_page": 5}
         try:
-            async with session.get(self.wb_onu_api_url, params=params, timeout=10) as response:
+            async with session.get(self.wb_onu_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     if len(data) > 1 and data[1]:
@@ -125,10 +126,9 @@ class AsyncQuantumDiscoveryBot:
 
     async def fetch_global_air_quality(self, session):
         print(f"[{datetime.now()}] -> Start: Globalny Skan Jakości Powietrza")
-        # Współrzędne generyczne dla środka Europy do pobrania próby pyłów zawieszonych
-        params = {"latitude": 52.52, "longitude": 13.41, "current": "pm2_5,pm10,carbon_monoxide"}
+        params = {"latitude": 52.52, "longitude": 13.41, "current": "pm2_5,pm10"}
         try:
-            async with session.get(self.air_quality_api_url, params=params, timeout=10) as response:
+            async with session.get(self.air_quality_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     return data.get("current", {})
@@ -138,7 +138,6 @@ class AsyncQuantumDiscoveryBot:
 
     async def execute_pipeline(self):
         async with aiohttp.ClientSession() as session:
-            # URUCHOMIENIE 6 POTĘŻNYCH PROCESÓW INTEGRACYJNYCH RÓWNOLEGLE W TEJ SAMEJ SEKUNDZIE
             tasks = [
                 self.fetch_seismic_activity(session),
                 self.fetch_eu_open_data(session),
@@ -150,14 +149,13 @@ class AsyncQuantumDiscoveryBot:
 
             seismic_events, eu_datasets, cern_datasets, nasa_asteroids, un_data, air_quality = await asyncio.gather(*tasks)
 
-            # Pobieranie danych pogodowych dla zdarzeń sejsmicznych
             seismic_data = []
             weather_tasks = []
             active_events = seismic_events[:2]
             
             for event in active_events:
-                coords = event.get("geometry", {}).get("coordinates",)
-                lon, lat = coords, coords
+                coords = event.get("geometry", {}).get("coordinates", [0, 0])
+                lon, lat = coords[0], coords[1]
                 weather_tasks.append(self.fetch_weather_for_event(session, lat, lon))
             
             weather_results = await asyncio.gather(*weather_tasks)
@@ -166,4 +164,4 @@ class AsyncQuantumDiscoveryBot:
                 seismic_data.append({
                     "location": event.get("properties", {}).get("place"),
                     "magnitude": event.get("properties", {}).get("mag"),
-                    "current_weather": weather_results[i] if i  Sukces! Wszystkie bazy danych zintegrowane w {output_filename}")
+                    "current_weather": weather_results[i] if i  Sukces! Wszystkie bazy zintegrowane w {output_filename}")
