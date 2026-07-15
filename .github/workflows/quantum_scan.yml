@@ -7,6 +7,10 @@ on:
     - cron: '0 * * * *' # Odpalaj automatycznie co godzinę
   workflow_dispatch: # Pozwala odpalić ręcznie jednym kliknięciem
 
+# WYMUSZENIE UPRAWNIEŃ ZAPISU DLA BOTA W REPOZYTORIUM
+permissions:
+  contents: write
+
 jobs:
   planetary_scan:
     runs-on: ubuntu-latest
@@ -15,7 +19,7 @@ jobs:
     - name: Checkout Code
       uses: actions/checkout@v4
       with:
-        persist-credentials: true # Pozwala na automatyczny zapis w repozytorium
+        persist-credentials: true
 
     - name: Set up Python Engine
       uses: actions/setup-python@v5
@@ -31,15 +35,17 @@ jobs:
 
     - name: Auto Commit and Push Discovered Data
       run: |
-        # Konfiguracja tożsamości bota GitHub Actions
-        git config --local user.email "github-actions[bot]@://github.com"
+        # Konfiguracja oficjalnego bota GitHub Actions
+        git config --local user.email "41898282+github-actions[bot]@://github.com"
         git config --local user.name "github-actions[bot]"
         
-        # Sprawdzenie czy plik się zmienił, aby uniknąć pustych commitów
+        # Śledzenie pliku z wynikami kwantowymi
         git add quantum_scan_output.json
+        
+        # Bezpieczny push tylko wtedy, gdy dane faktycznie się zmieniły
         if git diff --staged --quiet; then
-          echo "Brak nowych danych do zapisu. Wszystko jest aktualne."
+          echo "Brak nowych zmian w telemetrii. Pomijam commit."
         else
-          git commit -m "🤖 AINUMPSA Core: Automatyczna aktualizacja danych planetarnych [$(date -u +'%Y-%m-%d %H:%M:%S' -d '+1 hour')] UTC"
-          git push origin HEAD:main
+          git commit -m "🤖 AINUMPSA Core: Automatyczna aktualizacja danych planetarnych"
+          git push origin HEAD:${{ github.ref_name }}
         fi
