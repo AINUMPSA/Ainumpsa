@@ -1,3 +1,19 @@
+name: Quantum Planetary Scan
+
+on:
+  push:
+    branches: [ main, master ]
+  schedule:
+    - cron: '0 * * * *' # Automatyczny skan co godzinę
+  workflow_dispatch: # Opcja ręcznego odpalenia
+
+permissions:
+  contents: write
+
+jobs:
+  planetary_and_quantum_scan:
+    runs-on: ubuntu-latest
+
     steps:
     - name: Checkout Code
       uses: actions/checkout@v4
@@ -9,33 +25,33 @@
       with:
         python-version: '3.10'
 
-    # SPROWADZAMY WSZYSTKIE SYSTEMOWE BIBLIOTEKI W JEDNYM KROKU
-    - name: Install System Dependencies
+    # JEDNA INSTALACJA DLA WSZYSTKICH MODUŁÓW (Twoich i Moich)
+    - name: Install All System Dependencies
       run: |
         pip install requests aiohttp numpy scipy matplotlib
 
-    # URUCHOMIENIE TWOICH MODUŁÓW KWANTOWYCH
+    # KROKI DLA TWOICH MATERIAŁÓW KWANTOWYCH
     - name: Run QRNG Validator
       run: python qrng_validator.py
 
     - name: Run Field Visualizer
       run: python field_visualizer.py
 
-    # URUCHOMIENIE NASZEGO SKANERA GLOBALNYCH API
+    # KROK DLA SKANERA GLOBALNYCH API
     - name: Run Planetary API Discovery
       run: python api_hunter.py
 
-    # BEZPIECZNY ZAPIS I AUTOMATYCZNY COMMIT DLA CAŁEGO PROJEKTU
+    # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM
     - name: Auto Commit and Push All Discovered Data
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # Dodajemy wszystkie wygenerowane pliki i grafiki z wizualizacji
+        # Śledzimy wszystkie zmiany (JSONy, wykresy z visualizera, logi qrng)
         git add .
         
         if git diff --staged --quiet; then
-          echo "Brak nowych zmian w telemetrii i tensorach. Pomijam commit."
+          echo "Brak nowych zmian. Pomijam commit."
         else
           git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update"
           git push origin HEAD:${{ github.ref_name }}
