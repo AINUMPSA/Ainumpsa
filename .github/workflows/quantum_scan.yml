@@ -7,7 +7,6 @@ on:
     - cron: '0 * * * *' # Odpalaj automatycznie co godzinę
   workflow_dispatch: # Pozwala odpalić ręcznie jednym kliknięciem
 
-# WYMUSZENIE UPRAWNIEŃ ZAPISU DLA BOTA W REPOZYTORIUM
 permissions:
   contents: write
 
@@ -28,21 +27,18 @@ jobs:
 
     - name: Install System Dependencies
       run: |
-        pip install requests
+        pip install requests aiohttp
 
     - name: Run Planetary API Discovery
       run: python api_hunter.py
 
     - name: Auto Commit and Push Discovered Data
       run: |
-        # Konfiguracja oficjalnego bota GitHub Actions
         git config --local user.email "41898282+github-actions[bot]@://github.com"
         git config --local user.name "github-actions[bot]"
         
-        # Śledzenie pliku z wynikami kwantowymi
         git add quantum_scan_output.json
         
-        # Bezpieczny push tylko wtedy, gdy dane faktycznie się zmieniły
         if git diff --staged --quiet; then
           echo "Brak nowych zmian w telemetrii. Pomijam commit."
         else
