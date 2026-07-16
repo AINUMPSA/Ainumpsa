@@ -5,13 +5,13 @@ from datetime import datetime
 
 class AsyncQuantumDiscoveryBot:
     def __init__(self):
-        # Poprawione punkty końcowe API ze specyfikacji dostawców
+        # Definicje poprawnych punktów końcowych API
         self.seismic_api_url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
         self.weather_api_url = "https://api.open-meteo.com/v1/forecast"
-        self.eu_data_api_url = "https://europa.eu" # Poprawiona ścieżka wyszukiwania
-        self.cern_api_url = "https://cern.ch"               # Poprawiony punkt wyszukiwania rekordów
+        self.eu_data_api_url = "https://europa.eu"
+        self.cern_api_url = "https://cern.ch"
         self.nasa_api_url = "https://api.nasa.gov/neo/rest/v1/feed"
-        self.wb_onu_api_url = "https://worldbank.org" # Przykład: Populacja globalna
+        self.wb_onu_api_url = "https://worldbank.org"
         self.air_quality_api_url = "https://api.open-meteo.com/v1/air-quality"
 
     async def fetch_seismic_activity(self, session, min_magnitude=4.5):
@@ -117,7 +117,6 @@ class AsyncQuantumDiscoveryBot:
             async with session.get(self.wb_onu_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
-                    # Bank Światowy zwraca listę: [meta_dane, lista_rekordów]
                     if isinstance(data, list) and len(data) > 1 and len(data[1]) > 0:
                         latest_record = data[1][0]
                         return {
@@ -161,8 +160,7 @@ class AsyncQuantumDiscoveryBot:
             seismic_data = []
             weather_tasks = []
             
-            # Filtrujemy prawdziwe wydarzenia, pomijając słowniki z błędami
-            active_events = [e for e in seismic_events if "properties" in e][:2]
+            active_events = [e for e in seismic_events if isinstance(e, dict) and "properties" in e][:2]
             
             for event in active_events:
                 coords = event.get("geometry", {}).get("coordinates", [0, 0])
@@ -173,15 +171,14 @@ class AsyncQuantumDiscoveryBot:
 
             for i, event in enumerate(active_events):
                 seismic_data.append({
-                    "event_id": event.get("id"), # Dodany unikalny identyfikator zdarzenia
+                    "event_id": event.get("id"),
                     "location": event.get("properties", {}).get("place"),
                     "magnitude": event.get("properties", {}).get("mag"),
                     "time": datetime.utcfromtimestamp(event.get("properties", {}).get("time")/1000.0).isoformat(),
                     "current_weather": weather_results[i] if i < len(weather_results) else {}
                 })
             
-            # Jeśli brak wydarzeń sejsmicznych, a wystąpił błąd – przekaż go do struktury JSON
-            if not seismic_data and seismic_events and "error" in seismic_events[0]:
+            if not seismic_data and seismic_events and isinstance(seismic_events[0], dict) and "error" in seismic_events[0]:
                 seismic_data = seismic_events
 
             output_filename = f"quantum_discovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
@@ -193,3 +190,11 @@ class AsyncQuantumDiscoveryBot:
                     "cern_datasets": cern_datasets,
                     "nasa_asteroids": nasa_asteroids,
                     "un_data": un_data,
+                    "air_quality": air_quality
+                }, f, indent=2, ensure_ascii=False)
+            
+            print(f"Sukces! Wszystkie bazy zintegrowane w {output_filename}")
+
+if __name__ == "__main__":
+    bot = AsyncQuantumDiscoveryBot()
+    asyncio.run(bot.execute_pipeline())
