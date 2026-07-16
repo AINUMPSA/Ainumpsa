@@ -5,14 +5,14 @@ from datetime import datetime
 
 class AsyncQuantumDiscoveryBot:
     def __init__(self):
-        # PEŁNE ŚCIEŻKI INTERFEJSÓW API (Endpointy zwracające dane strukturalne JSON)
-        self.seismic_api_url = "https://usgs.gov"
-        self.weather_api_url = "https://open-meteo.com"
-        self.eu_data_api_url = "https://europa.eu"
-        self.cern_api_url = "https://cern.ch"
-        self.nasa_api_url = "https://nasa.gov"
-        self.wb_onu_api_url = "https://worldbank.org"
-        self.air_quality_api_url = "https://open-meteo.com"
+        # PEŁNE ŚCIEŻKI INTERFEJSÓW API
+        self.seismic_api_url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+        self.weather_api_url = "https://api.open-meteo.com/v1/forecast"
+        self.eu_data_api_url = "https://data.europa.eu/api"
+        self.cern_api_url = "https://opendata.cern.ch/api"
+        self.nasa_api_url = "https://api.nasa.gov/neo/rest/v1/feed"
+        self.wb_onu_api_url = "https://api.worldbank.org/v2/country"
+        self.air_quality_api_url = "https://api.open-meteo.com/v1/air-quality"
 
     async def fetch_seismic_activity(self, session, min_magnitude=4.5):
         print(f"[{datetime.now()}] -> Start: Skaner Sejsmiczny")
@@ -31,12 +31,12 @@ class AsyncQuantumDiscoveryBot:
         return []
 
     async def fetch_weather_for_event(self, session, lat, lon):
-        params = {"latitude": lat, "longitude": lon, "current_weather": "true"}
+        params = {"latitude": lat, "longitude": lon, "current": "temperature_2m,relative_humidity_2m"}
         try:
             async with session.get(self.weather_api_url, params=params, timeout=8) as response:
                 if response.status == 200:
                     data = await response.json()
-                    return data.get("current_weather", {})
+                    return data.get("current", {})
         except:
             pass
         return {}
@@ -154,8 +154,8 @@ class AsyncQuantumDiscoveryBot:
             active_events = seismic_events[:2]
             
             for event in active_events:
-                coords = event.get("geometry", {}).get("coordinates",)
-                lon, lat = coords, coords
+                coords = event.get("geometry", {}).get("coordinates", [0, 0])
+                lon, lat = coords[0], coords[1]
                 weather_tasks.append(self.fetch_weather_for_event(session, lat, lon))
             
             weather_results = await asyncio.gather(*weather_tasks)
@@ -164,4 +164,24 @@ class AsyncQuantumDiscoveryBot:
                 seismic_data.append({
                     "location": event.get("properties", {}).get("place"),
                     "magnitude": event.get("properties", {}).get("mag"),
-                    "current_weather": weather_results[i] if i  Sukces! Wszystkie bazy zintegrowane w {output_filename}")
+                    "current_weather": weather_results[i] if i < len(weather_results) else {}
+                })
+            
+            # Zapis wyników
+            output_filename = f"quantum_discovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+            with open(output_filename, "w", encoding="utf-8") as f:
+                json.dump({
+                    "timestamp": datetime.now().isoformat(),
+                    "seismic_events": seismic_data,
+                    "eu_datasets": eu_datasets,
+                    "cern_datasets": cern_datasets,
+                    "nasa_asteroids": nasa_asteroids,
+                    "un_data": un_data,
+                    "air_quality": air_quality
+                }, f, indent=2, ensure_ascii=False)
+            
+            print(f"Sukces! Wszystkie bazy zintegrowane w {output_filename}")
+
+if __name__ == "__main__":
+    bot = AsyncQuantumDiscoveryBot()
+    asyncio.run(bot.execute_pipeline())
