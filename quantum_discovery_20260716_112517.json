@@ -1,0 +1,25 @@
+{
+  "timestamp": "2026-07-16T11:25:17.477921",
+  "seismic_events": [],
+  "eu_datasets": [
+    {
+      "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://european-union.europa.eu/select-language?destination=/node/1'"
+    }
+  ],
+  "cern_datasets": [
+    {
+      "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://home.cern'"
+    }
+  ],
+  "nasa_asteroids": [
+    {
+      "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://www.nasa.gov/?start_date=2026-07-16&end_date=2026-07-16&api_key=DEMO_KEY'"
+    }
+  ],
+  "un_data": {
+    "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://www.worldbank.org/ext/en/home?format=json&per_page=2&date=2024'"
+  },
+  "air_quality": {
+    "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://open-meteo.com/?latitude=52.52&longitude=13.41&current=pm2_5,pm10'"
+  }
+}
