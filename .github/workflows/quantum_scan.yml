@@ -1,4 +1,4 @@
-name: Quantum Planetary Scan
+Quantum Planetary Scan
 
 on:
   push:
@@ -41,7 +41,7 @@ jobs:
     - name: Run Planetary API Discovery
       run: python api_hunter.py
 
-    # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM (Z ZABEZPIECZENIEM PRZED PĘTLĄ)
+    # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM
     - name: Auto Commit and Push All Discovered Data
       run: |
         git config --local user.email "41898282+github-actions[bot]@://github.com"
@@ -53,7 +53,10 @@ jobs:
         if git diff --staged --quiet; then
           echo "Brak nowych zmian. Pomijam commit."
         else
-          # Dodanie [skip ci] blokuje ponowne automatyczne odpalenie tego samego workflow
           git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
+          
+          # Pobieramy najnowsze zmiany z serwera i nakładamy nasze lokalne pliki na górę
+          git pull origin HEAD:${{ github.ref_name }} --rebase
+          
           git push origin HEAD:${{ github.ref_name }}
         fi
