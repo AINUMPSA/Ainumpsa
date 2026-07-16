@@ -1,4 +1,4 @@
-(import numpy as np
+import numpy as np
 
 
 def _validate_coords(coord_x, coord_y, coord_z, L_shape):
