@@ -1,4 +1,4 @@
-Quantum Planetary Scan
+name: Quantum Planetary Scan
 
 on:
   push:
@@ -44,7 +44,7 @@ jobs:
     # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM
     - name: Auto Commit and Push All Discovered Data
       run: |
-        git config --local user.email "41898282+github-actions[bot]@://github.com"
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
         # Śledzimy wszystkie zmiany (JSONy, wykresy z visualizera, logi qrng)
@@ -55,8 +55,9 @@ jobs:
         else
           git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
           
-          # Pobieramy najnowsze zmiany z serwera i nakładamy nasze lokalne pliki na górę
-          git pull origin HEAD:${{ github.ref_name }} --rebase
+          # Pobieramy najświeższy stan gałęzi z serwera, żeby uniknąć konfliktów z innymi akcjami
+          git pull origin ${{ github.ref_name }} --rebase --autostash
           
+          # Wypychamy zmiany na serwer
           git push origin HEAD:${{ github.ref_name }}
         fi
