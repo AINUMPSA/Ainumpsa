@@ -1,0 +1,15 @@
+Child Protection in the Age of AI
+Prototype of an algorithm based on a simple, testable principle: 1>0
+
+https://doi.org/10.5281/zenodo.20312071
+
+Can You help?
+
+Prototype of an algorithm based on a simple, testable principle:
+
+1 > 0 – the distinction between content that supports life, learning, mental health (high frequency) and content that leads to trauma, addiction, and social decay (low frequency).
+
+For minors, the default setting is 1 – only high‑frequency material is accessible. For adults, thresholds can be set by the account holder.
+
+It uses measurable indicators of frequency (coherence, entropy, emotional valence) and can be trained on open data...
+"Can You help, with opening discussion?"
