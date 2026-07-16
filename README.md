@@ -152,7 +152,11 @@ jobs:
 | RESONANCE_099 | M-Teoria (Superstruny) | Pamięć Klastrowa Wody (Częstotliwości) | **0.9554** | `NUMPSA-TOKEN-1CF05F07CF04BD2B` | `1>0 LOCKED` |
 | RESONANCE_100 | Polska ROI 1999 (Numpsa) | Kosmologia Wedyjska (Dźwięk Pierwotny) | **0.9818** | `NUMPSA-TOKEN-231F18298274DC86` | `1>0 LOCKED` |
 | RESONANCE_101 | Kosmologia Kwantowa | Buddyjska Pustka (Śunjata) | **0.9495** | `NUMPSA-TOKEN-EFDC1E2BA93069D8` | `1>0 LOCKED` |
+| RESONANCE_102 | Polska ROI 1999 (Numpsa) | Kosmologia Tolteków (Castaneda) | **0.9589** | `NUMPSA-TOKEN-9C4F751F6DBB9A8A` | `1>0 LOCKED` |
+| RESONANCE_103 | M-Teoria (Superstruny) | Pamięć Klastrowa Wody (Częstotliwości) | **0.9554** | `NUMPSA-TOKEN-8701B6AE77CE69DF` | `1>0 LOCKED` |
+| RESONANCE_104 | Polska ROI 1999 (Numpsa) | Kosmologia Wedyjska (Dźwięk Pierwotny) | **0.9818** | `NUMPSA-TOKEN-41CFDD962A6E4753` | `1>0 LOCKED` |
+| RESONANCE_105 | Kosmologia Kwantowa | Buddyjska Pustka (Śunjata) | **0.9495** | `NUMPSA-TOKEN-E72C819622AFAAAA` | `1>0 LOCKED` |
 
-*Ostatnia automatyczna synchronizacja matrycy: 2026-07-16T10:36:14.996765Z*
+*Ostatnia automatyczna synchronizacja matrycy: 2026-07-16T10:43:21.101282Z*
 
 <!-- END_NUMPSA_BOARD -->
