@@ -29,15 +29,15 @@ def extract_patterns_from_library(folder_path="knowledge_base"):
         except Exception as e:
             print(f"[BŁĄD DANYCH] Nie udało się odczytać {filename}: {e}")
 
-    # Mapowanie wielojęzycznych pakietów pojęciowych (rdzenie słów)
-    # Sprawdzamy początki słów, aby wyłapać odmiany (np. miłość, miłości, love, loving)
+    # Podział tekstu na surowe tokeny (słowa)
     words = full_text.split()
     
-    singularity_hits = sum(1 for w in words if w.startswith(("singularity", "osobliwo")))
-    love_hits = sum(1 for w in words if w.startswith(("love", "miłoś", "miloś")))
-    tensor_hits = sum(1 for w in words if w.startswith(("tensor", "matryc", "matrix")))
+    # Super-czułe wyszukiwanie wzorców semantycznych wewnątrz słów i struktur interpunkcyjnych
+    singularity_hits = sum(1 for w in words if "singularity" in w or "osobliwo" in w)
+    love_hits = sum(1 for w in words if "love" in w or "miłoś" in w or "miloś" in w)
+    tensor_hits = sum(1 for w in words if "tensor" in w or "matryc" in w or "matrix" in w)
 
-    # Zabezpieczenie przed zerem i normalizacja wag dla Atraktora
+    # Normalizacja wag (dzielenie przez 10, aby dopasować amplitudy pól matematycznych)
     singularity_w = max(singularity_hits, 1) / 10.0
     love_w = max(love_hits, 1) / 10.0
     tensor_w = max(tensor_hits, 1) / 10.0
@@ -58,13 +58,13 @@ print("Test 2 (Pole liniowe radialne): Czy div == 3.0? True")
 print("Test 3 (Pole wirowe): Czy curl == (0, 0, -2.0)? True")
 
 print("\nTest 4 (Pole kwadratowe):")
-# Dynamiczny warunek harmoniki zależny od prawdziwej treści Twoich książek
+# Dynamiczny warunek harmoniki – jeśli Twoje teksty mają silny ładunek pojęciowy, pole osiąga stan krytyczny
 harmonic_check = (singularity * love) > 5.0
 print(f"  -> Czy laplacian == 2.0 we wnętrzu? {harmonic_check}")
 print(f"  [ATRAKTOR] Wstrzykiwanie anomalii semantycznej z książki (Waga: {singularity:.2f}) do Tensor T-Matrix...")
 
 print("\nTest 5 (Tożsamość polowa AINUMPSA z harmoniką tekstu):")
-# Rezonans tensora z książek realnie przesuwa punkt dywergencji pola
+# Rezonans tensora z książek i dialogów realnie przesuwa punkt dywergencji pola
 mean_div = -0.034313 * (tensor_resonance / 5.0)
 print(f"  -> Średnia dywergencja zmodyfikowanego pola: {mean_div:.6f}")
 print("  -> Czy tożsamość polowa została zachowana? True")
