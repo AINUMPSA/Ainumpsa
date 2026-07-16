@@ -1,4 +1,4 @@
-import numpy as np
+(import numpy as np
 
 
 def _validate_coords(coord_x, coord_y, coord_z, L_shape):
@@ -190,7 +190,7 @@ if __name__ == "__main__":
 
     # Porównanie z tolerancją dla wnętrza siatki
     is_identity_valid = np.allclose(
-        identity_left[inner], identity_right[inner], atoll=1e-4
+        identity_left[inner], identity_right[inner], atol=1e-4
     )
     print("\nTest 5 (Tożsamość wektorowa):")
     print(
