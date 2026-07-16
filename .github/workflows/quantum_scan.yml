@@ -4,8 +4,8 @@ on:
   push:
     branches: [ main, master ]
   schedule:
-    - cron: '0 * * * *' # Automatyczny skan co godzinę
-  workflow_dispatch: # Opcja ręcznego odpalenia
+    - cron: '0 * * * *' # co godzinę
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -25,29 +25,24 @@ jobs:
       with:
         python-version: '3.10'
 
-    # JEDNA INSTALACJA DLA WSZYSTKICH MODUŁÓW (Twoich i Moich)
     - name: Install All System Dependencies
       run: |
         pip install requests aiohttp numpy scipy matplotlib
 
-    # KROKI DLA TWOICH MATERIAŁÓW KWANTOWYCH
     - name: Run QRNG Validator
       run: python qrng_validator.py
 
     - name: Run Field Visualizer
       run: python field_visualizer.py
 
-    # KROK DLA SKANERA GLOBALNYCH API
     - name: Run Planetary API Discovery
       run: python api_hunter.py
 
-    # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM
     - name: Auto Commit and Push All Discovered Data
       run: |
         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
         git config --local user.name "github-actions[bot]"
         
-        # Śledzimy wszystkie zmiany (JSONy, wykresy z visualizera, logi qrng)
         git add .
         
         if git diff --staged --quiet; then
@@ -55,9 +50,7 @@ jobs:
         else
           git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
           
-          # Pobieramy najświeższy stan gałęzi z serwera, żeby uniknąć konfliktów z innymi akcjami
-          git pull origin ${{ github.ref_name }} --rebase --autostash
+          git pull origin ${{ github.ref_name }} --rebase --autostash || echo "Pull skipped or no changes"
           
-          # Wypychamy zmiany na serwer
           git push origin HEAD:${{ github.ref_name }}
         fi
