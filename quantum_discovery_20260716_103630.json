@@ -1,0 +1,49 @@
+{
+  "timestamp": "2026-07-16T10:36:30.534137",
+  "seismic_events": [
+    {
+      "location": "42 km NNW of Te Anau, New Zealand",
+      "magnitude": 5.9,
+      "current_weather": {
+        "time": "2026-07-16T10:30",
+        "interval": 900,
+        "temperature_2m": 1.4,
+        "relative_humidity_2m": 100
+      }
+    },
+    {
+      "location": "141 km ENE of Hicks Bay, New Zealand",
+      "magnitude": 5,
+      "current_weather": {
+        "time": "2026-07-16T10:30",
+        "interval": 900,
+        "temperature_2m": 16.1,
+        "relative_humidity_2m": 77
+      }
+    }
+  ],
+  "eu_datasets": [],
+  "cern_datasets": [],
+  "nasa_asteroids": [
+    {
+      "name": "(2009 DB1)",
+      "potentially_hazardous": false,
+      "close_approach_distance_km": "69118723.009667573",
+      "velocity_km_h": "95584.8664596629"
+    },
+    {
+      "name": "(2009 HA21)",
+      "potentially_hazardous": true,
+      "close_approach_distance_km": "53400709.512865816",
+      "velocity_km_h": "122817.1854531895"
+    },
+    {
+      "name": "(2017 FX101)",
+      "potentially_hazardous": false,
+      "close_approach_distance_km": "59195512.663789745",
+      "velocity_km_h": "50789.4315106151"
+    }
+  ],
+  "un_data": {},
+  "air_quality": {}
+}
