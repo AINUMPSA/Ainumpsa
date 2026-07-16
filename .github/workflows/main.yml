@@ -16,16 +16,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # DODANY SYSTEM INSTALACJI BIBLIOTEK
+      # Konfiguracja Pythona z włączonym buforowaniem paczek
       - name: Setup Python and Dependencies
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
+          cache: 'pip'
+
+      # Poprawna i bezpieczna instalacja bibliotek wewnątrz środowiska
       - name: Install System Dependencies
         run: |
-          pip install requests aiohttp numpy scipy matplotlib
+          python -m pip install --upgrade pip
+          python -m pip install requests aiohttp numpy scipy matplotlib
 
-      # URUCHOMIENIE SILNIKA MATEMATYCZNEGO
+      # Uruchomienie skryptu i zapisanie zmian w repozytorium
       - name: Run Scripts
         run: |
           python qrng_validator.py
