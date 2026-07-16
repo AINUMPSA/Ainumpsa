@@ -1,0 +1,69 @@
+{
+  "timestamp": "2026-07-16T10:48:15.055691",
+  "seismic_events": [
+    {
+      "event_id": "us7000t0xb",
+      "location": "42 km NNW of Te Anau, New Zealand",
+      "magnitude": 5.9,
+      "time": "2026-07-16T09:14:54.293000",
+      "current_weather": {
+        "time": "2026-07-16T10:45",
+        "interval": 900,
+        "temperature_2m": 1.5,
+        "relative_humidity_2m": 100,
+        "temperature_unit": "°C",
+        "humidity_unit": "%"
+      }
+    },
+    {
+      "event_id": "us7000t0x8",
+      "location": "141 km ENE of Hicks Bay, New Zealand",
+      "magnitude": 5,
+      "time": "2026-07-16T08:57:58.825000",
+      "current_weather": {
+        "time": "2026-07-16T10:45",
+        "interval": 900,
+        "temperature_2m": 16.0,
+        "relative_humidity_2m": 74,
+        "temperature_unit": "°C",
+        "humidity_unit": "%"
+      }
+    }
+  ],
+  "eu_datasets": [
+    {
+      "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://european-union.europa.eu/select-language?destination=/node/1'"
+    }
+  ],
+  "cern_datasets": [
+    {
+      "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://home.cern'"
+    }
+  ],
+  "nasa_asteroids": [
+    {
+      "name": "(2009 DB1)",
+      "potentially_hazardous": false,
+      "close_approach_distance_km": "69118723.009667573",
+      "velocity_km_h": "95584.8664596629"
+    },
+    {
+      "name": "(2009 HA21)",
+      "potentially_hazardous": true,
+      "close_approach_distance_km": "53400709.512865816",
+      "velocity_km_h": "122817.1854531895"
+    },
+    {
+      "name": "(2017 FX101)",
+      "potentially_hazardous": false,
+      "close_approach_distance_km": "59195512.663789745",
+      "velocity_km_h": "50789.4315106151"
+    }
+  ],
+  "un_data": {
+    "error": "200, message='Attempt to decode JSON with unexpected mimetype: text/html; charset=utf-8', url='https://www.worldbank.org/ext/en/home?format=json&per_page=5'"
+  },
+  "air_quality": {
+    "error": "HTTP 404"
+  }
+}
