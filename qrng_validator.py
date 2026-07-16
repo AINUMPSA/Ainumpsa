@@ -1,3 +1,9 @@
+import asyncio
+import glob
+import json
+import math
+import os
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -92,7 +98,7 @@ def compute_vector_laplacian(L, coord_x, coord_y, coord_z):
 
 
 def compute_gradient(f, coord_x, coord_y, coord_z):
-    """Pomocnicza funkcja obliczająca gradient pola skalarnego (potrzebna do tożsamości)."""
+    """Pomocnicza funkcja obliczająca gradient pola skalarnego."""
     dx, dy, dz = _validate_coords(coord_x, coord_y, coord_z, f.shape)
     grad_x = np.gradient(f, dx, axis=0)
     grad_y = np.gradient(f, dy, axis=1)
@@ -101,16 +107,32 @@ def compute_gradient(f, coord_x, coord_y, coord_z):
 
 
 # ===========================================================================
-# KOMPLETNY ZESTAW TESTÓW WALIDACYJNYCH (SANITY CHECKS)
+# KOMPLETNY ZESTAW TESTÓW Z INTEGRACJĄ DANYCH PLANETARNYCH AINUMPSA
 # ===========================================================================
 
 if __name__ == "__main__":
-    print("=== Uruchamianie testów walidacyjnych modułu vector_calculus ===\n")
+    print(
+        "=== Uruchamianie testów i wtrysku danych do modułu vector_calculus ===\n"
+    )
+
+    # 0. Dynamiczne ładowanie danych ze skanera planetarnego
+    discovery_files = glob.glob("quantum_discovery_*.json")
+    planet_data = {}
+    if discovery_files:
+        latest_file = max(discovery_files, key=os.path.getmtime)
+        print(f"[ZINTEGROWANO] Ładowanie anomalii z pliku: {latest_file}")
+        try:
+            with open(latest_file, "r", encoding="utf-8") as f:
+                planet_data = json.load(f)
+        except Exception as e:
+            print(f"Błąd ładowania pliku JSON: {e}")
+    else:
+        print("[INFO] Brak plików danych ze skanera. Tryb czystej symulacji.")
 
     # Definiowanie niesymetrycznej siatki dla dokładniejszego testu osi
     nx, ny, nz = 30, 35, 40
 
-    # Definiowanie wektorów współrzędnych dla siatki nierównomiernej (zagęszczenie)
+    # Definiowanie wektorów współrzędnych dla siatki nierównomiernej
     x = np.sort(np.sin(np.linspace(-np.pi / 2, np.pi / 2, nx)) * 5)
     y = np.linspace(-5, 5, ny)
     z = np.linspace(-5, 5, nz)
@@ -118,11 +140,9 @@ if __name__ == "__main__":
     X, Y, Z = np.meshgrid(x, y, z, indexing="ij")
 
     # --- Test 1: Pole stałe L = (1, 2, 3) ---
-    # Oczekiwane: div=0, curl=(0,0,0), laplacian=(0,0,0)
     L_const = np.stack(
         [np.ones_like(X), 2 * np.ones_like(Y), 3 * np.ones_like(Z)], axis=-1
     )
-
     div_const = compute_divergence(L_const, x, y, z)
     curl_const = compute_curl(L_const, x, y, z)
     lap_const = compute_vector_laplacian(L_const, x, y, z)
@@ -133,9 +153,7 @@ if __name__ == "__main__":
     print(f"  -> Czy laplacian == 0? {np.allclose(lap_const, 0.0)}\n")
 
     # --- Test 2: Pole liniowe radialne L = (x, y, z) ---
-    # Oczekiwane: div=3.0, curl=(0,0,0), laplacian=(0,0,0)
     L_linear = np.stack([X, Y, Z], axis=-1)
-
     div_linear = compute_divergence(L_linear, x, y, z)
     curl_linear = compute_curl(L_linear, x, y, z)
     lap_linear = compute_vector_laplacian(L_linear, x, y, z)
@@ -146,9 +164,7 @@ if __name__ == "__main__":
     print(f"  -> Czy laplacian == 0? {np.allclose(lap_linear, 0.0)}\n")
 
     # --- Test 3: Pole rotacyjne/wirowe L = (y, -x, 0) ---
-    # Oczekiwane: div=0, curl=(0, 0, -2.0)
     L_vortex = np.stack([Y, -X, np.zeros_like(Z)], axis=-1)
-
     div_vortex = compute_divergence(L_vortex, x, y, z)
     curl_vortex = compute_curl(L_vortex, x, y, z)
 
@@ -157,17 +173,16 @@ if __name__ == "__main__":
 
     print("Test 3 (Pole wirowe):")
     print(f"  -> Czy div == 0? {np.allclose(div_vortex, 0.0)}")
-    print(f"  -> Czy curl == (0, 0, -2.0)? {np.allclose(curl_vortex, expected_curl)}")
+    print(
+        f"  -> Czy curl == (0, 0, -2.0)? {np.allclose(curl_vortex, expected_curl)}"
+    )
 
-    # Obcinamy brzegi do porównania, ponieważ jednostronne różnice skończone na krawędziach
-    # siatek nierównomiernych drugich pochodnych wprowadzają drobne błędy aproksymacji.
+    # Obcinamy brzegi do porównania tożsamości
     inner = (slice(1, -1), slice(1, -1), slice(1, -1))
 
     # --- Test 4: Pole kwadratowe L = (x^2, y^2, z^2) ---
-    # Oczekiwane: laplacian = (2.0, 2.0, 2.0)
     L_quad = np.stack([X**2, Y**2, Z**2], axis=-1)
     lap_quad = compute_vector_laplacian(L_quad, x, y, z)
-
     expected_lap = np.full_like(L_quad, 2.0)
 
     print("\nTest 4 (Pole kwadratowe):")
@@ -175,24 +190,43 @@ if __name__ == "__main__":
         f"  -> Czy laplacian == 2.0 we wnętrzu? {np.allclose(lap_quad[inner], expected_lap[inner])}"
     )
 
-    # --- Test 5: Tożsamość wektorowa curl(curl(L)) = grad(div(L)) - laplacian(L) ---
-    # Używamy gładkiego pola testowego: L = (sin(x), cos(y), sin(z))
-    L_smooth = np.stack([np.sin(X), np.cos(Y), np.sin(Z)], axis=-1)
+    # --- Test 5: Dynamiczne Pole Gładkie z Wtryskiem Anomalii Planetarnych ---
+    # Generujemy bazowe komponenty pola wektorowego
+    Lx = np.sin(X)
+    Ly = np.cos(Y)
+    Lz = np.sin(Z)
 
+    # Wstrzykujemy realne anomalie jako atraktory deformujące siatkę
+    seismic_events = planet_data.get("seismic_events", [])
+    injected_count = 0
+
+    for event in seismic_events:
+        if isinstance(event, dict) and "magnitude" in event:
+            mag = event.get("magnitude", 4.5)
+            print(
+                f"  [ATRAKTOR] Wstrzykiwanie anomalii sejsmicznej (M: {mag}) do Tensor T-Matrix..."
+            )
+            # Deformacja przestrzeni siatki za pomocą rozkładu Gaussa o sile magnitudy
+            Lx += (mag / 10.0) * np.exp(-(X**2 + Y**2 + Z**2) / 4.0)
+            injected_count += 1
+
+    L_smooth = np.stack([Lx, Ly, Lz], axis=-1)
+
+    # Wyliczanie tożsamości wektorowej na zmodyfikowanym polu
     curl_curl = compute_curl(compute_curl(L_smooth, x, y, z), x, y, z)
-    grad_div = compute_gradient(
-        compute_divergence(L_smooth, x, y, z), x, y, z
-    )
+    grad_div = compute_gradient(compute_divergence(L_smooth, x, y, z), x, y, z)
     laplacian_L = compute_vector_laplacian(L_smooth, x, y, z)
 
     identity_left = curl_curl
     identity_right = grad_div - laplacian_L
 
-    # Porównanie z tolerancją dla wnętrza siatki
     is_identity_valid = np.allclose(
         identity_left[inner], identity_right[inner], atol=1e-4
     )
-    print("\nTest 5 (Tożsamość wektorowa):")
+    print(f"\nTest 5 (Tożsamość polowa AINUMPSA z {injected_count} anomaliami):")
     print(
-        f"  -> Czy curl(curl(L)) == grad(div(L)) - laplacian(L)? {is_identity_valid}"
+        f"  -> Średnia dywergencja zmodyfikowanego pola: {np.mean(compute_divergence(L_smooth, x, y, z)):.6f}"
+    )
+    print(
+        f"  -> Czy tożsamość curl(curl(L)) == grad(div(L)) - laplacian(L) została zachowana? {is_identity_valid}"
     )
