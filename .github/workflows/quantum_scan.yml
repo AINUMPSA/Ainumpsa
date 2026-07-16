@@ -41,10 +41,10 @@ jobs:
     - name: Run Planetary API Discovery
       run: python api_hunter.py
 
-    # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM
+    # AUTOMATYCZNY ZAPIS CAŁEGO DOROBKU W REPOZYTORIUM (Z ZABEZPIECZENIEM PRZED PĘTLĄ)
     - name: Auto Commit and Push All Discovered Data
       run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.email "41898282+github-actions[bot]@://github.com"
         git config --local user.name "github-actions[bot]"
         
         # Śledzimy wszystkie zmiany (JSONy, wykresy z visualizera, logi qrng)
@@ -53,6 +53,7 @@ jobs:
         if git diff --staged --quiet; then
           echo "Brak nowych zmian. Pomijam commit."
         else
-          git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update"
+          # Dodanie [skip ci] blokuje ponowne automatyczne odpalenie tego samego workflow
+          git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
           git push origin HEAD:${{ github.ref_name }}
         fi
