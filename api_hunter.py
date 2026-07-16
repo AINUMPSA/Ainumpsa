@@ -5,7 +5,7 @@ from datetime import datetime
 
 class AsyncQuantumDiscoveryBot:
     def __init__(self):
-        # PEŁNE ŚCIEŻKI INTERFEJSÓW API
+        # Poprawne API endpoints
         self.seismic_api_url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
         self.weather_api_url = "https://api.open-meteo.com/v1/forecast"
         self.eu_data_api_url = "https://data.europa.eu/api"
@@ -94,7 +94,7 @@ class AsyncQuantumDiscoveryBot:
                     extracted = []
                     for neo in asteroids_today[:3]:
                         close_data = neo.get("close_approach_data", [{}])
-                        first_approach = close_data if close_data else {}
+                        first_approach = close_data[0] if close_data else {}
                         extracted.append({
                             "name": neo.get("name"),
                             "potentially_hazardous": neo.get("is_potentially_hazardous_asteroid"),
