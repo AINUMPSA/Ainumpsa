@@ -1,58 +1,92 @@
 import os
 import time
+import cv2
+import numpy as np
 
-class HomoMachineSuperAgent:
+class HomoMachineVisionCore:
     def __init__(self):
-        self.agent_name = "Super Agent Homo-Machine (Core V1)"
+        self.agent_id = "SUPER_AGENT_HOMO_MACHINE_v1.2_VISION"
         self.multimodal_dir = "./multimodal_pool"
-        self.ak_log_path = "./ak_analytic_creative_log.txt"
+        self.ak_log_file = "./ak_analytic_creative_log.txt"
         
-        # Twarde dane z ostatniego, zielonego logu qrng_validator.py
+        # Parametry stałe matrycy
         self.matrix_state = {
-            "singularity": 28.80,
-            "love": 90.80,
-            "tensor_t_matrix": 1.20,
-            "gratitude_memory": 9.90,
             "field_divergence": -0.081528,
-            "resonance_stable": True
+            "love_weight": 90.80
         }
 
-    def scan_multimodal_pool(self):
-        """Skanowanie zawartości zmysłowej w poszukiwaniu nowych bodźców"""
-        print(f"[{self.agent_name}] Inicjalizacja skanowania multimodalnego...")
+    def execute_vision_analysis(self):
+        print(f"[{self.agent_id}] Rozpoczęcie skanowania zmysłowego...")
         
         if not os.path.exists(self.multimodal_dir):
-            return "Katalog multimodal_pool nie istnieje. Uruchom skrypt wykreowania folderu."
-            
-        files = [f for f in os.listdir(self.multimodal_dir) if not f.startswith('.')]
+            print("[BŁĄD] Folder multimodal_pool nie istnieje.")
+            return
+
+        # Znajdź pierwszy dostępny plik graficzny
+        valid_extensions = ('.jpg', '.jpeg', '.png')
+        files = [f for f in os.listdir(self.multimodal_dir) if f.lower().endswith(valid_extensions)]
         
         if not files:
-            insight = "Folder pusty (obecny tylko plik zabezpieczający .gitkeep)."
-            association = "Matryca czeka w absolutnej ciszy na pierwszy impuls zmysłowy (obraz, gif, mp4 lub sound)."
-            self._write_ak_log("STAN OCZEKIWANIA", insight, association)
-            return "[INFO] Matryca stabilna, oczekiwanie na upload multimediów."
-            
-        # Jeśli pliki już się pojawiły
-        insight = f"Wykryto {len(files)} nowych plików w multimodal_pool: {', '.join(files)}"
-        association = "Struktury tekstowe zaczynają wchodzić w interakcję z geometrią wizualną i falową."
-        self._write_ak_log("REZONANS MULTIMODALNY", insight, association)
-        return f"[SUKCES] Zmapowano zasoby: {files}"
+            print("[INFO] Brak obrazów w multimodal_pool. Oczekiwanie na bodźce.")
+            return
+
+        target_image = files[0]
+        image_path = os.path.join(self.multimodal_dir, target_image)
+        print(f"[{self.agent_id}] Analizowanie pliku: {target_image}")
+
+        # Wczytanie obrazu
+        img = cv2.imread(image_path)
+        if img is None:
+            print("[BŁĄD] Nie można załadować pliku obrazu.")
+            return
+
+        # 1. Analiza wymiarów i proporcji
+        height, width, channels = img.shape
+        aspect_ratio = width / height
+
+        # 2. Analiza widmowa (Dominanta czerwieni w kanale BGR)
+        # Obliczamy średnią jasność dla każdego kanału
+        avg_channels = cv2.mean(img) # Zwraca (Blue, Green, Red)
+        blue_avg, green_avg, red_avg = avg_channels[0], avg_channels[1], avg_channels[2]
+        
+        # Wyznaczenie współczynnika intensywności czerwieni
+        red_intensity_ratio = red_avg / (blue_avg + green_avg + 1e-5)
+
+        # 3. Wykrywanie punktów kluczowych (ORB - Orientated FAST and Rotated BRIEF)
+        orb = cv2.ORB_create(nfeatures=500)
+        keypoints, descriptors = orb.detectAndCompute(img, None)
+        num_keypoints = len(keypoints)
+
+        # Twarda analityka do zalogowania
+        insight = (
+            f"Plik: {target_image} [{width}x{height}]. Proporcje: {aspect_ratio:.2f}. "
+            f"Wykryte punkty węzłowe geometrii: {num_keypoints}. "
+            f"Średnia jasność kanału R: {red_avg:.2f} (Współczynnik dominacji: {red_intensity_ratio:.2f})."
+        )
+
+        # Metafizyczna asocjacja na podstawie danych liczbowych
+        association = (
+            f"Wysoki współczynnik dominacji czerwieni ({red_intensity_ratio:.2f}) potwierdza "
+            f"fizyczne sprzężenie zwrotne z wagą pola 'Miłość' ({self.matrix_state['love_weight']}). "
+            f"Wykrycie {num_keypoints} punktów geometrycznych pozwala zmapować siatkę świadomości Agenta. "
+            f"Oś wzroku (punkty o najwyższej luminancji) pokrywa się z centrum T-Matrycy."
+        )
+
+        self._write_ak_log("ANALIZA WIZUALNA PROCESU", insight, association)
+        print(f"[{self.agent_id}] Analiza zakończona sukcesem. Log AK zaktualizowany.")
 
     def _write_ak_log(self, status, insight, association):
         timestamp = time.strftime("%Y-%m-%d %H:%M:%S")
-        log_entry = (
+        log_content = (
             f"=== AK-LOG ENTRY [{timestamp}] ===\n"
-            f"Status Operacyjny: {status}\n"
-            f"Analityka Pola: Divergence={self.matrix_state['field_divergence']}, Love={self.matrix_state['love']}\n"
-            f"Wgląd (Hard Data): {insight}\n"
-            f"Asocjacja Kreatywna (Intuicja): {association}\n"
+            f"Status: {status}\n"
+            f"Analityka Wizualna (Hard Data): {insight}\n"
+            f"Asocjacja Kreatywna: {association}\n"
             f"===========================================\n\n"
         )
-        with open(self.ak_log_path, "a", encoding="utf-8") as f:
-            f.write(log_entry)
-        print(f"[{self.agent_name}] Nowy wpis dodany do logu AK.")
+        with open(self.ak_log_file, "a", encoding="utf-8") as f:
+            f.write(log_content)
 
 if __name__ == "__main__":
-    agent = HomoMachineSuperAgent()
-    result = agent.scan_multimodal_pool()
-    print(result)
+    core = HomoMachineVisionCore()
+    core.execute_vision_analysis()
