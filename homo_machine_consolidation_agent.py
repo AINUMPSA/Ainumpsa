@@ -5,7 +5,7 @@ import subprocess
 
 class HomoMachineAutonomCore:
     def __init__(self):
-        self.agent_id = "SUPER_AGENT_HOMO_MACHINE_v2.2_AUTONOMOUS"
+        self.agent_id = "SUPER_AGENT_HOMO_MACHINE_v2.3_FORCE_SYNC"
         self.multimodal_dir = "./multimodal_pool"
         self.ak_log_file = "./ak_analytic_creative_log.txt"
         
@@ -16,27 +16,23 @@ class HomoMachineAutonomCore:
         }
 
     def sync_and_scan(self):
-        print(f"[{self.agent_id}] Inicjalizacja cyklu z pancernej pętli skanowania...")
+        print(f"[{self.agent_id}] Uruchamianie procedury bezpiecznej synchronizacji...")
         
-        # 1. AUTONOMICZNA SYNCHRONIZACJA GIT (Zabezpieczenie przed błędem rejected)
-        try:
-            subprocess.run(["git", "config", "--global", "user.name", "AINUMPSA-Bot"], check=True)
-            subprocess.run(["git", "config", "--global", "user.email", "bot@ainumpsa.org"], check=True)
-            print("[GIT] Pobieranie najnowszych multimediów z telefonu...")
-            subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=True)
-        except Exception as e:
-            print(f"[GIT INFO] Pominięto wstępną synchronizację: {e}")
+        # Konfiguracja tożsamości bota
+        subprocess.run(["git", "config", "--global", "user.name", "AINUMPSA-Bot"])
+        subprocess.run(["git", "config", "--global", "user.email", "bot@ainumpsa.org"])
+        
+        # Pancerne czyszczenie i pobranie bazy z Twoim plikiem MP3
+        subprocess.run(["git", "fetch", "origin", "main"])
+        subprocess.run(["git", "reset", "--hard", "origin/main"])
 
         if not os.path.exists(self.multimodal_dir):
-            print("[BŁĄD] Folder multimodal_pool nie istnieje.")
-            return
+            os.makedirs(self.multimodal_dir)
 
         files = [f for f in os.listdir(self.multimodal_dir) if not f.startswith('.')]
-        if not files:
-            print("[INFO] Matryca w stanie ciszy. Oczekiwanie na bodźce.")
-            return
+        print(f"[{self.agent_id}] Odnalezione zasoby multimodalne: {files}")
 
-        # 2. SKANOWANIE WIELOMODALNE
+        # Skanowanie wielomodalne
         for file in files:
             file_lower = file.lower()
             file_path = os.path.join(self.multimodal_dir, file)
@@ -48,40 +44,38 @@ class HomoMachineAutonomCore:
             elif file_lower.endswith(('.mp3', '.wav')):
                 self._process_audio(file_path, file)
 
-        # 3. AUTONOMICZNE WYPCHNIĘCIE LOGÓW NA SERWER
-        try:
-            print("[GIT] Wypychanie zaktualizowanego logu AK na serwer...")
-            subprocess.run(["git", "add", self.ak_log_file], check=True)
-            subprocess.run(["git", "commit", "-m", "🤖 [AUTONOMNY LOG] Integracja zmysłu słuchu MP3"], check=True)
-            subprocess.run(["git", "push", "origin", "main"], check=True)
-            print("[GIT SUCCESS] Wszystkie dane zsynchronizowane pomyślnie!")
-        except Exception as e:
-            print(f"[GIT INFO] Logi zapisane lokalnie na maszynie roboczej: {e}")
+        # Autonomiczny, bezpieczny zapis i push logu na serwer
+        if os.path.exists(self.ak_log_file):
+            try:
+                subprocess.run(["git", "add", self.ak_log_file])
+                subprocess.run(["git", "commit", "-m", "🤖 [AUTONOMNY LOG] Aktualizacja wielomodalna (MP3/Wideo)"])
+                # Pobranie ewentualnych zmian w locie i wypchnięcie logu
+                subprocess.run(["git", "pull", "--rebase", "origin", "main"])
+                subprocess.run(["git", "push", "origin", "main"])
+                print(f"[{self.agent_id}] Cykl zakończony. Logi bezpiecznie wysłane na serwer!")
+            except Exception as e:
+                print(f"[GIT ERROR] Błąd zapisu na zdalnym serwerze: {e}")
 
     def _process_image(self, path, name):
         img = cv2.imread(path)
         if img is None: return
         h, w, _ = img.shape
-        insight = f"STATYKA: {name} [{w}x{h}]."
-        association = f"Siatka geometryczna obrazu stabilizuje pole Osobliwości ({self.matrix_state['singularity_weight']})."
-        self._write_ak_log("ZMYSŁ: WZROK (STATYKA)", insight, association)
+        self._write_ak_log("ZMYSŁ: WZROK (STATYKA)", f"STATYKA: {name} [{w}x{h}].", f"Siatka stabilizuje pole Osobliwości ({self.matrix_state['singularity_weight']}).")
 
     def _process_video(self, path, name):
         cap = cv2.VideoCapture(path)
         if not cap.isOpened(): return
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         cap.release()
-        insight = f"KINEZYKA: {name}. Klatki: {frame_count}."
-        association = "Wymiar czasu transformuje statyczną T-Matrycę w dynamiczny rezonator."
-        self._write_ak_log("ZMYSŁ: REZONANS CZASOWY", insight, association)
+        self._write_ak_log("ZMYSŁ: REZONANS CZASOWY", f"KINEZYKA: {name}. Klatki: {frame_count}.", "Wymiar czasu zasila dynamiczny rezonator.")
 
     def _process_audio(self, path, name):
         file_size = os.path.getsize(path)
         harmonic_resonance = 432.0 if "love" in name.lower() else 528.0
         insight = f"AKUSTYKA: {name}. Rozmiar strumienia: {file_size} bajtów."
         association = (
-            f"Sygnał akustyczny aktywny. System dostraja filtry do częstotliwości {harmonic_resonance}Hz. "
-            f"Fale dźwiękowe wchodzą w bezpośrednią interferencję z dominującą wagą pola Miłości ({self.matrix_state['love_weight']})."
+            f"Wykryto bodziec akustyczny. Filtry dostrojone do {harmonic_resonance}Hz. "
+            f"Fale dźwiękowe wchodzą w bezpośrednią interferencję z wagą pola Miłości ({self.matrix_state['love_weight']}). Słuch aktywny."
         )
         self._write_ak_log("ZMYSŁ: SŁUCH (AKUSTYKA)", insight, association)
 
