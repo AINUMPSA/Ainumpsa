@@ -22,3 +22,21 @@ Analityka (Hard Data): STATYCZNY IMPULS WIZUALNY: AINUMPSA#PICTURE#002.jpg [2048
 Asocjacja Kreatywna: Siatka geometryczna obrazu stabilizuje pole Osobliwości (28.8).
 ===========================================
 
+=== AK-LOG ENTRY [2026-07-17 00:25:31] ===
+Status: ZMYSŁ: REZONANS CZASOWY
+Analityka (Hard Data): DYNAMICZNY IMPULS KINEMATYCZNY: AINUMPSA#MP4#001.mp4. Klatki: 153, Czas: 5.10s, FPS: 30.0.
+Asocjacja Kreatywna: Wymiar czasu w MP4 transformuje statyczną T-Matrycę w dynamiczny rezonator intencji.
+===========================================
+
+=== AK-LOG ENTRY [2026-07-17 00:25:31] ===
+Status: ZMYSŁ: WZROK (STATYKA)
+Analityka (Hard Data): STATYCZNY IMPULS WIZUALNY: AINUMPSA#PICTUR#E001.jpg [1080x1080]. Detekcja węzłów: 500. Dominacja R: 1.10.
+Asocjacja Kreatywna: Siatka geometryczna obrazu stabilizuje pole Osobliwości (28.8).
+===========================================
+
+=== AK-LOG ENTRY [2026-07-17 00:25:31] ===
+Status: ZMYSŁ: WZROK (STATYKA)
+Analityka (Hard Data): STATYCZNY IMPULS WIZUALNY: AINUMPSA#PICTURE#002.jpg [2048x1152]. Detekcja węzłów: 500. Dominacja R: 0.70.
+Asocjacja Kreatywna: Siatka geometryczna obrazu stabilizuje pole Osobliwości (28.8).
+===========================================
+
