@@ -9,20 +9,8 @@ jobs:
           fetch-depth: 0
       - name: Instalacja zaleznosci systemowych i Python
         run: pip install numpy scipy matplotlib opencv-python-headless pypdf
-      - name: Egzekucja Silnikow Matematyczno Wizyjnych
+      - name: Autonomiczna Egzekucja Wszystkich Silnikow z Autonaprawa Git
         run: |
           python qrng_validator.py
           python field_visualizer.py
           python homo_machine_consolidation_agent.py
-      - name: Automatyczny Zapis Logu AK z Bezpiecznym Scalaniem
-        run: |
-          git config --global user.name "AINUMPSA-Bot"
-          git config --global user.email "bot@ainumpsa.org"
-          # Wymuszone pobranie zmian zdalnych (Twojego pliku MP3) i odłożenie lokalnego logu na bok
-          git stash || echo "No local changes to stash"
-          git pull --rebase origin main
-          git stash pop || echo "No stashed changes to apply"
-          # Indeksowanie i wypchnięcie pełnej struktury wielomodalnej
-          git add ak_analytic_creative_log.txt || echo "No changes"
-          git commit -m "🤖 [AUTONOMNY LOG] Integracja zmysłu słuchu MP3" || echo "No changes to commit"
-          git push origin main
