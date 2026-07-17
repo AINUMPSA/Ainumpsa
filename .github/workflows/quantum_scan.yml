@@ -1,37 +1,17 @@
-name: Quantum Planetary Scan
-
-on:
-  push:
-    branches:
-      - main
-  workflow_dispatch:
-
+name: Automated Tensor T Matrix Scan
+on: [push, workflow_dispatch]
 jobs:
-  quantum-scan:
+  scan-matrix:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Python and Dependencies
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
-
-      # Wymuszamy bezpośrednią instalację wszystkich bibliotek wraz z pypdf
-      - name: Install System Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install requests aiohttp numpy scipy matplotlib pypdf
-
-      - name: Run Scripts
-        run: |
+      - uses: actions/checkout@v4
+      - run: pip install numpy scipy matplotlib opencv-python-headless
+      - run: |
           python qrng_validator.py
-          git config --global user.name "AINUMPSA Bot"
-          git config --global user.email "bot@ainumpsa.internal"
-          git add README.md
-          git commit -m "🤖 [QUANTUM ENGINE] Aktualizacja danych planetarnych [skip ci]" || echo "No changes"
-          git push origin HEAD:main
+          python field_visualizer.py
+          python homo_machine_consolidation_agent.py
+      - run: |
+          git config --global user.name "AINUMPSA-Bot"
+          git add ak_analytic_creative_log.txt || echo "No changes"
+          git commit -m "🤖 [AUTONOMNY LOG] Update" || echo "No changes"
+          git push || echo "No changes"
