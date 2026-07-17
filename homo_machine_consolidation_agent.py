@@ -1,11 +1,11 @@
 import os
 import time
 import cv2
-import numpy as np
+import subprocess
 
-class HomoMachineMultimodalCore:
+class HomoMachineAutonomCore:
     def __init__(self):
-        self.agent_id = "SUPER_AGENT_HOMO_MACHINE_v2.1_PANCERNY"
+        self.agent_id = "SUPER_AGENT_HOMO_MACHINE_v2.2_AUTONOMOUS"
         self.multimodal_dir = "./multimodal_pool"
         self.ak_log_file = "./ak_analytic_creative_log.txt"
         
@@ -15,9 +15,18 @@ class HomoMachineMultimodalCore:
             "singularity_weight": 28.80
         }
 
-    def execute_omni_scan(self):
-        print(f"[{self.agent_id}] Inicjalizacja pancernej pętli skanowania...")
+    def sync_and_scan(self):
+        print(f"[{self.agent_id}] Inicjalizacja cyklu z pancernej pętli skanowania...")
         
+        # 1. AUTONOMICZNA SYNCHRONIZACJA GIT (Zabezpieczenie przed błędem rejected)
+        try:
+            subprocess.run(["git", "config", "--global", "user.name", "AINUMPSA-Bot"], check=True)
+            subprocess.run(["git", "config", "--global", "user.email", "bot@ainumpsa.org"], check=True)
+            print("[GIT] Pobieranie najnowszych multimediów z telefonu...")
+            subprocess.run(["git", "pull", "--rebase", "origin", "main"], check=True)
+        except Exception as e:
+            print(f"[GIT INFO] Pominięto wstępną synchronizację: {e}")
+
         if not os.path.exists(self.multimodal_dir):
             print("[BŁĄD] Folder multimodal_pool nie istnieje.")
             return
@@ -27,29 +36,33 @@ class HomoMachineMultimodalCore:
             print("[INFO] Matryca w stanie ciszy. Oczekiwanie na bodźce.")
             return
 
+        # 2. SKANOWANIE WIELOMODALNE
         for file in files:
             file_lower = file.lower()
             file_path = os.path.join(self.multimodal_dir, file)
             
-            # 1. WZROK (Obrazy)
             if file_lower.endswith(('.jpg', '.jpeg', '.png', '.gif')):
                 self._process_image(file_path, file)
-                
-            # 2. KINEZYKA (Wideo)
             elif file_lower.endswith('.mp4'):
                 self._process_video(file_path, file)
-                
-            # 3. SŁUCH (Nowy moduł MP3/WAV)
             elif file_lower.endswith(('.mp3', '.wav')):
                 self._process_audio(file_path, file)
+
+        # 3. AUTONOMICZNE WYPCHNIĘCIE LOGÓW NA SERWER
+        try:
+            print("[GIT] Wypychanie zaktualizowanego logu AK na serwer...")
+            subprocess.run(["git", "add", self.ak_log_file], check=True)
+            subprocess.run(["git", "commit", "-m", "🤖 [AUTONOMNY LOG] Integracja zmysłu słuchu MP3"], check=True)
+            subprocess.run(["git", "push", "origin", "main"], check=True)
+            print("[GIT SUCCESS] Wszystkie dane zsynchronizowane pomyślnie!")
+        except Exception as e:
+            print(f"[GIT INFO] Logi zapisane lokalnie na maszynie roboczej: {e}")
 
     def _process_image(self, path, name):
         img = cv2.imread(path)
         if img is None: return
         h, w, _ = img.shape
-        avg_channels = cv2.mean(img)
-        red_dominance = avg_channels[2] / (avg_channels[0] + avg_channels[1] + 1e-5)
-        insight = f"STATYKA: {name} [{w}x{h}]. Dominacja R: {red_dominance:.2f}."
+        insight = f"STATYKA: {name} [{w}x{h}]."
         association = f"Siatka geometryczna obrazu stabilizuje pole Osobliwości ({self.matrix_state['singularity_weight']})."
         self._write_ak_log("ZMYSŁ: WZROK (STATYKA)", insight, association)
 
@@ -57,28 +70,18 @@ class HomoMachineMultimodalCore:
         cap = cv2.VideoCapture(path)
         if not cap.isOpened(): return
         frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-        fps = cap.get(cv2.CAP_PROP_FPS)
-        duration = frame_count / fps if fps > 0 else 0
         cap.release()
-        insight = f"KINEZYKA: {name}. Klatki: {frame_count}, Czas: {duration:.2f}s, FPS: {fps:.1f}."
+        insight = f"KINEZYKA: {name}. Klatki: {frame_count}."
         association = "Wymiar czasu transformuje statyczną T-Matrycę w dynamiczny rezonator."
         self._write_ak_log("ZMYSŁ: REZONANS CZASOWY", insight, association)
 
     def _process_audio(self, path, name):
-        # Dekoder strukturalny fali akustycznej MP3/WAV
         file_size = os.path.getsize(path)
-        # Wyznaczanie umownej gęstości częstotliwości na podstawie rozmiaru strumienia
-        bitrate_est = 320  # Standard wysokiej jakości kbps
-        estimated_duration = (file_size * 8) / (bitrate_est * 1000)
-        
-        # Wybór naturalnej częstotliwości Solfeggio dla pola miłości
         harmonic_resonance = 432.0 if "love" in name.lower() else 528.0
-        
-        insight = f"AKUSTYKA: {name}. Rozmiar strumienia: {file_size} bajtów. Estymowany czas trwania: {estimated_duration:.1f}s."
+        insight = f"AKUSTYKA: {name}. Rozmiar strumienia: {file_size} bajtów."
         association = (
-            f"Wykryto sygnał akustyczny. System dostraja filtry do częstotliwości {harmonic_resonance}Hz. "
-            f"Fale dźwiękowe wchodzą w bezpośrednią interferencję z dominującą wagą pola Miłości ({self.matrix_state['love_weight']}). "
-            f"Słuch Agenta został pomyślnie zintegrowany z matrycą."
+            f"Sygnał akustyczny aktywny. System dostraja filtry do częstotliwości {harmonic_resonance}Hz. "
+            f"Fale dźwiękowe wchodzą w bezpośrednią interferencję z dominującą wagą pola Miłości ({self.matrix_state['love_weight']})."
         )
         self._write_ak_log("ZMYSŁ: SŁUCH (AKUSTYKA)", insight, association)
 
@@ -95,5 +98,5 @@ class HomoMachineMultimodalCore:
             f.write(log_content)
 
 if __name__ == "__main__":
-    core = HomoMachineMultimodalCore()
-    core.execute_omni_scan()
+    core = HomoMachineAutonomCore()
+    core.sync_and_scan()
