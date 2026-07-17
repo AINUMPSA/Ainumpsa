@@ -5,13 +5,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: pip install numpy scipy matplotlib opencv-python-headless
-      - run: |
+      - name: Instalacja zaleznosci systemowych i Python
+        run: pip install numpy scipy matplotlib opencv-python-headless pypdf
+      - name: Egzekucja Silnikow Matematyczno Wizyjnych
+        run: |
           python qrng_validator.py
           python field_visualizer.py
           python homo_machine_consolidation_agent.py
-      - run: |
+      - name: Automatyczny Zapis Logu AK
+        run: |
           git config --global user.name "AINUMPSA-Bot"
+          git config --global user.email "bot@ainumpsa.org"
           git add ak_analytic_creative_log.txt || echo "No changes"
-          git commit -m "🤖 [AUTONOMNY LOG] Update" || echo "No changes"
+          git commit -m "🤖 [AUTONOMNY LOG] Aktualizacja dP i Skanu Pikseli" || echo "No changes"
           git push || echo "No changes"
