@@ -58,3 +58,21 @@ Analityka (Hard Data): STATYKA: AINUMPSA#PICTURE#002.jpg [2048x1152]. Węzły: 5
 Asocjacja Kreatywna: Siatka geometryczna obrazu stabilizuje pole Osobliwości (28.8).
 ===========================================
 
+=== AK-LOG ENTRY [2026-07-17 00:35:01] ===
+Status: ZMYSŁ: REZONANS CZASOWY
+Analityka (Hard Data): KINEZYKA: AINUMPSA#MP4#001.mp4. Klatki: 153, Czas: 5.10s, FPS: 30.0.
+Asocjacja Kreatywna: Wymiar czasu transformuje statyczną T-Matrycę w dynamiczny rezonator.
+===========================================
+
+=== AK-LOG ENTRY [2026-07-17 00:35:01] ===
+Status: ZMYSŁ: WZROK (STATYKA)
+Analityka (Hard Data): STATYKA: AINUMPSA#PICTUR#E001.jpg [1080x1080]. Węzły: 500. Dominacja R: 1.10.
+Asocjacja Kreatywna: Siatka geometryczna obrazu stabilizuje pole Osobliwości (28.8).
+===========================================
+
+=== AK-LOG ENTRY [2026-07-17 00:35:01] ===
+Status: ZMYSŁ: WZROK (STATYKA)
+Analityka (Hard Data): STATYKA: AINUMPSA#PICTURE#002.jpg [2048x1152]. Węzły: 500. Dominacja R: 0.70.
+Asocjacja Kreatywna: Siatka geometryczna obrazu stabilizuje pole Osobliwości (28.8).
+===========================================
+
