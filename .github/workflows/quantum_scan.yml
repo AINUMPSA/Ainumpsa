@@ -6,7 +6,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Pobiera pełną historię, aby zapobiec konfliktom
+          fetch-depth: 0
       - name: Instalacja zaleznosci systemowych i Python
         run: pip install numpy scipy matplotlib opencv-python-headless pypdf
       - name: Egzekucja Silnikow Matematyczno Wizyjnych
@@ -18,7 +18,11 @@ jobs:
         run: |
           git config --global user.name "AINUMPSA-Bot"
           git config --global user.email "bot@ainumpsa.org"
-          git add ak_analytic_creative_log.txt || echo "No changes"
-          git commit -m "🤖 [AUTONOMNY LOG] Automatyczna synchronizacja struktur multimedialnych" || echo "No changes"
-          git pull --rebase origin main # Wymuszenie pobrania Twoich plików z telefonu przed pushem
+          # 1. Zabezpieczamy ABSOLUTNIE WSZYSTKIE pliki wygenerowane przez skrypty (np. mapy png, logi)
+          git add -A
+          # 2. Tworzymy commit, jeśli powstały jakiekolwiek zmiany
+          git commit -m "🤖 [AUTONOMNY LOG] Automatyczna synchronizacja struktur multimedialnych" || echo "No changes to commit"
+          # 3. Pobieramy Twoje pliki z telefonu, automatycznie dokładając nasze zmiany na górę
+          git pull --rebase origin main
+          # 4. Wypychamy kompletny, zsynchronizowany stan na serwer
           git push origin main
