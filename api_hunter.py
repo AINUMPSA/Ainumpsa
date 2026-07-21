@@ -5,23 +5,28 @@ from datetime import datetime
 
 class AsyncQuantumDiscoveryBot:
     def __init__(self):
-        self.seismic_api_url = "https://usgs.gov"
-        self.weather_api_url = "https://open-meteo.com"
-        self.eu_data_api_url = "https://europa.eu"
-        self.cern_api_url = "https://cern.ch"
-        self.nasa_api_url = "https://nasa.gov"
-        self.wb_onu_api_url = "https://worldbank.org"
-        self.air_quality_api_url = "https://open-meteo.com"
+        self.seismic_api_url = "https://earthquake.usgs.gov/fdsnws/event/1/query"
+        self.weather_api_url = "https://api.open-meteo.com/v1/forecast"
+        self.eu_data_api_url = "https://data.europa.eu/api"
+        self.cern_api_url = "https://opendata.cern.ch/api"
+        self.nasa_api_url = "https://api.nasa.gov/neo/rest/v1/feed"
+        self.wb_onu_api_url = "https://api.worldbank.org/v2/country"
+        self.air_quality_api_url = "https://api.open-meteo.com/v1/air-quality"
 
     async def fetch_seismic_activity(self, session, min_magnitude=4.5):
         print(f"[{datetime.now()}] -> Start: Skaner Sejsmiczny")
-        params = {"format": "geojson", "starttime": datetime.utcnow().strftime("%Y-%m-%dT00:00:00"), "minmagnitude": min_magnitude}
+        params = {
+            "format": "geojson",
+            "starttime": datetime.utcnow().strftime("%Y-%m-%dT00:00:00"),
+            "minmagnitude": min_magnitude
+        }
         try:
             async with session.get(self.seismic_api_url, params=params, timeout=12) as response:
                 if response.status == 200:
                     data = await response.json()
                     return data.get("features", [])
-        except: pass
+        except Exception as e:
+            print(f"Seismic error: {e}")
         return []
 
     async def fetch_weather_for_event(self, session, lat, lon):
@@ -30,12 +35,9 @@ class AsyncQuantumDiscoveryBot:
             async with session.get(self.weather_api_url, params=params, timeout=8) as response:
                 if response.status == 200:
                     data = await response.json()
-                    current = data.get("current", {})
-                    if current:
-                        current["temperature_unit"] = "°C"
-                        current["humidity_unit"] = "%"
-                    return current
-        except: pass
+                    return data.get("current", {})
+        except Exception as e:
+            print(f"Weather error: {e}")
         return {}
 
     async def fetch_eu_open_data(self, session, query="climate"):
@@ -47,7 +49,8 @@ class AsyncQuantumDiscoveryBot:
                     data = await response.json()
                     results = data.get("result", {}).get("results", [])
                     return [{"title": d.get("title", {}).get("en", "EU Dataset"), "publisher": d.get("publisher", {}).get("name", "EU Portal")} for d in results]
-        except: pass
+        except Exception as e:
+            print(f"EU data error: {e}")
         return []
 
     async def fetch_cern_physics_data(self, session, query="higgs"):
@@ -59,7 +62,8 @@ class AsyncQuantumDiscoveryBot:
                     data = await response.json()
                     hits = data.get("hits", {}).get("hits", [])
                     return [{"title": h.get("metadata", {}).get("title", "CERN Data"), "experiment": h.get("metadata", {}).get("experiment", {}).get("name", "LHC")} for h in hits]
-        except: pass
+        except Exception as e:
+            print(f"CERN error: {e}")
         return []
 
     async def fetch_nasa_asteroids(self, session):
@@ -81,7 +85,8 @@ class AsyncQuantumDiscoveryBot:
                             "velocity_km_h": close_data.get("relative_velocity", {}).get("kilometers_per_hour")
                         })
                     return extracted
-        except: pass
+        except Exception as e:
+            print(f"NASA error: {e}")
         return []
 
     async def fetch_un_world_bank_data(self, session):
@@ -93,7 +98,8 @@ class AsyncQuantumDiscoveryBot:
                     data = await response.json()
                     if isinstance(data, list) and len(data) > 1:
                         return {"indicator_name": "Total Population", "global_value": "Stable", "last_updated_year": "2024"}
-        except: pass
+        except Exception as e:
+            print(f"World Bank error: {e}")
         return {}
 
     async def fetch_global_air_quality(self, session):
@@ -104,7 +110,8 @@ class AsyncQuantumDiscoveryBot:
                 if response.status == 200:
                     data = await response.json()
                     return data.get("current", {})
-        except: pass
+        except Exception as e:
+            print(f"Air quality error: {e}")
         return {}
 
     def update_readme(self, output_data):
@@ -144,55 +151,4 @@ Autonomiczny system korelacji danych planetarnych oraz walidacji pól tensorowyc
             hazard = "⚠️ TAK" if a.get("potentially_hazardous") else "✅ Nie"
             dist = f"{float(a.get('close_approach_distance_km', 0)):,.0f}" if a.get('close_approach_distance_km') else "-"
             vel = f"{float(a.get('velocity_km_h', 0)):,.0f}" if a.get('velocity_km_h') else "-"
-            readme_content += f"| {a.get('name')} | {hazard} | {dist} km | {vel} km/h |\n"
-
-        readme_content += """
-### 📊 Wykres Pola Tensorowego Matrix
-Ostatnio wygenerowana mapa rezonansu geometrycznego:
-![Geometria Pola Tensorowego](matrix_field_map.png)
-
----
-*Wygenerowano automatycznie przez AINUMPSA Engine [skip ci].*
-"""
-        with open("README.md", "w", encoding="utf-8") as f:
-            f.write(readme_content)
-
-    async def execute_pipeline(self):
-        async with aiohttp.ClientSession() as session:
-            tasks = [
-                self.fetch_seismic_activity(session), self.fetch_eu_open_data(session),
-                self.fetch_cern_physics_data(session), self.fetch_nasa_asteroids(session),
-                self.fetch_un_world_bank_data(session), self.fetch_global_air_quality(session)
-            ]
-            seismic_events, eu_datasets, cern_datasets, nasa_asteroids, un_data, air_quality = await asyncio.gather(*tasks)
-
-            seismic_data = []
-            weather_tasks = []
-            active_events = [e for e in seismic_events if isinstance(e, dict) and "properties" in e][:2]
-            
-            for event in active_events:
-                coords = event.get("geometry", {}).get("coordinates", [0, 0])
-                weather_tasks.append(self.fetch_weather_for_event(session, coords[1], coords[0]))
-            
-            weather_results = await asyncio.gather(*weather_tasks)
-
-            for i, event in enumerate(active_events):
-                seismic_data.append({
-                    "event_id": event.get("id"),
-                    "location": event.get("properties", {}).get("place"),
-                    "magnitude": event.get("properties", {}).get("mag"),
-                    "time": datetime.utcfromtimestamp(event.get("properties", {}).get("time")/1000.0).isoformat(),
-                    "current_weather": weather_results[i] if i < len(weather_results) else {}
-                })
-            
-            output_data = {
-                "timestamp": datetime.now().isoformat(), "seismic_events": seismic_data,
-                "eu_datasets": eu_datasets, "cern_datasets": cern_datasets,
-                "nasa_asteroids": nasa_asteroids, "un_data": un_data, "air_quality": air_quality
-            }
-
-            output_filename = f"quantum_discovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
-            with open(output_filename, "w", encoding="utf-8") as f:
-                json.dump(output_data, f, indent=2, ensure_ascii=False)
-            
-            # Wymuszamy aktualizację pliku README.md na podstawie pobranych danych
+            readme_content += f
