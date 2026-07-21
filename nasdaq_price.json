@@ -1,0 +1,9 @@
+{
+  "source": "Alpha Vantage (NASDAQ100)",
+  "symbol": "QQQ",
+  "currency": "USD",
+  "last_updated": "2026-07-21T05:03:34.766111",
+  "date": "N/A",
+  "close_price": 0.0,
+  "status": "no_data"
+}

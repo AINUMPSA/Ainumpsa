@@ -1,0 +1,4 @@
+{
+  "error": "HTTPSConnectionPool(host='sdmx.cloud.unicef.org', port=443): Max retries exceeded with url: /ws/public/sdmxapi/rest/data/UNICEF,MDG_0000000011,1.0/all?format=json (Caused by NameResolutionError(\"HTTPSConnection(host='sdmx.cloud.unicef.org', port=443): Failed to resolve 'sdmx.cloud.unicef.org' ([Errno -5] No address associated with hostname)\"))",
+  "timestamp": "2026-07-21T05:03:35.050340"
+}
