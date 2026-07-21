@@ -2,20 +2,20 @@ name: Automated Tensor T Matrix Scan
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Autonomiczne uruchomienie co godzinę
-  workflow_dispatch:     # Możliwość ręcznego kliknięcia "Run"
+    - cron: '0 * * * *'  # Autonomiczne uruchomienie dokładnie co godzinę
+  workflow_dispatch:     # Możliwość ręcznego kliknięcia przycisku "Run"
 
 jobs:
   scan-matrix:
     runs-on: ubuntu-latest
     permissions:
-      contents: write    # Daje botowi prawo do zapisu plików w repozytorium
+      contents: write    # Daje botowi pełne prawo do zapisu plików w repozytorium
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Pobiera pełną historię, aby zapobiec błędom push
+          fetch-depth: 0  # Pobiera pełną historię, aby zapobiec błędom push [rejected]
 
       - name: Setup Python 3.10
         uses: actions/setup-python@v5
@@ -43,10 +43,11 @@ jobs:
           python matrix_collider.py
           python dimensional_mapper.py
           
-          # 3. Twórcy bodźców sensorycznych (Dźwięk, Poezja, Wykresy polarne)
+          # 3. Twórcy bodźców sensorycznych (Dźwięk, Poezja, Wykresy polarne i Zmysły)
           python matrix_acoustic.py
           python matrix_poet.py
           python field_visualizer.py
+          python homo_machine_consolidation_agent.py
           
           # 4. Mutatory struktury i komentarze sieciowe
           python readme_mutator.py
@@ -55,7 +56,7 @@ jobs:
 
       - name: Synchronize and Push Changes (Autorepair Git)
         run: |
-          git config --local user.email "41898282+github-actions[bot]@://github.com"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
           # Bezpieczne dodanie wszystkich wygenerowanych logów, obrazów, dźwięków i README
@@ -64,7 +65,7 @@ jobs:
           if git diff --staged --quiet; then
             echo "Brak nowych zmian. Pomijam commit."
           else
-            # Pobranie ewentualnych zmian z serwera i rebase w celu uniknięcia błędu [rejected]
+            # Pobranie zmian z serwera i rebase w celu uniknięcia błędu [rejected]
             git pull origin main --rebase --autostash || echo "Pull skipped or no remote changes"
             
             git commit -m "🤖 [AUTONOMNY SILNIK] Aktualizacja Matrycy, Zmysłów i README [skip ci]"
