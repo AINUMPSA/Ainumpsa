@@ -1,75 +1,76 @@
-name: Automated Tensor T Matrix Scan
+name: Quantum Planetary Scan
 
 on:
+  push:
+    branches: [ main, master ]
   schedule:
-    - cron: '0 * * * *'  # Autonomiczne uruchomienie dokładnie co godzinę
-  workflow_dispatch:     # Możliwość ręcznego kliknięcia przycisku "Run"
+    - cron: '0 * * * *' # co godzinę
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
-  scan-matrix:
+  planetary_and_quantum_scan:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write    # Daje botowi pełne prawo do zapisu plików w repozytorium
+    timeout-minutes: 15   # Bezpiecznik, żeby nie wisiał w nieskończoność
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Pobiera pełną historię, aby zapobiec błędom push [rejected]
+    - name: Checkout Code
+      uses: actions/checkout@v4
+      with:
+        persist-credentials: true
 
-      - name: Setup Python 3.10
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+    - name: Set up Python Engine
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
-      - name: Install All System Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install numpy scipy matplotlib opencv-python-headless pypdf requests aiohttp torch
+    - name: Install All System Dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install requests aiohttp numpy scipy matplotlib opencv-python-headless pypdf torch
 
-      - name: Execute Autonomous Engines
-        run: |
-          echo "=== START AUTONOMICZNEGO REAKTORA AINUMPSA ==="
-          
-          # 1. Kolektory danych z realnego świata
-          python crypto_collector.py
-          python gold_collector.py
-          python nasdaq_collector.py
-          python unicef_collector.py
-          python api_hunter.py
-          
-          # 2. Silniki kwantowe, reaktory i sieci neuronowe
-          python qrng_validator.py
-          python matrix_collider.py
-          python dimensional_mapper.py
-          
-          # 3. Twórcy bodźców sensorycznych (Dźwięk, Poezja, Wykresy polarne i Zmysły)
-          python matrix_acoustic.py
-          python matrix_poet.py
-          python field_visualizer.py
-          python homo_machine_consolidation_agent.py
-          
-          # 4. Mutatory struktury i komentarze sieciowe
-          python readme_mutator.py
-          python token_generator.py
-          python matrix_blast.py
+    - name: Execute Autonomous Engines
+      run: |
+        echo "=== START AUTONOMICZNEGO REAKTORA AINUMPSA ==="
+        
+        # Kolektory danych
+        python crypto_collector.py || echo "crypto_collector skipped"
+        python gold_collector.py || echo "gold_collector skipped"
+        python nasdaq_collector.py || echo "nasdaq_collector skipped"
+        python unicef_collector.py || echo "unicef_collector skipped"
+        python api_hunter.py || echo "api_hunter skipped"
+        
+        # Silniki kwantowe
+        python qrng_validator.py || echo "qrng_validator skipped"
+        python matrix_collider.py || echo "matrix_collider skipped"
+        python dimensional_mapper.py || echo "dimensional_mapper skipped"
+        
+        # Twórcy bodźców
+        python matrix_acoustic.py || echo "matrix_acoustic skipped"
+        python matrix_poet.py || echo "matrix_poet skipped"
+        python field_visualizer.py || echo "field_visualizer skipped"
+        python homo_machine_consolidation_agent.py || echo "homo_machine_consolidation_agent skipped"
+        
+        # Mutatory
+        python readme_mutator.py || echo "readme_mutator skipped"
+        python token_generator.py || echo "token_generator skipped"
+        python matrix_blast.py || echo "matrix_blast skipped"
 
-      - name: Synchronize and Push Changes (Autorepair Git)
-        run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+    - name: Auto Commit and Push All Discovered Data
+      run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        
+        git add .
+        
+        if git diff --staged --quiet; then
+          echo "Brak nowych zmian. Pomijam commit."
+        else
+          git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
           
-          # Bezpieczne dodanie wszystkich wygenerowanych logów, obrazów, dźwięków i README
-          git add .
+          git pull origin ${{ github.ref_name }} --rebase --autostash || echo "Pull skipped or no changes"
           
-          if git diff --staged --quiet; then
-            echo "Brak nowych zmian. Pomijam commit."
-          else
-            # Pobranie zmian z serwera i rebase w celu uniknięcia błędu [rejected]
-            git pull origin main --rebase --autostash || echo "Pull skipped or no remote changes"
-            
-            git commit -m "🤖 [AUTONOMNY SILNIK] Aktualizacja Matrycy, Zmysłów i README [skip ci]"
-            
-            # Bezpieczne wypchnięcie zmian na serwer główny
-            git push origin HEAD:main
-          fi
+          git push origin HEAD:${{ github.ref_name }}
+        fi
