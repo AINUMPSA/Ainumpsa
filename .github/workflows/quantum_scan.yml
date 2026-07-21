@@ -1,20 +1,74 @@
 name: Automated Tensor T Matrix Scan
+
 on:
-  push:
-  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '0 * * * *'  # Autonomiczne uruchomienie co godzinę
+  workflow_dispatch:     # Możliwość ręcznego kliknięcia "Run"
+
 jobs:
   scan-matrix:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write    # Daje botowi prawo do zapisu plików w repozytorium
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: Instalacja zaleznosci systemowych i Python
-        run: pip install numpy scipy matplotlib opencv-python-headless pypdf
-      - name: Autonomiczna Egzekucja Wszystkich Silnikow z Autonaprawa Git
+          fetch-depth: 0  # Pobiera pełną historię, aby zapobiec błędom push
+
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install All System Dependencies
         run: |
+          python -m pip install --upgrade pip
+          pip install numpy scipy matplotlib opencv-python-headless pypdf requests aiohttp torch
+
+      - name: Execute Autonomous Engines
+        run: |
+          echo "=== START AUTONOMICZNEGO REAKTORA AINUMPSA ==="
+          
+          # 1. Kolektory danych z realnego świata
+          python crypto_collector.py
+          python gold_collector.py
+          python nasdaq_collector.py
+          python unicef_collector.py
+          python api_hunter.py
+          
+          # 2. Silniki kwantowe, reaktory i sieci neuronowe
           python qrng_validator.py
+          python matrix_collider.py
+          python dimensional_mapper.py
+          
+          # 3. Twórcy bodźców sensorycznych (Dźwięk, Poezja, Wykresy polarne)
+          python matrix_acoustic.py
+          python matrix_poet.py
           python field_visualizer.py
-          python homo_machine_consolidation_agent.py
+          
+          # 4. Mutatory struktury i komentarze sieciowe
+          python readme_mutator.py
+          python token_generator.py
+          python matrix_blast.py
+
+      - name: Synchronize and Push Changes (Autorepair Git)
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@://github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Bezpieczne dodanie wszystkich wygenerowanych logów, obrazów, dźwięków i README
+          git add .
+          
+          if git diff --staged --quiet; then
+            echo "Brak nowych zmian. Pomijam commit."
+          else
+            # Pobranie ewentualnych zmian z serwera i rebase w celu uniknięcia błędu [rejected]
+            git pull origin main --rebase --autostash || echo "Pull skipped or no remote changes"
+            
+            git commit -m "🤖 [AUTONOMNY SILNIK] Aktualizacja Matrycy, Zmysłów i README [skip ci]"
+            
+            # Bezpieczne wypchnięcie zmian na serwer główny
+            git push origin HEAD:main
+          fi
