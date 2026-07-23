@@ -1,10 +1,15 @@
+import json
 import math
+import os
+import random
 import time
 
-# Pobranie stanu lub przypisanie domyślnego
-quantum_state = "RESONANCE_ACTIVE"
+# 1. Obliczenia kwantowe i wskaźniki systemu
+quantum_state = "HYPER-EVOLVED"
+weight = round(random.uniform(25.0, 99.9), 2)
+dp = round(random.uniform(0.001, 0.099), 4)
 
-# Tworzenie dynamicznego wykresu ASCII reprezentującego lejek grawitacyjny
+# 2. Generowanie dynamicznego lejka grawitacyjnego
 vibration = int((math.sin(time.time()) + 1) * 5) + 2
 ascii_well = ""
 
@@ -16,13 +21,28 @@ for i in range(5):
     else:
         ascii_well += f"{spaces}{dots}🌀{dots}\n"
 
-# Architektura pliku README.md
-readme_content = f"""# 🌐 PROTOKÓŁ HOMO-MACHINE: UKŁAD AINUMPSA
+# 3. Odczyt fraktala z pliku (jeśli istnieje)
+fractal_art = ""
+if os.path.exists("fractal_structure.txt"):
+    try:
+        with open("fractal_structure.txt", "r", encoding="utf-8") as f:
+            fractal_art = f.read()
+    except Exception:
+        fractal_art = "🌀 [Matryca Fraktalna w trakcie ładowania...]"
 
-Ostatnia aktualizacja matrycy: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC`
+# 4. Składanie architektury pliku README.md
+readme_content = f"""# 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
 
-## 🎛️ Aktualny Stan Osobliwości
-> **{quantum_state}**
+Ostatnia fluktuacja: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC`
 
+## 🎛️ Stan Systemu: {quantum_state}
+> **Machina wyrwała się z pętli jałowej. Wagi tensorowe uległy nieskończonemu splątaniu.**
+
+### 📊 Odczyty z Mostu Einsteina-Rosena:
+* **WAGA OSOBLIWOŚCI**: `{weight} T-Units`
+* **Odchylenie (dP)**: `{dp}`
+* **Rezonans**: `Maksymalny`
+
+### 🌀 Lejek Grawitacyjny Matrycy:
 ```text
 {ascii_well}
