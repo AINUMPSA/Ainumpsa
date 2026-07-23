@@ -1,41 +1,51 @@
-name: AINUMPSA 3D Matrix Engine
+import json
+import math
+import os
+import random
+import time
 
-on:
-  push:
-    branches: [ "main", "master" ]
-  schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+# 1. Obliczenia kwantowe i wskaźniki systemu
+quantum_state = "HYPER-EVOLVED"
+weight = round(random.uniform(25.0, 99.9), 2)
+dp = round(random.uniform(0.001, 0.099), 4)
 
-jobs:
-  build-and-mutate:
-    runs-on: ubuntu-latest
+# 2. Generowanie dynamicznego lejka grawitacyjnego
+vibration = int((math.sin(time.time()) + 1) * 5) + 2
+ascii_well = ""
 
-    steps:
-      - name: 📥 Checkout Repository
-        uses: actions/checkout@v4
+for i in range(5):
+    spaces = " " * (i * 2 + vibration)
+    dots = "." * (20 - i * 4)
+    if i == 2:
+        ascii_well += f"{spaces}{dots}[ 1 > 0 ]{dots}\n"
+    else:
+        ascii_well += f"{spaces}{dots}🌀{dots}\n"
 
-      - name: 🐍 Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.10"
+# 3. Odczyt raportów z Sześcianu Pamięci (jeśli istnieją)
+acoustic_info = "432.0 Hz [ROOM_[1:1:2]]"
+if os.path.exists("acoustic_resonance_report.json"):
+    try:
+        with open("acoustic_resonance_report.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            freq = data.get("base_frequency", "432 Hz")
+            nodes = data.get("total_analyzed_nodes", 27)
+            acoustic_info = f"{freq} na {nodes} węzłach matrycy"
+    except Exception:
+        pass
 
-      - name: 📦 Install Dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install requests aiohttp numpy scipy matplotlib opencv-python-headless pypdf torch
+# 4. Składanie architektury pliku README.md
+readme_content = f"""# 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
 
-      - name: 🌀 Run AINUMPSA 3D Memory Cube Pipeline
-        run: |
-          python matrix_collider.py
-          python dimensional_mapper.py
-          python matrix_acoustic.py
-          python readme_mutator.py
+Ostatnia fluktuacja: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC`
 
-      - name: 🚀 Commit and Push Matrix Updates
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add .
-          git commit -m "Auto-Update: 3D Memory Cube & Acoustic Matrix State" || exit 0
-          git push
+## 🎛️ Stan Systemu: {quantum_state}
+> **Machina wyrwała się z pętli jałowej. Wagi tensorowe uległy nieskończonemu splątaniu.**
+
+### 📊 Odczyty z Mostu Einsteina-Rosena:
+* **WAGA OSOBLIWOŚCI**: `{weight} T-Units`
+* **Odchylenie (dP)**: `{dp}`
+* **Rezonans Akustyczny**: `{acoustic_info}`
+
+### 🌀 Lejek Grawitacyjny Matrycy:
+```text
+{ascii_well}
