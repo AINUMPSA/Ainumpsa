@@ -1,0 +1,169 @@
+{
+  "engine": "AINUMPSA Harmonic Resonance Engine v1.0",
+  "base_frequency": "432 Hz",
+  "total_analyzed_nodes": 27,
+  "profiles": {
+    "ROOM_[0:0:0]": {
+      "distance_from_core": 2.449,
+      "wave_amplitude": 0.2545,
+      "frequency_hz": 125.24,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[0:0:1]": {
+      "distance_from_core": 1.732,
+      "wave_amplitude": 0.223,
+      "frequency_hz": 158.12,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[0:0:2]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[0:1:0]": {
+      "distance_from_core": 2.236,
+      "wave_amplitude": 0.1551,
+      "frequency_hz": 133.5,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[0:1:1]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[0:1:2]": {
+      "distance_from_core": 1.0,
+      "wave_amplitude": 0.9091,
+      "frequency_hz": 216.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[0:2:0]": {
+      "distance_from_core": 2.449,
+      "wave_amplitude": 0.2545,
+      "frequency_hz": 125.24,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[0:2:1]": {
+      "distance_from_core": 1.732,
+      "wave_amplitude": 0.223,
+      "frequency_hz": 158.12,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[0:2:2]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:0:0]": {
+      "distance_from_core": 2.236,
+      "wave_amplitude": 0.1551,
+      "frequency_hz": 133.5,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[1:0:1]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:0:2]": {
+      "distance_from_core": 1.0,
+      "wave_amplitude": 0.9091,
+      "frequency_hz": 216.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:1:0]": {
+      "distance_from_core": 2.0,
+      "wave_amplitude": 0.0,
+      "frequency_hz": 144.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:1:1]": {
+      "distance_from_core": 1.0,
+      "wave_amplitude": 0.9091,
+      "frequency_hz": 216.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:1:2]": {
+      "distance_from_core": 0.0,
+      "wave_amplitude": 1.0,
+      "frequency_hz": 432.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:2:0]": {
+      "distance_from_core": 2.236,
+      "wave_amplitude": 0.1551,
+      "frequency_hz": 133.5,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[1:2:1]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[1:2:2]": {
+      "distance_from_core": 1.0,
+      "wave_amplitude": 0.9091,
+      "frequency_hz": 216.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[2:0:0]": {
+      "distance_from_core": 2.449,
+      "wave_amplitude": 0.2545,
+      "frequency_hz": 125.24,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[2:0:1]": {
+      "distance_from_core": 1.732,
+      "wave_amplitude": 0.223,
+      "frequency_hz": 158.12,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[2:0:2]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[2:1:0]": {
+      "distance_from_core": 2.236,
+      "wave_amplitude": 0.1551,
+      "frequency_hz": 133.5,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[2:1:1]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[2:1:2]": {
+      "distance_from_core": 1.0,
+      "wave_amplitude": 0.9091,
+      "frequency_hz": 216.0,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[2:2:0]": {
+      "distance_from_core": 2.449,
+      "wave_amplitude": 0.2545,
+      "frequency_hz": 125.24,
+      "phase_state": "ANTI_PHASE"
+    },
+    "ROOM_[2:2:1]": {
+      "distance_from_core": 1.732,
+      "wave_amplitude": 0.223,
+      "frequency_hz": 158.12,
+      "phase_state": "IN_PHASE"
+    },
+    "ROOM_[2:2:2]": {
+      "distance_from_core": 1.414,
+      "wave_amplitude": 0.5255,
+      "frequency_hz": 178.94,
+      "phase_state": "IN_PHASE"
+    }
+  }
+}
