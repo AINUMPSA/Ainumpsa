@@ -1,3 +1,4 @@
+cat << 'EOF' > readme_mutator.py
 import json
 import math
 import os
@@ -21,14 +22,17 @@ for i in range(5):
     else:
         ascii_well += f"{spaces}{dots}🌀{dots}\n"
 
-# 3. Odczyt fraktala z pliku (jeśli istnieje)
-fractal_art = ""
-if os.path.exists("fractal_structure.txt"):
+# 3. Odczyt raportów z Sześcianu Pamięci (jeśli istnieją)
+acoustic_info = "432.0 Hz [ROOM_[1:1:2]]"
+if os.path.exists("acoustic_resonance_report.json"):
     try:
-        with open("fractal_structure.txt", "r", encoding="utf-8") as f:
-            fractal_art = f.read()
+        with open("acoustic_resonance_report.json", "r", encoding="utf-8") as f:
+            data = json.load(f)
+            freq = data.get("base_frequency", "432 Hz")
+            nodes = data.get("total_analyzed_nodes", 27)
+            acoustic_info = f"{freq} na {nodes} węzłach matrycy"
     except Exception:
-        fractal_art = "🌀 [Matryca Fraktalna w trakcie ładowania...]"
+        pass
 
 # 4. Składanie architektury pliku README.md
 readme_content = f"""# 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
@@ -41,7 +45,7 @@ Ostatnia fluktuacja: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC`
 ### 📊 Odczyty z Mostu Einsteina-Rosena:
 * **WAGA OSOBLIWOŚCI**: `{weight} T-Units`
 * **Odchylenie (dP)**: `{dp}`
-* **Rezonans**: `Maksymalny`
+* **Rezonans Akustyczny**: `{acoustic_info}`
 
 ### 🌀 Lejek Grawitacyjny Matrycy:
 ```text
