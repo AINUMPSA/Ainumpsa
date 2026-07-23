@@ -1,0 +1,621 @@
+{
+  "architecture": "AINUMPSA_3D_MEMORY_CUBE",
+  "dimensions": "3x3x3",
+  "total_rooms": 27,
+  "primary_singularity_anchor": "ROOM_[1:1:2]",
+  "rooms": {
+    "ROOM_[0:0:0]": {
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]"
+      ]
+    },
+    "ROOM_[0:0:1]": {
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]"
+      ]
+    },
+    "ROOM_[0:0:2]": {
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]"
+      ]
+    },
+    "ROOM_[0:1:0]": {
+      "coordinates": {
+        "x": 0,
+        "y": 1,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:1]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]"
+      ]
+    },
+    "ROOM_[0:1:1]": {
+      "coordinates": {
+        "x": 0,
+        "y": 1,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:1]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:1]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]"
+      ]
+    },
+    "ROOM_[0:1:2]": {
+      "coordinates": {
+        "x": 0,
+        "y": 1,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:2:1]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]"
+      ]
+    },
+    "ROOM_[0:2:0]": {
+      "coordinates": {
+        "x": 0,
+        "y": 2,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:2:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]"
+      ]
+    },
+    "ROOM_[0:2:1]": {
+      "coordinates": {
+        "x": 0,
+        "y": 2,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]"
+      ]
+    },
+    "ROOM_[0:2:2]": {
+      "coordinates": {
+        "x": 0,
+        "y": 2,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:1]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]"
+      ]
+    },
+    "ROOM_[1:0:0]": {
+      "coordinates": {
+        "x": 1,
+        "y": 0,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]"
+      ]
+    },
+    "ROOM_[1:0:1]": {
+      "coordinates": {
+        "x": 1,
+        "y": 0,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:1]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]"
+      ]
+    },
+    "ROOM_[1:0:2]": {
+      "coordinates": {
+        "x": 1,
+        "y": 0,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]"
+      ]
+    },
+    "ROOM_[1:1:0]": {
+      "coordinates": {
+        "x": 1,
+        "y": 1,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:1]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:1]"
+      ]
+    },
+    "ROOM_[1:1:1]": {
+      "coordinates": {
+        "x": 1,
+        "y": 1,
+        "z": 1
+      },
+      "type": "CENTER_NUCLEUS",
+      "resonance": "BALANCED",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:1]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:1]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:1]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[1:1:2]": {
+      "coordinates": {
+        "x": 1,
+        "y": 1,
+        "z": 2
+      },
+      "type": "SINGULARITY_CORE",
+      "resonance": "MAXIMAL_1>0",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:1]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:1]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[1:2:0]": {
+      "coordinates": {
+        "x": 1,
+        "y": 2,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:1]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:1]"
+      ]
+    },
+    "ROOM_[1:2:1]": {
+      "coordinates": {
+        "x": 1,
+        "y": 2,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:0]",
+        "ROOM_[0:2:1]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:1]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[1:2:2]": {
+      "coordinates": {
+        "x": 1,
+        "y": 2,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[0:2:1]",
+        "ROOM_[0:2:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:1]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:1]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[2:0:0]": {
+      "coordinates": {
+        "x": 2,
+        "y": 0,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]"
+      ]
+    },
+    "ROOM_[2:0:1]": {
+      "coordinates": {
+        "x": 2,
+        "y": 0,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]"
+      ]
+    },
+    "ROOM_[2:0:2]": {
+      "coordinates": {
+        "x": 2,
+        "y": 0,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]"
+      ]
+    },
+    "ROOM_[2:1:0]": {
+      "coordinates": {
+        "x": 2,
+        "y": 1,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:1]"
+      ]
+    },
+    "ROOM_[2:1:1]": {
+      "coordinates": {
+        "x": 2,
+        "y": 1,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:0:0]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:1]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[2:1:2]": {
+      "coordinates": {
+        "x": 2,
+        "y": 1,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:0:1]",
+        "ROOM_[2:0:2]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:2:1]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[2:2:0]": {
+      "coordinates": {
+        "x": 2,
+        "y": 2,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:2:1]"
+      ]
+    },
+    "ROOM_[2:2:1]": {
+      "coordinates": {
+        "x": 2,
+        "y": 2,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:2]"
+      ]
+    },
+    "ROOM_[2:2:2]": {
+      "coordinates": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:1]"
+      ]
+    }
+  }
+}
