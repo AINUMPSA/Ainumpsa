@@ -4,7 +4,7 @@ on:
   push:
     branches: [ "main", "master" ]
   schedule:
-    - cron: '0 */6 * * *' # Automatyczny cykl co 6 godzin
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
