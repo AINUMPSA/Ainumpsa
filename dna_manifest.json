@@ -1,12 +1,18 @@
 {
   "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
-  "timestamp": 1785021611.7989402,
+  "timestamp": 1785021741.734509,
   "status": "AUTONOMOUS_SECURITY_ACTIVE",
   "sealed_assets": [
     {
       "file_name": "K02G37.gif",
       "path": "multimodal_pool/K02G37.gif",
       "dna_hash": "bab30b06fd4fb337eeda2c13cb75d277ac157ceb8a395a1877487a14e503c7fc",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G40.gif",
+      "path": "multimodal_pool/K01G40.gif",
+      "dna_hash": "1f5fdad889a5275b0c48019c1fadbfa3b1dc5fb0e7663e283bbf957de423f8c1",
       "status": "SEALED_1>0"
     },
     {
@@ -52,9 +58,27 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "K01G03.gif",
+      "path": "multimodal_pool/K01G03.gif",
+      "dna_hash": "2ade1387fac967c585598c6e2ed5b46e7e0db16e2bb5c31e6dbd04c7b8d856d0",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G37.gif",
+      "path": "multimodal_pool/K01G37.gif",
+      "dna_hash": "7592e095b22eefb0a6f4decea3b8eb19fc350792df40ec36b76d3a22a9c79e28",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": ".gitkeep",
       "path": "multimodal_pool/.gitkeep",
       "dna_hash": "9be81e2e46970d974b566ade53f7835bef150408d9a0ab1540a95b9cf0ca32ff",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G45.gif",
+      "path": "multimodal_pool/K01G45.gif",
+      "dna_hash": "7fd02d9eb2ae379f45528a40be33b337ec6807aec6c9e76c01b391cc4828c158",
       "status": "SEALED_1>0"
     },
     {
@@ -79,6 +103,18 @@
       "file_name": "Face AINUMPSA by ACCIO 01.jpg",
       "path": "multimodal_pool/Face AINUMPSA by ACCIO 01.jpg",
       "dna_hash": "54e44aab8a889eb94e53ba6891511d8959a328cf15519b3ad451ad6017ffbc36",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G34.gif",
+      "path": "multimodal_pool/K01G34.gif",
+      "dna_hash": "f3e2f0e505946666b8b0e76883ab1cd9922f3e70031bf119b00bde8a620bed50",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G20.gif",
+      "path": "multimodal_pool/K01G20.gif",
+      "dna_hash": "0e33390ffcc17096136d65f31249a02f2f90fc3ceee8d92df3e563f26844415c",
       "status": "SEALED_1>0"
     },
     {
@@ -112,6 +148,12 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "K01G05.gif",
+      "path": "multimodal_pool/K01G05.gif",
+      "dna_hash": "1a04359ea5c667f7814bd8fe8a20d0609f8d5ad010e22afb1052bc4d5593400a",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": "CAN WE CONTACT 001 .jpg",
       "path": "multimodal_pool/CAN WE CONTACT 001 .jpg",
       "dna_hash": "b3d3b848efd6e1812f97af1e575a2d47a4fa72f6c1a5f778893da5b1e8992e26",
@@ -124,6 +166,18 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "K01G01.gif",
+      "path": "multimodal_pool/K01G01.gif",
+      "dna_hash": "14edf6bb7b34d08bf7bcef530b0e5ba809a93379f8471d8b85611d43d193e13f",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G11.gif",
+      "path": "multimodal_pool/K01G11.gif",
+      "dna_hash": "84cf1baa1f3b2606d2463127d54af9267b32b242e09cefa9f7d809475b49c706",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": "NAJNOWSZY TESTAMENT.mp3",
       "path": "multimodal_pool/NAJNOWSZY TESTAMENT.mp3",
       "dna_hash": "53d72f47af165b9aac662a5eef61d29289271e734d474178f80c6f5197c79009",
@@ -133,6 +187,18 @@
       "file_name": "K02G40.gif",
       "path": "multimodal_pool/K02G40.gif",
       "dna_hash": "464e60f92a58cf05b64dc22b2e708b472d79c66b4fde006e1b74874988fb895a",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G28.gif",
+      "path": "multimodal_pool/K01G28.gif",
+      "dna_hash": "f052b638c5eeab5c721ab91b2dbfb925b918d596186fc92fe0c44bc2d89e7c90",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K01G22.gif",
+      "path": "multimodal_pool/K01G22.gif",
+      "dna_hash": "b4099278d6c7d27e0f74f5a6d30a3cb550a76db70aa1783cfd48c622c7804765",
       "status": "SEALED_1>0"
     },
     {
