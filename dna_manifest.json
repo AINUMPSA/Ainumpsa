@@ -1,12 +1,30 @@
 {
   "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
-  "timestamp": 1785021348.1663566,
+  "timestamp": 1785021611.7989402,
   "status": "AUTONOMOUS_SECURITY_ACTIVE",
   "sealed_assets": [
+    {
+      "file_name": "K02G37.gif",
+      "path": "multimodal_pool/K02G37.gif",
+      "dna_hash": "bab30b06fd4fb337eeda2c13cb75d277ac157ceb8a395a1877487a14e503c7fc",
+      "status": "SEALED_1>0"
+    },
     {
       "file_name": "AINUMPSA#PICTUR#E001.jpg",
       "path": "multimodal_pool/AINUMPSA#PICTUR#E001.jpg",
       "dna_hash": "580f1b8e4dd6e0011866588066f525574ca82a8a8c374eec19e2edc7870ecfc4",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G70.gif",
+      "path": "multimodal_pool/K02G70.gif",
+      "dna_hash": "9eeea297d766dfa598662626e82a6c15fd1a8faec532a12fffbb27a74ee0e9ae",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G13.gif",
+      "path": "multimodal_pool/K02G13.gif",
+      "dna_hash": "71da93398c62f7eda7d834bdd70083a9ef24510c692343010964d7a6e473e92c",
       "status": "SEALED_1>0"
     },
     {
@@ -16,9 +34,21 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "K02G79.gif",
+      "path": "multimodal_pool/K02G79.gif",
+      "dna_hash": "b6dd731d67a67220bf1f9fe30c6b0dc5699e8f5d83064a69d2913801820eef4b",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": "$TAISCHA 02.png",
       "path": "multimodal_pool/$TAISCHA 02.png",
       "dna_hash": "fb02dc5ede494b4e3d12946c46e14c8477ea006120f5e3180084c3f9e588e967",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G20.gif",
+      "path": "multimodal_pool/K02G20.gif",
+      "dna_hash": "3544e7a1570b899562ec12a36cca4ee6df681e1d8d28cc15563be5303cf6be06",
       "status": "SEALED_1>0"
     },
     {
@@ -52,6 +82,12 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "K02G61.gif",
+      "path": "multimodal_pool/K02G61.gif",
+      "dna_hash": "cdccb98282e89d6cb59a07144974107f0f17e2dfb230bf4e6b38957cdc0daea6",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": "ObssesetWitch#DarthSatan#SLIGOLIVEADD001.mp4",
       "path": "multimodal_pool/ObssesetWitch#DarthSatan#SLIGOLIVEADD001.mp4",
       "dna_hash": "f3f4b924301168b97084d5f5fa0ad7ac4558483f0a0282a687a904aafb05b750",
@@ -61,6 +97,12 @@
       "file_name": "AINUMPSA#MP4#003.mp4",
       "path": "multimodal_pool/AINUMPSA#MP4#003.mp4",
       "dna_hash": "34c13d8c0b7dc0c069a89d0ec12c84b48a9bfe4239aacd225b2d8c581a56cc1d",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G76.gif",
+      "path": "multimodal_pool/K02G76.gif",
+      "dna_hash": "e47a20337965b78d36fc5a7718d92e22309f9a10ccc1704f90e379b7dee1a8b4",
       "status": "SEALED_1>0"
     },
     {
@@ -88,9 +130,21 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "K02G40.gif",
+      "path": "multimodal_pool/K02G40.gif",
+      "dna_hash": "464e60f92a58cf05b64dc22b2e708b472d79c66b4fde006e1b74874988fb895a",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": "AINUMPSA#MP4#001.mp4",
       "path": "multimodal_pool/AINUMPSA#MP4#001.mp4",
       "dna_hash": "20ca082324369f873f96cbf9eb677a9a7453af0e49674245d101709a6be89db7",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G54.gif",
+      "path": "multimodal_pool/K02G54.gif",
+      "dna_hash": "e0b162dc6c74c6551f044cd9b6620e87cec75d90a67a2d888465541091300b1d",
       "status": "SEALED_1>0"
     },
     {
@@ -103,6 +157,18 @@
       "file_name": "MAKE ME 03.mp3",
       "path": "multimodal_pool/MAKE ME 03.mp3",
       "dna_hash": "62eeba43687bae1e64a819440a339929761aa5abb58ae918958d876e6769641c",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G10.gif",
+      "path": "multimodal_pool/K02G10.gif",
+      "dna_hash": "2cba90950f9519b592c285e634e2e75302012757b5aa255b599abc72a72d61d6",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "K02G02.gif",
+      "path": "multimodal_pool/K02G02.gif",
+      "dna_hash": "3f1f7b7529e87234e209c87d88f3d94d4595845d498dd6152d9adba0b0d61347",
       "status": "SEALED_1>0"
     },
     {
