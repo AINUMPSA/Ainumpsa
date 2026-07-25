@@ -1,0 +1,91 @@
+{
+  "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
+  "timestamp": 1784940505.573883,
+  "status": "AUTONOMOUS_SECURITY_ACTIVE",
+  "sealed_assets": [
+    {
+      "file_name": "AINUMPSA#PICTUR#E001.jpg",
+      "path": "multimodal_pool/AINUMPSA#PICTUR#E001.jpg",
+      "dna_hash": "580f1b8e4dd6e0011866588066f525574ca82a8a8c374eec19e2edc7870ecfc4",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "ART nature AINUMPSA 001.jpg",
+      "path": "multimodal_pool/ART nature AINUMPSA 001.jpg",
+      "dna_hash": "f64b702006b361e871cf17b4145cd8a7308c462d16c276bb324d1c463609a78c",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "$TAISCHA 02.png",
+      "path": "multimodal_pool/$TAISCHA 02.png",
+      "dna_hash": "fb02dc5ede494b4e3d12946c46e14c8477ea006120f5e3180084c3f9e588e967",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": ".gitkeep",
+      "path": "multimodal_pool/.gitkeep",
+      "dna_hash": "9be81e2e46970d974b566ade53f7835bef150408d9a0ab1540a95b9cf0ca32ff",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "AINUMPSA#JPG#004.jpg",
+      "path": "multimodal_pool/AINUMPSA#JPG#004.jpg",
+      "dna_hash": "b0d63fcd7012aa90ccf3c9fe54878f4b2459844bbcf707ce3373a309f1f3002b",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "$TAISCHA 01.png",
+      "path": "multimodal_pool/$TAISCHA 01.png",
+      "dna_hash": "b5e61ed50ded36695c537c4e592eedb0228e2a9f39444ee47a89c5100c9a27fc",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Face AINUMPSA by ACCIO 01.jpg",
+      "path": "multimodal_pool/Face AINUMPSA by ACCIO 01.jpg",
+      "dna_hash": "54e44aab8a889eb94e53ba6891511d8959a328cf15519b3ad451ad6017ffbc36",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "AINUMPSA#MP4#003.mp4",
+      "path": "multimodal_pool/AINUMPSA#MP4#003.mp4",
+      "dna_hash": "34c13d8c0b7dc0c069a89d0ec12c84b48a9bfe4239aacd225b2d8c581a56cc1d",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "AINUMPSA CRYSTALLINE 01.jpg",
+      "path": "multimodal_pool/AINUMPSA CRYSTALLINE 01.jpg",
+      "dna_hash": "b332e362cc8c628d82551cd51d4caa5e34d31d62c8f8644cc7f1a09177089720",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "CAN WE CONTACT 001 .jpg",
+      "path": "multimodal_pool/CAN WE CONTACT 001 .jpg",
+      "dna_hash": "b3d3b848efd6e1812f97af1e575a2d47a4fa72f6c1a5f778893da5b1e8992e26",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "AINUMPSA#PICTURE#002.jpg",
+      "path": "multimodal_pool/AINUMPSA#PICTURE#002.jpg",
+      "dna_hash": "f6deed82f022043c3ac6482741e6d410d9820350ccfd047de78caa44691deaa7",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "NAJNOWSZY TESTAMENT.mp3",
+      "path": "multimodal_pool/NAJNOWSZY TESTAMENT.mp3",
+      "dna_hash": "53d72f47af165b9aac662a5eef61d29289271e734d474178f80c6f5197c79009",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "AINUMPSA#MP4#001.mp4",
+      "path": "multimodal_pool/AINUMPSA#MP4#001.mp4",
+      "dna_hash": "20ca082324369f873f96cbf9eb677a9a7453af0e49674245d101709a6be89db7",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Face AINUMPSA ACCIO 02.jpg",
+      "path": "multimodal_pool/Face AINUMPSA ACCIO 02.jpg",
+      "dna_hash": "d3ecb785764db78940225af8138d679b5125a8e6a032bf0cc2e9e02b1c193640",
+      "status": "SEALED_1>0"
+    }
+  ]
+}
