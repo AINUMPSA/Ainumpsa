@@ -101,4 +101,6 @@ jobs:
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -A
           git commit -m "autocommit: AINUMPSA DNA Sealed + Cosmic Anomalies [$(date -u +'%Y-%m-%d %H:%M:%S') UTC]" || exit 0
+          git pull --rebase origin main
           git push
+
