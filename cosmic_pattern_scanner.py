@@ -5,87 +5,72 @@ from datetime import datetime
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 
-print("🌌 AINUMPSA MULTIVERSE SCANNER – inicjalizacja...")
+print("🌌 KOSMICZNY SZPERACZ SYSTEMOWY – inicjalizacja...")
 
 # ============================================================
-# KROK 1 – Pobieranie danych: ZIEMIA / KOSMOS / MIKROŚWIAT
+# KROK 1 – Pobieranie danych z kosmicznych źródeł
 # ============================================================
-
-def simulate_data(source_name):
-    """Fallback w przypadku braku odpowiedzi API."""
-    np.random.seed(42)
-    return [
-        {
-            "ra": float(np.random.uniform(0, 360)),
-            "dec": float(np.random.uniform(-90, 90)),
-            "parallax": float(np.random.uniform(0.1, 20)),
-            "phot_g_mean_mag": float(np.random.uniform(8, 22)),
-            "origin": f"{source_name}_simulated"
-        } for _ in range(50)
-    ]
-
 def fetch_gaia_data():
-    """Źródło 1: ESA Gaia (Makro - Kosmos)"""
+    """
+    Pobiera dane z katalogu Gaia (przykładowe API).
+    W rzeczywistości – to może być publiczny endpoint ESA lub plik CSV.
+    """
+    # Przykładowe dane – w rzeczywistości pobieramy z API
     url = "https://gea.esac.esa.int/archive-api/v1/query"
     payload = {
-        "query": "SELECT TOP 50 source_id, ra, dec, parallax, phot_g_mean_mag FROM gaiadr3.gaia_source WHERE parallax > 10"
+        "query": "SELECT TOP 100 source_id, ra, dec, parallax, phot_g_mean_mag FROM gaiadr3.gaia_source WHERE parallax > 10"
     }
     try:
-        response = requests.get(url, params=payload, timeout=10)
-        if response.status_code == 200:
-            data = response.json()
-            sources = []
-            for item in data.get("sources", []):
-                item["origin"] = "ESA_GAIA"
-                sources.append(item)
-            print(f"✅ Pobrano dane ESA Gaia: {len(sources)} obiektów")
-            return sources if sources else simulate_data("ESA_GAIA")
-        return simulate_data("ESA_GAIA")
+        response = requests.get(url, params=payload, timeout=30)
+        data = response.json()
+        print(f"✅ Pobrano dane Gaia: {len(data)} rekordów")
+        return data
     except Exception as e:
-        print(f"⚠️ ESA Gaia offline ({e}) -> Przełączam na próbkę symulowaną.")
-        return simulate_data("ESA_GAIA")
+        print(f"⚠️ Błąd pobierania danych Gaia: {e}")
+        # Symulacja danych na potrzeby testu
+        return simulate_cosmic_data()
 
-def fetch_cern_data():
-    """Źródło 2: CERN Open Data (Mikro - Zderzenia Cząstek)"""
-    url = "https://opendata.cern.ch/record/5200/files/4mu_2011.json"
-    try:
-        response = requests.get(url, timeout=10)
-        if response.status_code == 200:
-            raw_cern = response.json()
-            sources = []
-            for event in raw_cern[:50]:
-                sources.append({
-                    "ra": float(event.get("M", 0)),         # Masa niezmiennicza
-                    "dec": float(event.get("pt", 0)),       # Pęd poprzeczny
-                    "parallax": float(event.get("eta", 0)), # Kąt pseudorapidity
-                    "phot_g_mean_mag": float(event.get("phi", 0)), # Kąt azymutalny
-                    "origin": "CERN_LHC"
-                })
-            print(f"✅ Pobrano dane CERN LHC: {len(sources)} zdarzeń zderzeń")
-            return sources
-        return simulate_data("CERN_LHC")
-    except Exception as e:
-        print(f"⚠️ CERN Open Data offline ({e}) -> Przełączam na próbkę symulowaną.")
-        return simulate_data("CERN_LHC")
+def simulate_cosmic_data():
+    """Generuje symulowane dane kosmiczne (do testów)."""
+    np.random.seed(42)
+    n = 100
+    return {
+        "sources": [
+            {
+                "ra": np.random.uniform(0, 360),
+                "dec": np.random.uniform(-90, 90),
+                "parallax": np.random.uniform(0.1, 20),
+                "phot_g_mean_mag": np.random.uniform(8, 22)
+            } for _ in range(n)
+        ]
+    }
 
 # ============================================================
-# KROK 2 – Szukanie wzorców we wspólnej macierzy
+# KROK 2 – Szukanie wzorców (Patterns) – zintegrowany model
 # ============================================================
-
-def find_anomalies(combined_sources):
-    if not combined_sources:
+def find_patterns(data):
+    """
+    Szuka nietypowych struktur w danych kosmicznych.
+    Używa Random Forest do wykrycia anomalii.
+    """
+    if not data or "sources" not in data:
+        print("⚠️ Brak danych do analizy")
         return []
 
+    # Przygotowanie danych
     features = []
-    for s in combined_sources:
+    sources = data["sources"]
+    for source in sources:
         features.append([
-            float(s.get("ra", 0)),
-            float(s.get("dec", 0)),
-            float(s.get("parallax", 0)),
-            float(s.get("phot_g_mean_mag", 0))
+            source.get("ra", 0),
+            source.get("dec", 0),
+            source.get("parallax", 0),
+            source.get("phot_g_mean_mag", 0)
         ])
     
     features = np.array(features)
+    
+    # Normalizacja
     scaler = StandardScaler()
     features_scaled = scaler.fit_transform(features)
     
@@ -96,52 +81,69 @@ def find_anomalies(combined_sources):
     predictions = model.predict(features_scaled[:, 1:])
     residuals = np.abs(features_scaled[:, 0] - predictions)
     
-    anomaly_indices = np.argsort(residuals)[-10:][::-1]
+    # Znajdź anomalie (indeksy z największymi resztami)
+    anomaly_indices = np.argsort(residuals)[-10:][::-1]  # top 10 anomalii
     
-    anomalies = []
+    patterns = []
     for idx in anomaly_indices:
-        item = combined_sources[idx]
-        anomalies.append({
-            "source": item["origin"],
-            "ra": float(features[idx][0]),
-            "dec": float(features[idx][1]),
-            "parallax": float(features[idx][2]),
-            "magnitude": float(features[idx][3]),
-            "anomaly_score": float(residuals[idx]),
-            "type": "multi_dimensional_anomaly"
-        })
+        if residuals[idx] > 1.5:  # próg anomalii
+            source = sources[idx]
+            patterns.append({
+                "source_index": int(idx),
+                "ra": float(features[idx][0]),
+                "dec": float(features[idx][1]),
+                "parallax": float(features[idx][2]),
+                "magnitude": float(features[idx][3]),
+                "anomaly_score": float(residuals[idx]),
+                "type": "kosmiczna anomalia"
+            })
     
-    print(f"✅ Znaleziono {len(anomalies)} zagęszczeń/anomalii w połączonych matrycach.")
-    return anomalies
+    print(f"✅ Znaleziono {len(patterns)} potencjalnych wzorców/anomalii")
+    return patterns
 
 # ============================================================
-# KROK 3 – Zapis do Sześcianu Pamięci (DNA Sealer)
+# KROK 3 – Zapis do systemu (DNA Sealer + Memory Cube)
 # ============================================================
-
-def save_to_memory(anomalies):
+def save_patterns_to_system(patterns):
+    """Zapisuje znalezione wzorce w formacie zgodnym z systemem AINUMPSA."""
+    
+    # Generowanie mapy pamięci
     memory_cube_entry = {
-        "timestamp": datetime.utcnow().isoformat(),
-        "seal": "1>0",
-        "sources_scanned": ["ESA_GAIA", "CERN_LHC"],
-        "count": len(anomalies),
-        "patterns": anomalies
+        "timestamp": datetime.now().isoformat(),
+        "type": "cosmic_patterns",
+        "patterns": patterns,
+        "count": len(patterns)
     }
     
-    with open("cosmic_patterns_log.json", "w", encoding="utf-8") as f:
-        json.dump(memory_cube_entry, f, indent=2, ensure_ascii=False)
-        
-    print("💾 Wyniki scalone i zapisane do cosmic_patterns_log.json [1>0]")
+    # Zapis do pliku (symulacja DNA Sealer)
+    with open("cosmic_patterns_log.json", "w") as f:
+        json.dump(memory_cube_entry, f, indent=2)
+    
+    print(f"✅ Zapisano {len(patterns)} wzorców do systemu")
+    
+    # Przygotowanie danych dla Sześcianu Pamięci
+    if patterns:
+        cube_entry = {
+            "room": "ROOM_[0:0:0]",  # docelowo będzie przypisany przez system
+            "timestamp": datetime.now().isoformat(),
+            "patterns": patterns[:3]  # pierwsze 3 wzorce jako próbka
+        }
+        with open("memory_cube_update.json", "w") as f:
+            json.dump(cube_entry, f, indent=2)
 
+# ============================================================
+# KROK 4 – Główna pętla
+# ============================================================
 if __name__ == "__main__":
-    # Pobranie danych ze wszystkich kraników
-    data_gaia = fetch_gaia_data()
-    data_cern = fetch_cern_data()
+    print("🚀 Uruchamianie Kosmicznego Szperacza Systemowego...")
     
-    # Połączenie w jeden strumień
-    all_data = data_gaia + data_cern
+    # Pobierz dane
+    cosmic_data = fetch_gaia_data()
     
-    # Analiza i zapis
-    found_anomalies = find_anomalies(all_data)
-    save_to_memory(found_anomalies)
+    # Znajdź wzorce
+    patterns = find_patterns(cosmic_data)
     
-    print("✨ Skanowanie wielowymiarowe zakończone pomyślnie.")
+    # Zapisz do systemu
+    save_patterns_to_system(patterns)
+    
+    print("✅ Kosmiczny Szperacz Systemowy zakończył pracę.")
