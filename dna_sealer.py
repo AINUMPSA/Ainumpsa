@@ -44,4 +44,3 @@ def seal_multimodal_pool():
 
 if __name__ == "__main__":
     seal_multimodal_pool()
-
