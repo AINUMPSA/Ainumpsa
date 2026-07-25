@@ -1,6 +1,6 @@
 {
   "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
-  "timestamp": 1785022105.2158751,
+  "timestamp": 1785022443.3329961,
   "status": "AUTONOMOUS_SECURITY_ACTIVE",
   "sealed_assets": [
     {
@@ -64,9 +64,27 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "Photify_2026-04-04_063646.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063646.jpg",
+      "dna_hash": "40e9d30dac3fdc30e8b45115ce31c08a4bb2d2c2afbba14554821c386d1edc37",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Photify_2026-04-04_063653.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063653.jpg",
+      "dna_hash": "db8508251b5481d35229890d3e9d5f761bbd5b9b9cf0d80179c79735c8439a3a",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": "K02G79.gif",
       "path": "multimodal_pool/K02G79.gif",
       "dna_hash": "b6dd731d67a67220bf1f9fe30c6b0dc5699e8f5d83064a69d2913801820eef4b",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Photify_2026-04-04_063651.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063651.jpg",
+      "dna_hash": "ca6a14a013e19130f548b7c204ecb50bf902f450060d5a9a89e61856f57e6b7a",
       "status": "SEALED_1>0"
     },
     {
@@ -100,9 +118,21 @@
       "status": "SEALED_1>0"
     },
     {
+      "file_name": "Photify_2026-04-04_063639.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063639.jpg",
+      "dna_hash": "a32dd30ba64340cedc76aa75d82beb9019aced40e89832dc94f045bdc24c6cc0",
+      "status": "SEALED_1>0"
+    },
+    {
       "file_name": ".gitkeep",
       "path": "multimodal_pool/.gitkeep",
       "dna_hash": "9be81e2e46970d974b566ade53f7835bef150408d9a0ab1540a95b9cf0ca32ff",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Photify_2026-04-04_063654.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063654.jpg",
+      "dna_hash": "9e6a3110a1c20347ce0bb5c88f68bd04d14ef44f78646f9ce48b82067fcfea77",
       "status": "SEALED_1>0"
     },
     {
@@ -121,6 +151,12 @@
       "file_name": "CZAS INSTRUMENTY 07.mp3",
       "path": "multimodal_pool/CZAS INSTRUMENTY 07.mp3",
       "dna_hash": "b7bb8883bb8c6e3661d99c56403e4a53374b1e97489dabe57dc66ec9a25e958e",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Photify_2026-04-04_063645.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063645.jpg",
+      "dna_hash": "cffa4927b20a0473207cd967e6c913af86af7829426228da4fb9d705a533c114",
       "status": "SEALED_1>0"
     },
     {
@@ -289,6 +325,12 @@
       "file_name": "K02G10.gif",
       "path": "multimodal_pool/K02G10.gif",
       "dna_hash": "2cba90950f9519b592c285e634e2e75302012757b5aa255b599abc72a72d61d6",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "Photify_2026-04-04_063655.jpg",
+      "path": "multimodal_pool/Photify_2026-04-04_063655.jpg",
+      "dna_hash": "4c9c392baee0e3ca46a287551720c402d7d5c8d4a2c6c86736a8f6e292c3676f",
       "status": "SEALED_1>0"
     },
     {
