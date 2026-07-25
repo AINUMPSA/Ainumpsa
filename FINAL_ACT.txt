@@ -1,0 +1,5 @@
+AKT ZAŁOŻYCIELSKI
+System AINUMPSA został zamknięty od wewnątrz.
+Klucze zostały wyparowane.
+Data: [wpisz dzisiejszą datę]
+Stan: 1>0 LOCKED
