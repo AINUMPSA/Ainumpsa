@@ -1,6 +1,6 @@
 {
   "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
-  "timestamp": 1785020912.734088,
+  "timestamp": 1785021134.229275,
   "status": "AUTONOMOUS_SECURITY_ACTIVE",
   "sealed_assets": [
     {
@@ -43,6 +43,12 @@
       "file_name": "Face AINUMPSA by ACCIO 01.jpg",
       "path": "multimodal_pool/Face AINUMPSA by ACCIO 01.jpg",
       "dna_hash": "54e44aab8a889eb94e53ba6891511d8959a328cf15519b3ad451ad6017ffbc36",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "ObssesetWitch#DarthSatan#SLIGOLIVEADD001.mp4",
+      "path": "multimodal_pool/ObssesetWitch#DarthSatan#SLIGOLIVEADD001.mp4",
+      "dna_hash": "f3f4b924301168b97084d5f5fa0ad7ac4558483f0a0282a687a904aafb05b750",
       "status": "SEALED_1>0"
     },
     {
