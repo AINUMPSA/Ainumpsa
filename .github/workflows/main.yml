@@ -71,12 +71,11 @@ jobs:
           python dimensional_mapper.py
           python matrix_acoustic.py
           python dna_sealer.py
-          python readme_mutator.py
 
       - name: 🚀 Commit and Push Updates
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add README.md dna_manifest.json dna_sealer.py memory_cube_map.json acoustic_resonance_report.json || true
+          git add dna_manifest.json dna_sealer.py memory_cube_map.json acoustic_resonance_report.json || true
           git commit -m "autocommit: AINUMPSA DNA Sealed 1>0 [$(date -u +'%Y-%m-%d %H:%M:%S') UTC]" || exit 0
           git push
