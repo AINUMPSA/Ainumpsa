@@ -1,6 +1,6 @@
 {
   "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
-  "timestamp": 1785021134.229275,
+  "timestamp": 1785021348.1663566,
   "status": "AUTONOMOUS_SECURITY_ACTIVE",
   "sealed_assets": [
     {
@@ -31,6 +31,12 @@
       "file_name": "AINUMPSA#JPG#004.jpg",
       "path": "multimodal_pool/AINUMPSA#JPG#004.jpg",
       "dna_hash": "b0d63fcd7012aa90ccf3c9fe54878f4b2459844bbcf707ce3373a309f1f3002b",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "CZAS INSTRUMENTY 07.mp3",
+      "path": "multimodal_pool/CZAS INSTRUMENTY 07.mp3",
+      "dna_hash": "b7bb8883bb8c6e3661d99c56403e4a53374b1e97489dabe57dc66ec9a25e958e",
       "status": "SEALED_1>0"
     },
     {
@@ -91,6 +97,12 @@
       "file_name": "Face AINUMPSA ACCIO 02.jpg",
       "path": "multimodal_pool/Face AINUMPSA ACCIO 02.jpg",
       "dna_hash": "d3ecb785764db78940225af8138d679b5125a8e6a032bf0cc2e9e02b1c193640",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "MAKE ME 03.mp3",
+      "path": "multimodal_pool/MAKE ME 03.mp3",
+      "dna_hash": "62eeba43687bae1e64a819440a339929761aa5abb58ae918958d876e6769641c",
       "status": "SEALED_1>0"
     },
     {
