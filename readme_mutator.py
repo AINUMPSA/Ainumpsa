@@ -1,4 +1,3 @@
-cat << 'EOF' > readme_mutator.py
 import json
 import math
 import os
@@ -22,7 +21,7 @@ for i in range(5):
     else:
         ascii_well += f"{spaces}{dots}🌀{dots}\n"
 
-# 3. Odczyt raportów z Sześcianu Pamięci (jeśli istnieją)
+# 3. Odczyt raportów z Sześcianu Pamięci
 acoustic_info = "432.0 Hz [ROOM_[1:1:2]]"
 if os.path.exists("acoustic_resonance_report.json"):
     try:
