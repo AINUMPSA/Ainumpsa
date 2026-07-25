@@ -1,6 +1,8 @@
 name: AINUMPSA 3D Matrix Engine
 
 on:
+  push:
+    branches: [ main ]
   workflow_dispatch:
   schedule:
     - cron: '0 */6 * * *'
