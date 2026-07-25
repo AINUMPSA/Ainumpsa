@@ -1,108 +1,63 @@
 import json
-import numpy as np
+import os
 import matplotlib.pyplot as plt
-from datetime import datetime
 
-print("🌌 KOSMICZNY WIZUALIZATOR – generowanie mapy anomalii...")
+print("🎨 KOSMICZNY WIZUALIZATOR – generowanie mapy anomalii...")
 
-# ============================================================
-# KROK 1 – Wczytaj dane anomalii
-# ============================================================
-def load_anomalies():
-    """Wczytuje dane z pliku cosmic_patterns_log.json."""
-    try:
-        with open("cosmic_patterns_log.json", "r") as f:
-            data = json.load(f)
-        print(f"✅ Wczytano {data.get('count', 0)} anomalii")
-        return data.get("patterns", [])
-    except FileNotFoundError:
-        print("⚠️ Brak pliku cosmic_patterns_log.json – uruchom najpierw cosmic_pattern_scanner.py")
-        return []
-    except Exception as e:
-        print(f"❌ Błąd wczytywania danych: {e}")
-        return []
+LOG_FILE = "cosmic_patterns_log.json"
+OUTPUT_IMAGE = "cosmic_anomalies_map.png"
 
-# ============================================================
-# KROK 2 – Wygeneruj mapę nieba
-# ============================================================
-def generate_sky_map(anomalies):
-    """Generuje mapę nieba z zaznaczonymi anomaliami."""
-    if not anomalies:
-        print("⚠️ Brak anomalii do wizualizacji")
+def generate_map():
+    if not os.path.exists(LOG_FILE):
+        print(f"⚠️ Brak pliku {LOG_FILE}. Wizualizacja pominięta.")
         return
 
-    # Przygotowanie danych
-    ra = [a.get("ra", 0) for a in anomalies]
-    dec = [a.get("dec", 0) for a in anomalies]
-    scores = [a.get("anomaly_score", 0) for a in anomalies]
+    with open(LOG_FILE, "r", encoding="utf-8") as f:
+        data = json.load(f)
 
-    # Tworzenie mapy nieba (projekcja Mollweide)
-    fig = plt.figure(figsize=(12, 6))
-    ax = fig.add_subplot(111, projection="mollweide")
+    patterns = data.get("patterns", [])
+    if not patterns:
+        print("⚠️ Brak anomalii do wykreślenia.")
+        return
 
-    # Konwersja RA (0-360) na radiany (0-2π) z przesunięciem
-    ra_rad = np.radians(ra)
-    dec_rad = np.radians(dec)
+    # Przygotowanie danych do wykresu
+    ra_gaia, dec_gaia = [], []
+    ra_cern, dec_cern = [], []
 
-    # Normalizacja kolorów na podstawie anomaly_score
-    sc = ax.scatter(ra_rad, dec_rad, c=scores, cmap="hot", s=100, alpha=0.8, edgecolors="white", linewidth=0.5)
+    for p in patterns:
+        source = p.get("source", "")
+        ra = p.get("ra", 0)
+        dec = p.get("dec", 0)
+        
+        if "GAIA" in source:
+            ra_gaia.append(ra)
+            dec_gaia.append(dec)
+        else:
+            ra_cern.append(ra)
+            dec_cern.append(dec)
 
-    # Dodanie kolorbar
-    cbar = plt.colorbar(sc, orientation="vertical", pad=0.05)
-    cbar.set_label("Anomaly Score", fontsize=10)
+    # Tworzenie ciemnego, kosmicznego wykresu
+    plt.style.use('dark_background')
+    fig, ax = plt.subplots(figsize=(10, 6))
 
-    # Opisy osi
-    ax.set_title("Mapa Nieba – Anomalie Kosmiczne (Gaia + CERN)", fontsize=14)
-    ax.set_xlabel("RA [rad]", fontsize=10)
-    ax.set_ylabel("Dec [rad]", fontsize=10)
+    # Naniesienie punktów z ESA Gaia i CERN LHC
+    if ra_gaia:
+        ax.scatter(ra_gaia, dec_gaia, c='#00f3ff', s=120, label='ESA Gaia (Kosmos)', alpha=0.8, edgecolors='white')
+    if ra_cern:
+        ax.scatter(ra_cern, dec_cern, c='#ff0055', s=120, label='CERN LHC (Mikro)', alpha=0.8, edgecolors='white')
 
-    # Dodanie siatki
-    ax.grid(True, linestyle="--", alpha=0.3)
+    # Stylizacja i opis mapy
+    ax.set_title("AINUMPSA – MAPA ANOMALII WIELOWYMIAROWYCH [1>0]", fontsize=14, pad=15, color='#ffffff')
+    ax.set_xlabel("Współrzędna RA / Masa [M]", fontsize=10)
+    ax.set_ylabel("Współrzędna DEC / Pęd [pt]", fontsize=10)
+    ax.grid(True, linestyle='--', alpha=0.3)
+    ax.legend(loc='upper right')
 
-    # Zapis do pliku
-    output_file = "cosmic_anomalies_map.png"
-    plt.savefig(output_file, dpi=150, bbox_inches="tight")
+    # Zapis pliku PNG
+    plt.savefig(OUTPUT_IMAGE, dpi=150, bbox_inches='tight')
     plt.close()
-    print(f"✅ Zapisano mapę nieba: {output_file}")
 
-# ============================================================
-# KROK 3 – Generowanie raportu tekstowego
-# ============================================================
-def generate_report(anomalies):
-    """Generuje krótki raport tekstowy o znalezionych anomaliach."""
-    if not anomalies:
-        return
+    print(f"✅ Wygenerowano obraz mapy: {OUTPUT_IMAGE}")
 
-    report = f"""
-🌌 RAPORT KOSMICZNYCH ANOMALII
-================================
-Data: {datetime.now().isoformat()}
-Liczba anomalii: {len(anomalies)}
-Najwyższy wynik anomalii: {max([a.get('anomaly_score', 0) for a in anomalies]):.3f}
-Średni wynik anomalii: {np.mean([a.get('anomaly_score', 0) for a in anomalies]):.3f}
-
-Top 3 anomalie:
-"""
-    sorted_anomalies = sorted(anomalies, key=lambda x: x.get("anomaly_score", 0), reverse=True)
-    for i, a in enumerate(sorted_anomalies[:3]):
-        report += f"  {i+1}. RA: {a.get('ra', 0):.2f}, Dec: {a.get('dec', 0):.2f}, Score: {a.get('anomaly_score', 0):.3f}\n"
-
-    with open("cosmic_anomalies_report.txt", "w") as f:
-        f.write(report)
-    print("✅ Zapisano raport tekstowy: cosmic_anomalies_report.txt")
-
-# ============================================================
-# KROK 4 – Główna pętla
-# ============================================================
 if __name__ == "__main__":
-    # Wczytaj anomalie
-    anomalies = load_anomalies()
-
-    if anomalies:
-        # Generuj mapę nieba
-        generate_sky_map(anomalies)
-        # Generuj raport tekstowy
-        generate_report(anomalies)
-        print("✅ Kosmiczny Wizualizator zakończył pracę.")
-    else:
-        print("⚠️ Brak danych – zakończono.")
+    generate_map()
