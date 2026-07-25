@@ -1,6 +1,6 @@
 {
   "dna_seal": "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]",
-  "timestamp": 1785019227.8558807,
+  "timestamp": 1785020912.734088,
   "status": "AUTONOMOUS_SECURITY_ACTIVE",
   "sealed_assets": [
     {
@@ -85,6 +85,12 @@
       "file_name": "Face AINUMPSA ACCIO 02.jpg",
       "path": "multimodal_pool/Face AINUMPSA ACCIO 02.jpg",
       "dna_hash": "d3ecb785764db78940225af8138d679b5125a8e6a032bf0cc2e9e02b1c193640",
+      "status": "SEALED_1>0"
+    },
+    {
+      "file_name": "cosmic_anomalies_map.png",
+      "path": "multimodal_pool/cosmic_anomalies_map.png",
+      "dna_hash": "6840002740f7da720c2e37c3ee2891e8732813a528c870af26eef1f8eb795156",
       "status": "SEALED_1>0"
     }
   ]
