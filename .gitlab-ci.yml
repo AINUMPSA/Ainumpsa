@@ -11,4 +11,11 @@ run-scan:
     - pip install -r requirements.txt || pip install numpy scipy matplotlib
     - python qrng_validator.py
     - python field_visualizer.py
-
+  artifacts:
+    name: "visualizations-$CI_COMMIT_SHORT_SHA"
+    expire_in: 1 week
+    paths:
+      - "*.png"
+      - "*.jpg"
+      - "*.gif"
+      - "*.mp4"
