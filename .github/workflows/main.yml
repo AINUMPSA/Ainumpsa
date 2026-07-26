@@ -109,9 +109,8 @@ jobs:
       - name: 🚀 Commit and Push Updates
         run: |
           git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git config --global user.email 'github-actions[bot]@://github.com'
           git add -A
-          # Dodano [skip ci] w opisie, aby bot nie wywoływał kolejnego, nieskończonego uruchomienia potoku
           git commit -m "autocommit [skip ci]: AINUMPSA DNA Sealed + Cosmic Anomalies [$(date -u +'%Y-%m-%d %H:%M:%S') UTC]" || exit 0
           git pull --rebase origin main
           git push
