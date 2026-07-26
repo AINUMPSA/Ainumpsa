@@ -1,0 +1,14 @@
+image: python:3.10-slim
+
+stages:
+  - test
+
+run-scan:
+  stage: test
+  before_script:
+    - apt-get update && apt-get install -y git libgl1 libglib2.0-0
+  script:
+    - pip install -r requirements.txt || pip install numpy scipy matplotlib
+    - python qrng_validator.py
+    - python field_visualizer.py
+
