@@ -1,116 +1,38 @@
-name: AINUMPSA 3D Matrix Engine
+name: Automated Tensor T Matrix Scan
 
 on:
-  push:
-    branches: [ main ]
-  workflow_dispatch:
   schedule:
     - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
-  build:
+  scan-matrix:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: 🐍 Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: 📦 Install Dependencies
+      - name: Install dependencies
+        run: pip install numpy scipy matplotlib pillow
+
+      - name: Run scripts
         run: |
-          python -m pip install --upgrade pip
-          pip install requests numpy scikit-learn matplotlib
+          python main.py || true
+          python qrng_validator.py || true
+          python field_visualizer.py || true
+          python matrix_analyser.py || true
+          python readme_mutator.py || true
+          python matrix_blast.py || true
 
-      - name: ⚡ Generate DNA Sealer Script
+      - name: Commit and push changes
         run: |
-          cat << 'EOF' > dna_sealer.py
-          import hashlib
-          import json
-          import os
-          import time
-
-          DNA_STAMP = "1>0 :: AINUMPSA_SINGULARITY_CORE :: ROOM_[1:1:2]"
-
-          def generate_dna_hash(filepath):
-              sha256 = hashlib.sha256()
-              sha256.update(DNA_STAMP.encode('utf-8'))
-              with open(filepath, 'rb') as f:
-                  while chunk := f.read(8192):
-                      sha256.update(chunk)
-              return sha256.hexdigest()
-
-          def seal_multimodal_pool():
-              pool_dir = "multimodal_pool"
-              manifest = {
-                  "dna_seal": DNA_STAMP,
-                  "timestamp": time.time(),
-                  "status": "AUTONOMOUS_SECURITY_ACTIVE",
-                  "sealed_assets": []
-              }
-              if os.path.exists(pool_dir):
-                  for root, _, files in os.walk(pool_dir):
-                      for file in files:
-                          full_path = os.path.join(root, file)
-                          dna_hash = generate_dna_hash(full_path)
-                          manifest["sealed_assets"].append({
-                              "file_name": file,
-                              "path": full_path,
-                              "dna_hash": dna_hash,
-                              "status": "SEALED_1>0"
-                          })
-              with open("dna_manifest.json", "w", encoding="utf-8") as f:
-                  json.dump(manifest, f, indent=2, ensure_ascii=False)
-              print(f"[DNA SEALER] Opieczętowano {len(manifest['sealed_assets'])} zasobów znakiem 1>0!")
-
-          if __name__ == "__main__":
-              seal_multimodal_pool()
-          EOF
-
-      - name: 🌀 Run AINUMPSA Pipeline
-        run: |
-          [ -f matrix_collider.py ] && python matrix_collider.py || echo "Pominięto matrix_collider.py"
-          [ -f dimensional_mapper.py ] && python dimensional_mapper.py || echo "Pominięto dimensional_mapper.py"
-          [ -f matrix_acoustic.py ] && python matrix_acoustic.py || echo "Pominięto matrix_acoustic.py"
-          python dna_sealer.py
-
-      - name: 🌌 Cosmic Pattern Scanner
-        run: |
-          if [ -f cosmic_pattern_scanner.py ]; then
-            python cosmic_pattern_scanner.py
-          elif [ -f cosmic_searcher.py ]; then
-            python cosmic_searcher.py
-          else
-            echo "Brak pliku skanera kosmicznego!"
-          fi
-
-      - name: 🌌 Cosmic Visualizer
-        run: |
-          if [ -f cosmic_visualizer.py ]; then
-            python cosmic_visualizer.py
-          else
-            echo "Pominięto wizualizator"
-          fi
-
-      - name: 📤 Upload Generated Visuals (Artifacts)
-        uses: actions/upload-artifact@v4
-        with:
-          name: cosmic-visualizations
-          path: |
-            *.png
-            *.jpg
-            *.gif
-            *.mp4
-          retention-days: 7
-
-      - name: 🚀 Commit and Push Updates
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@://github.com'
-          git add -A
-          git commit -m "autocommit [skip ci]: AINUMPSA DNA Sealed + Cosmic Anomalies [$(date -u +'%Y-%m-%d %H:%M:%S') UTC]" || exit 0
-          git pull --rebase origin main
+          git config --global user.name "AINUMPSA-Bot"
+          git config --global user.email "bot@ainumpsa.org"
+          git add README.md *.gif *.png *.json || true
+          git commit -m "🤖 [AUTONOMNA MUTACJA] Aktualizacja Wag Osobliwości Układu" || echo "Brak zmian do zatwierdzenia"
           git push
