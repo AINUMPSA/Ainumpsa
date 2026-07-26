@@ -6,9 +6,11 @@ stages:
 run-scan:
   stage: test
   before_script:
-    - apt-get update && apt-get install -y git libgl1 libglib2.0-0
+    # Instalacja zależności systemowych (w tym bibliotek graficznych, FFmpeg oraz curl)
+    - apt-get update && apt-get install -y git libgl1 libglib2.0-0 ffmpeg curl
   script:
-    - pip install -r requirements.txt || pip install numpy scipy matplotlib
+    # Automatyczna instalacja bibliotek z pliku requirements.txt lub podanych ręcznie
+    - pip install -r requirements.txt || pip install numpy scipy matplotlib requests
     - python qrng_validator.py
     - python field_visualizer.py
   artifacts:
