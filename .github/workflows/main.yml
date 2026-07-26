@@ -1,41 +1,43 @@
-name: Automated Tensor T Matrix Scan
+name: AINUMPSA Matrix Engine Pipeline
 
 on:
+  push:
+    branches: [ main ]
   schedule:
-    - cron: '0 */6 * * *'
-  workflow_dispatch:
+    - cron: '0 */6 * * *' # Uruchamia się automatycznie co 6 godzin
+  workflow_dispatch: # Pozwala na ręczne uruchomienie z zakładki Actions
 
 jobs:
-  scan-matrix:
+  build-and-run:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install numpy scipy matplotlib pillow
-
-      - name: Run scripts
         run: |
-          python main.py || true
-          python qrng_validator.py || true
-          python field_visualizer.py || true
-          python matrix_analyser.py || true
-          python readme_mutator.py || true
-          python matrix_blast.py || true
+          python -m pip install --upgrade pip
+          pip install numpy matplotlib requests
+
+      - name: Run Matrix Engine Simulation
+        run: |
+          if [ -f main.py ]; then
+            python main.py
+          fi
 
       - name: Commit and push changes
         run: |
-          git config --global user.name "AINUMPSA-Bot"
-          git config --global user.email "bot@ainumpsa.org"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add README.md *.gif *.png *.json || true
           git commit -m "🤖 [AUTONOMNA MUTACJA] Aktualizacja Wag Osobliwości Układu" || echo "Brak zmian do zatwierdzenia"
           git push
-          
-    - name: Run social publisher
-      run: python social_publisher.py
+
+      - name: Run social publisher
+        run: python social_publisher.py
