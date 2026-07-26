@@ -36,3 +36,6 @@ jobs:
           git add README.md *.gif *.png *.json || true
           git commit -m "🤖 [AUTONOMNA MUTACJA] Aktualizacja Wag Osobliwości Układu" || echo "Brak zmian do zatwierdzenia"
           git push
+          
+    - name: Run social publisher
+      run: python social_publisher.py
