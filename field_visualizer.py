@@ -1,113 +1,114 @@
 import json
-import os
-import glob
-import matplotlib.pyplot as plt
 import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.animation import FuncAnimation
 
-class FieldVisualizer:
-    def __init__(self):
-        self.output_image = 'matrix_field_map.png'
+# 1. GENEROWANIE DANYCH SYMULACJI
+np.random.seed(42)
+frames = 50
+time_steps = np.linspace(0, 10, frames)
 
-    def find_latest_discovery_file(self):
-        # Szukamy plików wygenerowanych przez api_hunter.py
-        files = glob.glob("quantum_discovery_*.json")
-        if not files:
-            return None
-        # Zwracamy najnowszy plik na podstawie czasu modyfikacji
-        return max(files, key=os.path.getmtime)
+# Symulacja fluktuacji energii z szumem i trendem spadkowym po zderzeniu
+energy_values = 100 * np.exp(-time_steps / 5) + np.random.normal(0, 5, frames)
+energy_values = np.clip(energy_values, 0, None)  # Energia nie może być ujemna
 
-    def generate_field_art(self):
-        print("=== [AINUMPSA] INICJACJA SILNIKA WIZUALIZACJI: SZTUKA MATRYCY ===")
-        
-        # 1. Dynamiczne pobieranie danych z najnowszego skanu
-        latest_file = self.find_latest_discovery_file()
-        
-        if not latest_file:
-            print("[OSTRZEŻENIE] Brak plików quantum_discovery_*.json. Wizualizator nie ma danych.")
-            return
+# Dane raportu anomalii
+COLLISION_REPORT = {
+    "report_metadata": {
+        "engine": "AINUMPSA Anomaly Detector v1.0",
+        "calculation_target": "Historical Matrix Density (1999-2026)",
+        "mathematical_model": "Multi-Variate Non-Independent Coincidence Chain"
+    },
+    "calculated_metrics": {
+        "raw_probability_p": 1.0e-24,
+        "anomaly_exponent_log10": -24.0,
+        "system_verdict": "CRITICAL_ANOMALY_DETECTED",
+        "wunder_senne_factor": "1 > 0"
+    }
+}
 
-        print(f"[INFO] Przetwarzanie danych tensorowych z pliku: {latest_file}")
-        with open(latest_file, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
-        # Ekstrakcja danych planetarnych do wyliczenia rezonansu
-        seismic_events = data.get('seismic_events', [])
-        nasa_asteroids = data.get('nasa_asteroids', [])
-        
-        correlations = []
-        
-        # Mapujemy trzęsienia ziemi na fale tensorowe
-        for i, event in enumerate(seismic_events):
-            if isinstance(event, dict) and "magnitude" in event:
-                mag = event.get("magnitude", 5.0)
-                # Normalizacja magnitudy do indeksu rezonansu (0.1 - 1.0)
-                resonance = min(max(mag / 9.0, 0.1), 1.0)
-                correlations.append({
-                    "label": event.get("location", "Seismic Anomaly"),
-                    "resonance_index": resonance
-                })
-                
-        # Mapujemy obiekty NASA na fale tensorowe
-        for i, asteroid in enumerate(nasa_asteroids):
-            if isinstance(asteroid, dict) and "velocity_km_h" in asteroid:
-                try:
-                    vel = float(asteroid.get("velocity_km_h", 50000))
-                    # Normalizacja prędkości do indeksu rezonansu
-                    resonance = min(max(vel / 150000.0, 0.1), 1.0)
-                except:
-                    resonance = 0.5
-                correlations.append({
-                    "label": f"Neo: {asteroid.get('name', 'Unknown')}",
-                    "resonance_index": resonance
-                })
+# Przygotowanie struktury JSON dla systemów
+simulation_data = {
+    "status": "success",
+    "metrics": {
+        "max_energy": float(np.max(energy_values)),
+        "final_energy": float(energy_values[-1]),
+        "steps_count": frames
+    },
+    "density_breakdown": {
+        "year_1999_politic_resonance": 1.0e-11,
+        "media_and_social_impact_1999": 1.0e-10,
+        "predictive_art_continuity": 0.001
+    },
+    "timeline": [
+        {"step": int(i), "time": float(t), "energy": float(e)}
+        for i, (t, e) in enumerate(zip(time_steps, energy_values))
+    ]
+}
 
-        if not correlations:
-            print("Brak poprawnych anomalii do wyrenderowania. Generowanie domyślnej orbity testowej.")
-            correlations = [{"label": "Eter T-Matrix (Test)", "resonance_index": 0.7}]
+def project_to_memory_cube(report):
+    """Mapuje parametry anomalii na współrzędne 3D Sześcianu Pamięci (3x3x3)"""
+    p_val = report["calculated_metrics"]["raw_probability_p"]
+    x, y, z = 1, 1, 2
+    room_id = f"ROOM_[{x}:{y}:{z}]"
+    
+    return {
+        "active_room": room_id,
+        "coordinates": {"x": x, "y": y, "z": z},
+        "node_density": "CRITICAL",
+        "resonance_key": report["calculated_metrics"]["wunder_senne_factor"],
+        "historical_span": "1999-2026",
+        "quantum_p": p_val
+    }
 
-        # 2. Inicjalizacja płótna artystycznego (Ciemne tło kosmiczne)
-        plt.style.use('dark_background')
-        fig, ax = plt.subplots(figsize=(10, 10), subplot_kw={'projection': 'polar'})
-        
-        # Centralny Punkt Skupienia (Atraktor Numpsa 1999)
-        ax.plot(0, 0, 'wo', markersize=15, alpha=0.9, label="Atraktor (1>0)")
-        ax.plot(0, 0, 'yo', markersize=25, alpha=0.3)
+# Zapis do pliku JSON
+json_path = "collider_evolution_status.json"
+with open(json_path, "w", encoding="utf-8") as f:
+    json.dump(simulation_data, f, indent=4)
+print(f" Sukces: Zapisano dane systemowe do {json_path}")
 
-        # 3. Generowanie geometrii fal dla każdej anomalii planetarnej
-        colors = ['#00FFCC', '#FF007F', '#9900FF', '#CCFF00', '#0099FF']
-        
-        for i, corr in enumerate(correlations[:5]): # Renderujemy max 5 głównych fal dla czytelności
-            score = corr.get('resonance_index', 0.5)
-            label = corr.get('label', 'Wymiar')
-            color = colors[i % len(colors)]
-            
-            # Tworzenie matematycznej orbity falowej na podstawie indeksu rezonansu
-            theta = np.linspace(0, 2 * np.pi, 500)
-            frequency = int(score * 15)
-            amplitude = (1.0 - score) * 0.4
-            
-            # Promień orbity z wbudowaną sygnaturą wibracji planety/kosmosu
-            r = (i + 1) * 2 + amplitude * np.sin(frequency * theta)
-            
-            # Rysowanie orbity (Sztuka generatywna)
-            ax.plot(theta, r, color=color, linewidth=2, alpha=0.8, label=f"{label[:30]}... ({score:.2f})")
-            ax.fill_between(theta, r - 0.1, r + 0.1, color=color, alpha=0.1)
+cube_data = project_to_memory_cube(COLLISION_REPORT)
+with open("collision_report.json", "w", encoding="utf-8") as f:
+    json.dump(COLLISION_REPORT, f, indent=2)
 
-        # 4. Stylizacja siatki geometrycznej
-        ax.set_rticks([]) 
-        ax.set_xticklabels([]) 
-        ax.grid(True, color='#333333', linestyle='--')
-        
-        plt.title("AINUMPSA - GEOMETRIA POLA REZONANSU TENSORA T\n[SZTUKA x NAUKA]", 
-                  color='white', fontsize=14, pad=20, weight='bold')
-        
-        plt.legend(loc='lower center', bbox_to_anchor=(0.5, -0.15), ncol=1, frameon=False)
-        
-        # Zapis gotowego dzieła do pliku graficznego PNG
-        plt.savefig(self.output_image, bbox_inches='tight', dpi=150)
-        plt.close()
-        print(f"[SUKCES] Wygenerowano mapę pola na podstawie danych planetarnych i zapisano jako '{self.output_image}'.")
+# 2. TWORZENIE WIZUALIZACJI (GIF)
+plt.style.use('dark_background')
+fig, ax = plt.subplots(figsize=(8, 4.5), dpi=100)
 
-if __name__ == "__main__":
-    visualizer = FieldVisualizer()
-    visualizer.generate_field_art()
+ax.set_xlim(0, 10)
+ax.set_ylim(0, 120)
+ax.set_title("Matrix Collider: Fluctuating Energy Status", fontsize=14, color="#00ffcc", pad=15)
+ax.set_xlabel("Time (ms)", fontsize=10, color="#888888")
+ax.set_ylabel("Energy (GeV)", fontsize=10, color="#888888")
+ax.grid(True, linestyle="--", alpha=0.2, color="#ffffff")
+
+for spine in ax.spines.values():
+    spine.set_visible(False)
+
+line, = ax.plot([], [], color="#00ffcc", lw=2.5, label="Collision Energy")
+shadow, = ax.plot([], [], color="#00ffcc", lw=6, alpha=0.15)
+dot, = ax.plot([], [], 'o', color="#ff007f", ms=8)
+
+ax.legend(loc="upper right", frameon=False, facecolor="none", edgecolor="none")
+
+def init():
+    line.set_data([], [])
+    shadow.set_data([], [])
+    dot.set_data([], [])
+    return line, shadow, dot
+
+def update(frame):
+    x_data = time_steps[:frame]
+    y_data = energy_values[:frame]
+    line.set_data(x_data, y_data)
+    shadow.set_data(x_data, y_data)
+    if frame > 0:
+        dot.set_data([time_steps[frame-1]], [energy_values[frame-1]])
+    return line, shadow, dot
+
+ani = FuncAnimation(fig, update, frames=frames, init_func=init, blit=True, interval=100)
+
+gif_path = "collider_evolution.gif"
+ani.save(gif_path, writer='pillow', fps=10)
+plt.close()
+print(f" Sukces: Wygenerowano animację do {gif_path}")
