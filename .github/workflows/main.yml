@@ -1,14 +1,14 @@
-name: AINUMPSA Matrix Engine Pipeline
+name: Automated Tensor T Matrix Scan
 
 on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 */6 * * *' # Uruchamia się automatycznie co 6 godzin
-  workflow_dispatch: # Pozwala na ręczne uruchomienie z zakładki Actions
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
 jobs:
-  build-and-run:
+  scan-matrix:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,13 +23,16 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install numpy matplotlib requests
+          pip install numpy scipy matplotlib pillow requests
 
-      - name: Run Matrix Engine Simulation
+      - name: Run AINUMPSA scripts
         run: |
-          if [ -f main.py ]; then
-            python main.py
-          fi
+          python main.py || true
+          python qrng_validator.py || true
+          python field_visualizer.py || true
+          python matrix_analyser.py || true
+          python readme_mutator.py || true
+          python matrix_blast.py || true
 
       - name: Commit and push changes
         run: |
