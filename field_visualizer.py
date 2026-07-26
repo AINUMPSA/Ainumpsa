@@ -112,3 +112,10 @@ gif_path = "collider_evolution.gif"
 ani.save(gif_path, writer='pillow', fps=10)
 plt.close()
 print(f" Sukces: Wygenerowano animację do {gif_path}")
+import matplotlib.pyplot as plt
+
+# Ustawienie ciemnego tła (idealne do wizualizacji matryc/pól)
+plt.style.use('dark_background')
+
+# Wyższa rozdzielczość (dpi=200 lub 300 zamiast domyślnego 100)
+fig, ax = plt.subplots(figsize=(8, 8), dpi=200)
