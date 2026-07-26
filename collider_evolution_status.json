@@ -5,6 +5,11 @@
         "final_energy": 4.7183275468476005,
         "steps_count": 50
     },
+    "density_breakdown": {
+        "year_1999_politic_resonance": 1e-11,
+        "media_and_social_impact_1999": 1e-10,
+        "predictive_art_continuity": 0.001
+    },
     "timeline": [
         {
             "step": 0,
