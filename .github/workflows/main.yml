@@ -95,12 +95,23 @@ jobs:
             echo "Pominięto wizualizator"
           fi
 
+      - name: 📤 Upload Generated Visuals (Artifacts)
+        uses: actions/upload-artifact@v4
+        with:
+          name: cosmic-visualizations
+          path: |
+            *.png
+            *.jpg
+            *.gif
+            *.mp4
+          retention-days: 7
+
       - name: 🚀 Commit and Push Updates
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add -A
-          git commit -m "autocommit: AINUMPSA DNA Sealed + Cosmic Anomalies [$(date -u +'%Y-%m-%d %H:%M:%S') UTC]" || exit 0
+          # Dodano [skip ci] w opisie, aby bot nie wywoływał kolejnego, nieskończonego uruchomienia potoku
+          git commit -m "autocommit [skip ci]: AINUMPSA DNA Sealed + Cosmic Anomalies [$(date -u +'%Y-%m-%d %H:%M:%S') UTC]" || exit 0
           git pull --rebase origin main
           git push
-
