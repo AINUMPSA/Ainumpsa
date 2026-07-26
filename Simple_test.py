@@ -16,31 +16,21 @@ except FileNotFoundError:
     print("❌ Brak pliku crypto_prices.json – uruchom najpierw crypto_collector.py")
     exit(1)
 
-# Tworzymy sztuczne pole 3D z danych cenowych (używamy cen jako wartości w siatce)
-# Dla uproszczenia – tworzymy siatkę 1D, która będzie reprezentować szereg czasowy
-# Można to rozszerzyć do 3D, ale na początek wystarczy analiza 1D
+# Definiujemy rozmiar siatki 3D na podstawie dostępnych cen (maksymalnie 10x10x10)
+size = min(10, len(prices))
+prices_reduced = np.array(prices[:size])
 
-x = np.arange(len(prices))
-y = np.array(prices)
+# Tworzymy czyste pole wektorowe 3D (X, Y, Z, 3)
+L = np.zeros((size, size, size, 3))
 
-# Dla potrzeb dywergencji (która jest operatorem 3D) – przekształcamy dane na siatkę 3D
-# np. powtarzamy szereg czasowy w dwóch innych wymiarach jako stałą
-size = min(10, len(prices))  # ograniczamy do 10 punktów dla prostoty
-prices_reduced = prices[:size]
+# Wypełniamy składowe pola wartościami cen dla celów demonstracji dywergencji
+for i in range(size):
+    L[i, :, :, 0] = prices_reduced[i]  # Składowa X zależy od ceny
+    L[:, i, :, 1] = prices_reduced[i]  # Składowa Y zależy od ceny
+    L[:, :, i, 2] = prices_reduced[i]  # Składowa Z zależy od ceny
 
-X, Y, Z = np.meshgrid(np.arange(size), np.arange(size), np.arange(size), indexing='ij')
-L = np.stack([
-    np.full_like(X, prices_reduced)[..., np.newaxis],
-    np.full_like(Y, prices_reduced)[..., np.newaxis],
-    np.full_like(Z, prices_reduced)[..., np.newaxis]
-], axis=-1).squeeze()  # upraszczamy do postaci 3D
-
-# Liczymy dywergencję (dla uproszczenia – na danych 1D przekształconych na 3D)
-# UWAGA: To tylko demonstracja – prawdziwa analiza będzie wymagać lepszego przekształcenia
-dx = 1
-dy = 1
-dz = 1
-
+# Liczymy dywergencję (operator 3D)
+dx, dy, dz = 1, 1, 1
 dLx = np.gradient(L[..., 0], dx, axis=0)
 dLy = np.gradient(L[..., 1], dy, axis=1)
 dLz = np.gradient(L[..., 2], dz, axis=2)
