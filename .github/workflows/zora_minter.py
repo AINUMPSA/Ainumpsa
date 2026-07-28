@@ -7,6 +7,7 @@ def run_zora_mint():
     # Pobranie klucza prywatnego z Secrets
     private_key = os.environ.get("ZORA_PRIVATE_KEY")
     
+    # Sprawdzenie, czy klucz istnieje i nie jest domyślny
     if not private_key or private_key == "YOUR_PRIVATE_KEY_HERE":
         print("[SKIP] Brak klucza prywatnego w ZORA_PRIVATE_KEY. Pomijam mintowanie.")
         print("[INFO] Tryb symulacji: MINT_SIMULATED (rezonans 1 > 0 zachowany).")
@@ -14,11 +15,11 @@ def run_zora_mint():
 
     print(f"[OK] Klucz prywatny wykryty (zakodowany). Łączenie z siecią Zora...")
     
-    # --- SYMULACJA TRANSAKCJI (Tu normalnie byłby kod Web3.py) ---
+    # --- SYMULACJA TRANSAKCJI ---
     print("[INFO] Przygotowywanie metadanych NFT (Hawking Radiation Geometry)...")
     time.sleep(1)
     
-    # Udajemy, że wysyłamy transakcję
+    # Udajemy, że generujemy hash transakcji
     tx_hash = "0x" + os.urandom(32).hex() 
     
     print(f"[SUCCESS] Transakcja wysłana!")
