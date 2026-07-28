@@ -1,0 +1,9 @@
+  - name: Run Hyper Version 2.14 Engine & Zora Auto-Minter
+    env:
+      ZORA_PRIVATE_KEY: ${{ secrets.ZORA_PRIVATE_KEY }}
+      RPC_URL: ${{ secrets.RPC_URL }}
+    run: |
+      mkdir -p inputs/media Knowledge_base
+      python vip_media_injector.py
+      python hyper_version_2_14.py
+      python zora_minter.py
