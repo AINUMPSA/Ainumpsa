@@ -3,12 +3,7 @@ name: Automated Tensor T Matrix Scan
 on:
   push:
     branches: [ main ]
-  schedule:
-    - cron: '0 */6 * * *'
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   scan-matrix:
@@ -24,7 +19,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account
+        run: pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account opencv-python
 
       - name: Prepare folders
         run: mkdir -p inputs/media Knowledge_base nft_ready
@@ -38,10 +33,13 @@ jobs:
       - name: Run Hyper Version 2.14 Engine
         run: python hyper_version_2_14.py || true
 
-      - name: Run Grok Radiation Engine
+      - name: Grok → 10 Wersji (Shadow in Art)
         env:
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
-        run: python grok_radiator.py || true
+        run: python grok_10_versions.py || true
+
+      - name: Run Matrix Collider (generates 10 versions)
+        run: python matrix_collider.py || true
 
       - name: Mutate README
         run: python readme_mutator.py || true
@@ -56,9 +54,7 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          
           git add nft_ready/ Knowledge_base/ README.md || true
-          
           if git diff --staged --quiet; then
             echo "[INFO] Brak nowych zmian do zapisania."
           else

@@ -1,83 +1,105 @@
-import json
 import os
+import json
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
+from datetime import datetime
+from PIL import Image, ImageFilter, ImageEnhance
 
-# 1. GENEROWANIE DANYCH SYMULACJI
-np.random.seed(42)
-frames = 50
-time_steps = np.linspace(0, 10, frames)
-# Symulacja fluktuacji energii z szumem i trendem spadkowym po zderzeniu
-energy_values = 100 * np.exp(-time_steps / 5) + np.random.normal(0, 5, frames)
-energy_values = np.clip(energy_values, 0, None)  # Energia nie może być ujemna
+print("[START] Inicjalizacja Matrix Collider – 10 wersji...")
 
-# Przygotowanie struktury JSON dla systemów
-simulation_data = {
-    "status": "success",
-    "metrics": {
-        "max_energy": float(np.max(energy_values)),
-        "final_energy": float(energy_values[-1]),
-        "steps_count": frames
-    },
-    "timeline": [
-        {"step": int(i), "time": float(t), "energy": float(e)}
-        for i, (t, e) in enumerate(zip(time_steps, energy_values))
+# 1. Sprawdź, czy istnieje obraz wejściowy z inputs/media/
+input_image_path = None
+if os.path.exists("inputs/media"):
+    files = [f for f in os.listdir("inputs/media") if f.endswith(('.jpg', '.png', '.jpeg'))]
+    if files:
+        input_image_path = os.path.join("inputs/media", files[0])
+        print(f"[INFO] Znaleziono obraz wejściowy: {input_image_path}")
+
+# 2. Wczytaj 10 zestawów parametrów od Groka
+params_list = []
+if os.path.exists("grok_10_versions.json"):
+    with open("grok_10_versions.json", "r") as f:
+        params_list = json.load(f)
+        print(f"[INFO] Wczytano {len(params_list)} zestawów parametrów od Groka.")
+
+# 3. Jeśli brak parametrów – użyj domyślnych (10 różnych stylów)
+if not params_list:
+    params_list = [
+        {"style": "surrealism", "colors": ["#FFD700", "#FF8C00", "#4A90D9"], "composition": "spiral"},
+        {"style": "cubism", "colors": ["#FF5733", "#33FF57", "#3357FF"], "composition": "symmetry"},
+        {"style": "abstract", "colors": ["#FF33A8", "#33FFF5", "#F5FF33"], "composition": "chaos"},
+        {"style": "expressionism", "colors": ["#8B0000", "#FF4500", "#FFD700"], "composition": "radial"},
+        {"style": "cosmic", "colors": ["#0B0B3B", "#1A1A5E", "#3A3A8A"], "composition": "spiral"},
+        {"style": "minimalism", "colors": ["#FFFFFF", "#808080", "#000000"], "composition": "grid"},
+        {"style": "pop_art", "colors": ["#FF0000", "#00FF00", "#0000FF"], "composition": "dots"},
+        {"style": "impressionism", "colors": ["#FFB6C1", "#FFD700", "#98FB98"], "composition": "blur"},
+        {"style": "futurism", "colors": ["#FF00FF", "#00FFFF", "#FFFF00"], "composition": "dynamic"},
+        {"style": "kubizm", "colors": ["#8B4513", "#D2B48C", "#F5DEB3"], "composition": "fragments"}
     ]
+    print("[INFO] Użyto domyślnych 10 stylów.")
+
+# 4. Generowanie 10 wersji
+os.makedirs("variant_images", exist_ok=True)
+
+for i, params in enumerate(params_list[:10]):  # ograniczamy do 10
+    try:
+        print(f"[INFO] Generowanie wersji {i+1}: {params.get('style', 'default')}")
+
+        # Jeśli istnieje obraz wejściowy – użyj go, w przeciwnym razie wygeneruj losowe dane
+        if input_image_path and os.path.exists(input_image_path):
+            img = Image.open(input_image_path).convert('RGB')
+            # Przekształcenia w zależności od stylu
+            if params.get('style') == 'surrealism':
+                img = img.filter(ImageFilter.EMBOSS)
+            elif params.get('style') == 'cubism':
+                img = img.resize((img.width // 4, img.height // 4)).resize((img.width, img.height), Image.NEAREST)
+            elif params.get('style') == 'impressionism':
+                img = img.filter(ImageFilter.GaussianBlur(radius=3))
+            elif params.get('style') == 'abstract':
+                enhancer = ImageEnhance.Color(img)
+                img = enhancer.enhance(np.random.uniform(0.5, 1.5))
+            # Konwersja do numpy dla matplotlib
+            data = np.array(img)
+        else:
+            # Generowanie losowego pola
+            data = np.random.rand(100, 100) * 10
+
+        # Dodanie losowego przesunięcia, aby każda wersja była unikalna
+        random_offset = np.random.uniform(-0.5, 0.5)
+        data_modified = data + random_offset
+
+        # Wybór colormap na podstawie kolorów
+        cmap = params.get('colors', ['#FFD700', '#FF8C00', '#4A90D9'])
+        # Użyj pierwszego koloru jako nazwy cmap (lub 'plasma' jako domyślny)
+        cmap_name = 'plasma'  # domyślnie
+
+        # Generowanie obrazu
+        plt.figure(figsize=(8, 8))
+        plt.imshow(data_modified, cmap=cmap_name, interpolation='bilinear')
+        plt.axis('off')
+
+        # Dodanie tytułu z datą i stylem
+        title = f"AINUMPSA – {params.get('style', 'style')}\n{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"
+        plt.title(title, fontsize=10, color='white', backgroundcolor='black')
+
+        # Zapis obrazu jako variant_{i+1}.png
+        filename = f"variant_{i+1}.png"
+        plt.savefig(filename, dpi=150, bbox_inches='tight', pad_inches=0.1)
+        plt.close()
+        print(f"[SUCCESS] Zapisano {filename}")
+
+    except Exception as e:
+        print(f"[ERROR] Błąd przy generowaniu wersji {i+1}: {e}")
+
+# 5. Zapisanie podsumowania
+summary = {
+    "timestamp": datetime.now().isoformat(),
+    "input_image": input_image_path,
+    "versions_generated": len(params_list[:10]),
+    "styles": [p.get('style') for p in params_list[:10]]
 }
+with open("collider_summary.json", "w") as f:
+    json.dump(summary, f, indent=2)
 
-# Zapis do pliku JSON
-json_path = "collider_evolution_status.json"
-with open(json_path, "w") as f:
-    json.dump(simulation_data, f, indent=4)
-print(f" Sukces: Zapisano dane systemowe do {json_path}")
-
-# 2. TWORZENIE ATRAKCYJNEJ WIZUALIZACJI (GIF)
-plt.style.use('dark_background')  # Nowoczesny, ciemny styl developerski
-fig, ax = plt.subplots(figsize=(8, 4.5), dpi=100)
-
-# Konfiguracja estetyczna wykresu
-ax.set_xlim(0, 10)
-ax.set_ylim(0, 120)
-ax.set_title("Matrix Collider: Fluctuating Energy Status", fontsize=14, color="#00ffcc", pad=15)
-ax.set_xlabel("Time (ms)", fontsize=10, color="#888888")
-ax.set_ylabel("Energy (GeV)", fontsize=10, color="#888888")
-ax.grid(True, linestyle="--", alpha=0.2, color="#ffffff")
-
-# Usunięcie zbędnych ramek dla czystego wyglądu
-for spine in ax.spines.values():
-    spine.set_visible(False)
-
-# Inicjalizacja elementów wykresu
-line, = ax.plot([], [], color="#00ffcc", lw=2.5, label="Collision Energy")
-shadow, = ax.plot([], [], color="#00ffcc", lw=6, alpha=0.15) # Efekt poświaty (glow)
-dot, = ax.plot([], [], 'o', color="#ff007f", ms=8) # Pulsujący punkt czołowy
-
-ax.legend(loc="upper right", frameon=False, facecolor="none", edgecolor="none")
-
-def init():
-    line.set_data([], [])
-    shadow.set_data([], [])
-    dot.set_data([], [])
-    return line, shadow, dot
-
-def update(frame):
-    x = time_steps[:frame]
-    y = energy_values[:frame]
-    
-    line.set_data(x, y)
-    shadow.set_data(x, y)
-    
-    if frame > 0:
-        dot.set_data([time_steps[frame-1]], [energy_values[frame-1]])
-        
-    return line, shadow, dot
-
-# Generowanie animacji
-ani = FuncAnimation(fig, update, frames=frames, init_func=init, blit=True, interval=100)
-
-# Zapis do pliku GIF
-gif_path = "collider_evolution.gif"
-ani.save(gif_path, writer='pillow', fps=10)
-plt.close()
-print(f" Sukces: Wygenerowano animację do {gif_path}")
+print("[INFO] Zapisano collider_summary.json")
+print("[FINISHED] Matrix Collider zakończył pracę – wygenerowano 10 wersji.")
