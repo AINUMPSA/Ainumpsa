@@ -5,7 +5,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
-# Uprawnienia wymagane do zapisywania i wysyłania zmian (push) do repozytorium
+# WYMAGANE UPRAWNIENIA DLA BOTA DO ROBIENIA PUSH
 permissions:
   contents: write
 
@@ -49,20 +49,19 @@ jobs:
       - name: Run Social Publisher
         run: python social_publisher.py || true
 
-      # NOWY KROK: Zapisywanie wygenerowanego folderu nft_ready na stałe w GitHubie
-      - name: Commit and Push Generated NFT
+      # AUTOMATYCZNY COMMIT I PUSH DLA DANYCH NFT I WIZUALIZACJI
+      - name: Commit and Push Generated Artifacts
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Dodanie folderu nft_ready oraz ewentualnych zmian w README / Knowledge_base
+          # Śledzenie katalogów z wynikami
           git add nft_ready/ Knowledge_base/ README.md || true
           
-          # Sprawdzenie, czy są jakieś nowe pliki do zapisania
           if git diff --staged --quiet; then
-            echo "[INFO] Brak nowych plików NFT do zacommitowania."
+            echo "[INFO] Brak nowych zmian do wygenerowania."
           else
-            git commit -m "auto: Grok prepared NFT in nft_ready/ [skip ci]"
+            git commit -m "auto: matrix scan artifact generated in nft_ready/ [skip ci]"
             git push
-            echo "[SUCCESS] Folder nft_ready został pomyślnie zapisany w repozytorium! 🎉"
+            echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
