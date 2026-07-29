@@ -46,6 +46,6 @@ jobs:
           
           # 7. Wypalenie NFT na Zora
           python zora_minter.py || true
-          
+          # python zora_minter.py || true
           # 8. Publikacja społecznościowa
           python social_publisher.py || true
