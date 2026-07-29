@@ -1,3 +1,9 @@
+import time
+import numpy as np
+
+# Dodaj tę linijkę, aby za każdym razem generować inną geometrię:
+np.random.seed(int(time.time()))
+
 import os
 import json
 import math
