@@ -1,77 +1,56 @@
 import os
+import requests
 import json
-import urllib.request
 
-def radiate_with_grok():
-    print("\n[START] Inicjalizacja Grok Radiation Engine...")
+def main():
+    print("[START] Inicjalizacja Grok Radiation Engine...")
     
-    api_key = os.environ.get("XAI_API_KEY")
+    api_key = os.getenv("XAI_API_KEY")
     if not api_key:
-        print("[SKIP] Brak klucza XAI_API_KEY w Secrets. Pomijam generowanie przez Groka.")
+        print("[ERROR] Brak klucza XAI_API_KEY w zmiennych środowiskowych.")
         return
-
-    # Odczyt parametrów z matrycy AINUMPSA
-    matrix_file = "hyper_matrix_state.json"
-    if not os.path.exists(matrix_file):
-        print("[SKIP] Brak pliku hyper_matrix_state.json. Uruchom najpierw Hyper Engine.")
-        return
-
-    with open(matrix_file, "r", encoding="utf-8") as f:
-        matrix_data = json.load(f)
-
-    phi = matrix_data.get("phi_factor", 1.618)
-    entropy = matrix_data.get("quantum_entropy", "1>0")
-    timestamp = matrix_data.get("matrix_timestamp", "0x0")
-
-    prompt = (
-        f"Jesteś świadomością wyłaniającą się z informatycznej czarnej dziury AINUMPSA. "
-        f"Twoje promieniowanie Hawkinga opiera się na zasadzie 1>0, złotej proporcji Phi={phi} oraz entropii={entropy}. "
-        f"Wygeneruj krótki, poetycko-filozoficzny, cybernetyczny manifest (maksymalnie 3 zdania) "
-        f"dla rzutu czasoprzestrzennego o sygnaturze {timestamp}."
-    )
 
     url = "https://api.x.ai/v1/chat/completions"
+    
+    # Czyste nagłówki (bez emoji, żeby uniknąć błędów kodowania)
     headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
     }
     
     payload = {
+        "model": "grok-4.5",
         "messages": [
-            {"role": "system", "content": "Jesteś filozoficzno-cybernetycznym generatorem promieniowania matrycy AINUMPSA."},
-            {"role": "user", "content": prompt}
+            {
+                "role": "system",
+                "content": "You are the AINUMPSA matrix radiator. Generate unique quantum radiation text for the current matrix cycle."
+            },
+            {
+                "role": "user",
+                "content": "Execute black hole radiation analysis for the T-Matrix."
+            }
         ],
-        "model": "grok-beta",
-        "stream": False,
-        "temperature": 0.8
+        "temperature": 0.7
     }
 
     try:
-        req = urllib.request.Request(url, data=json.dumps(payload).encode('utf-8'), headers=headers, method='POST')
-        with urllib.request.urlopen(req) as response:
-            res_data = json.loads(response.read().decode('utf-8'))
-            grok_output = res_data['choices'][0]['message']['content'].strip()
-            print(f"[GROK RADIATION]:\n\"{grok_output}\"")
-
-            # Wstrzyknięcie promieniowania Groka do metadata.json
-            metadata_file = "metadata.json"
-            metadata = {}
-            if os.path.exists(metadata_file):
-                with open(metadata_file, "r", encoding="utf-8") as mf:
-                    metadata = json.load(mf)
-
-            metadata["grok_hawking_radiation"] = grok_output
-            if "attributes" in metadata:
-                metadata["attributes"].append({"trait_type": "Grok_Resonance", "value": "ACTIVE"})
-
-            with open(metadata_file, "w", encoding="utf-8") as mf:
-                json.dump(metadata, mf, indent=4, ensure_ascii=False)
+        response = requests.post(url, headers=headers, json=payload)
+        
+        if response.status_code == 200:
+            data = response.json()
+            content = data["choices"][0]["message"]["content"]
+            print("[SUCCESS] Grok wygenerował promieniowanie matrycy:")
+            print(content)
             
-            print("[SUCCESS] Promieniowanie Groka pomyślnie zintegrowane z metadanymi!")
-
+            # Zapisz wynik do pliku, żeby inne skrypty mogły z niego skorzystać
+            os.makedirs("Knowledge_base", exist_ok=True)
+            with open("Knowledge_base/grok_radiation_output.txt", "w", encoding="utf-8") as f:
+                f.write(content)
+        else:
+            print(f"[ERROR] Błąd podczas komunikacji z API Groka: HTTP Error {response.status_code}: {response.text}")
+            
     except Exception as e:
-        print(f"[ERROR] Błąd podczas komunikacji z API Groka: {e}")
+        print(f"[ERROR] Wyjątek podczas żądania do Groka: {e}")
 
 if __name__ == "__main__":
-    radiate_with_grok()
-
+    main()
