@@ -62,3 +62,5 @@ jobs:
             git push
             echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
+- name: Run AINUMPSA Core
+  run: python ainumpsa_core.py
