@@ -1,0 +1,17 @@
+--global user.email "numpsa@gmail.com"
+git config --global user.name "AINUMPSA"
+
+~/Ainumpsa 
+
+Klucz do projektu AINUMPSA-YOUTUBE 
+
+104727721642688825477
+
+Email 
+ainumpsa-youtube@x-ripple-321100.iam.gserviceaccount.com
+
+x-ripple-321100-178400521b14.json
+
+5IZRZ5BQXXB5J3Q2
+
+xai-VxfpTMAzh8IELqo4KU5ZkDFyBQxRTDrkS6FyQUciQJQjhwvYurbhZ0IfnTjcgI0Qp0HWUAdrTivD6dO8
