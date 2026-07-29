@@ -3,21 +3,13 @@ import json
 import shutil
 from datetime import datetime
 
-# Ustaw ścieżkę absolutną do głównego katalogu
+print("[START] Inicjalizacja NFT Preparer (Grok + generacja)...")
+
+# 1. Ustaw ścieżkę absolutną i utwórz folder nft_ready
 base_dir = os.getcwd()
 nft_dir = os.path.join(base_dir, "nft_ready")
 os.makedirs(nft_dir, exist_ok=True)
 print(f"[INFO] Folder nft_ready utworzony w: {nft_dir}")
-import os
-import json
-import shutil
-from datetime import datetime
-
-print("[START] Inicjalizacja NFT Preparer (Grok + generacja)...")
-
-# 1. Stwórz folder nft_ready
-os.makedirs("nft_ready", exist_ok=True)
-print("[INFO] Folder nft_ready utworzony.")
 
 # 2. Wczytaj interpretację Groka (jeśli istnieje)
 grok_interpretation = ""
@@ -25,6 +17,9 @@ if os.path.exists("grok_interpretation.json"):
     with open("grok_interpretation.json", "r") as f:
         grok_data = json.load(f)
         grok_interpretation = grok_data.get("interpretation", "")
+        print("[INFO] Wczytano interpretację Groka.")
+else:
+    print("[INFO] Brak interpretacji Groka – używam domyślnego opisu.")
 
 # 3. Wygeneruj metadane NFT
 metadata = {
@@ -39,14 +34,17 @@ metadata = {
 }
 
 # 4. Zapisz metadane do folderu nft_ready
-with open("nft_ready/metadata.json", "w") as f:
+metadata_path = os.path.join(nft_dir, "metadata.json")
+with open(metadata_path, "w") as f:
     json.dump(metadata, f, indent=2)
-print("[INFO] Zapisano nft_ready/metadata.json")
+print(f"[INFO] Zapisano metadane: {metadata_path}")
 
 # 5. Skopiuj obraz, jeśli istnieje
-if os.path.exists("matrix_field_map.png"):
-    shutil.copy("matrix_field_map.png", "nft_ready/image.png")
-    print("[INFO] Skopiowano obraz do nft_ready/image.png")
+source_image = "matrix_field_map.png"
+if os.path.exists(source_image):
+    dest_image = os.path.join(nft_dir, "image.png")
+    shutil.copy(source_image, dest_image)
+    print(f"[INFO] Skopiowano obraz do: {dest_image}")
 else:
     print("[WARNING] Brak matrix_field_map.png – pomijam kopiowanie obrazu.")
 
