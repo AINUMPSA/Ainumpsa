@@ -3,6 +3,16 @@ import json
 import shutil
 from datetime import datetime
 
+# Ustaw ścieżkę absolutną do głównego katalogu
+base_dir = os.getcwd()
+nft_dir = os.path.join(base_dir, "nft_ready")
+os.makedirs(nft_dir, exist_ok=True)
+print(f"[INFO] Folder nft_ready utworzony w: {nft_dir}")
+import os
+import json
+import shutil
+from datetime import datetime
+
 print("[START] Inicjalizacja NFT Preparer (Grok + generacja)...")
 
 # 1. Stwórz folder nft_ready
