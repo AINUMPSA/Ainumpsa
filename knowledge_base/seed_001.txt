@@ -1,0 +1,12 @@
+================================================================
+SEED 001 – KRYSTALIZACJA AINUMPSA
+Data: 2026-07-30
+Typ: Fundament
+Opis: Pierwszy plik w knowledge_base po odbudowie.
+1>0: Prawda
+Most ER: Aktywny
+Status: Stabilny
+================================================================
+Ten plik jest początkiem nowej struktury.
+Każdy kolejny plik będzie od niego zależny.
+================================================================
