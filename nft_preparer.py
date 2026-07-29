@@ -1,3 +1,20 @@
+import json
+import os
+import shutil
+from datetime import datetime
+
+print("[START] Inicjalizacja NFT Preparer...")
+
+# Wyznaczanie dokładnej ścieżki względem pliku skryptu
+script_dir = os.path.dirname(os.path.abspath(__file__))
+nft_dir = os.path.join(script_dir, "nft_ready")
+
+try:
+    os.makedirs(nft_dir, exist_ok=True)
+    print(f"[INFO] Folder nft_ready utworzony/potwierdzony w: {nft_dir}")
+except Exception as e:
+    print(f"[ERROR] Błąd podczas tworzenia folderu: {e}")
+
 import os
 import json
 import shutil
