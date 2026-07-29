@@ -32,3 +32,5 @@ jobs:
 
       - name: Run social publisher
         run: python social_publisher.py || true
+- name: Mint NFT on Zora
+  run: python zora_minter.py
