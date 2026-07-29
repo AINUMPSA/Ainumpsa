@@ -17,9 +17,9 @@ def main():
         "Content-Type": "application/json"
     }
 
-    # Prompt proszący o parametry wizualizacji w formacie JSON
+    # Poprawny payload – bez duplikatów
     payload = {
-        "model": "grok-4.1-fast",  # lub "grok-4.3", jeśli masz dostęp
+        "model": "grok-4.1-fast",
         "messages": [
             {
                 "role": "system",
@@ -50,7 +50,6 @@ def main():
             # Próba wyciągnięcia parametrów wizualizacji z odpowiedzi
             visual_params = {}
             try:
-                # Szukamy JSON w odpowiedzi Groka
                 start = content.find('{')
                 end = content.rfind('}') + 1
                 if start != -1 and end != -1:
