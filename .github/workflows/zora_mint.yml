@@ -11,15 +11,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install numpy scipy matplotlib pillow requests pypdf
+        run: pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account
 
       - name: Run AINUMPSA Full Matrix & Grok Flow
         env:
