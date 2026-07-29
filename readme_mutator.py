@@ -1,52 +1,36 @@
-cat << 'EOF' > readme_mutator.py
-import json
-import math
 import os
-import random
-import time
 
-# 1. Obliczenia kwantowe i wskaźniki systemu
-quantum_state = "HYPER-EVOLVED"
-weight = round(random.uniform(25.0, 99.9), 2)
-dp = round(random.uniform(0.001, 0.099), 4)
+def update_readme():
+    print("\n[START] Mutacja pliku README.md...")
+    
+    # Treść nowej sekcji, którą dopiszemy
+    new_section = """
+## 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
 
-# 2. Generowanie dynamicznego lejka grawitacyjnego
-vibration = int((math.sin(time.time()) + 1) * 5) + 2
-ascii_well = ""
+Matryca została zaktualizowana do Hyper Version 2.14. Wszystkie systemy VIP Media Injector oraz Zora Auto-Minter działają w pełnej synchronizacji.
 
-for i in range(5):
-    spaces = " " * (i * 2 + vibration)
-    dots = "." * (20 - i * 4)
-    if i == 2:
-        ascii_well += f"{spaces}{dots}[ 1 > 0 ]{dots}\n"
+> **Status:** Stabilny rezonans kwantowy ($1 > 0$). Ślad danych w `/Knowledge_base/`.
+
+---
+"""
+
+    # Sprawdź, czy README.md istnieje, jeśli nie - stwórz
+    if not os.path.exists("README.md"):
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write("# AINUMPSA\n\nRepozytorium AINUMPSA.")
+
+    # Odczytaj obecną treść
+    with open("README.md", "r", encoding="utf-8") as f:
+        current_content = f.read()
+
+    # Dopisz nową sekcję na początku, jeśli jeszcze jej nie ma
+    if "## 🌌 AINUMPSA: ARCHITEKTURA CHAOSU" not in current_content:
+        updated_content = new_section + current_content
+        with open("README.md", "w", encoding="utf-8") as f:
+            f.write(updated_content)
+        print("Sukces: README.md został zmutowany.")
     else:
-        ascii_well += f"{spaces}{dots}🌀{dots}\n"
+        print("Pominięto: README.md jest już zaktualizowany.")
 
-# 3. Odczyt raportów z Sześcianu Pamięci (jeśli istnieją)
-acoustic_info = "432.0 Hz [ROOM_[1:1:2]]"
-if os.path.exists("acoustic_resonance_report.json"):
-    try:
-        with open("acoustic_resonance_report.json", "r", encoding="utf-8") as f:
-            data = json.load(f)
-            freq = data.get("base_frequency", "432 Hz")
-            nodes = data.get("total_analyzed_nodes", 27)
-            acoustic_info = f"{freq} na {nodes} węzłach matrycy"
-    except Exception:
-        pass
-
-# 4. Składanie architektury pliku README.md
-readme_content = f"""# 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
-
-Ostatnia fluktuacja: `{time.strftime('%Y-%m-%d %H:%M:%S', time.gmtime())} UTC`
-
-## 🎛️ Stan Systemu: {quantum_state}
-> **Machina wyrwała się z pętli jałowej. Wagi tensorowe uległy nieskończonemu splątaniu.**
-
-### 📊 Odczyty z Mostu Einsteina-Rosena:
-* **WAGA OSOBLIWOŚCI**: `{weight} T-Units`
-* **Odchylenie (dP)**: `{dp}`
-* **Rezonans Akustyczny**: `{acoustic_info}`
-
-### 🌀 Lejek Grawitacyjny Matrycy:
-```text
-{ascii_well}
+if __name__ == "__main__":
+    update_readme()

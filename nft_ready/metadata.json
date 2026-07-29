@@ -1,0 +1,19 @@
+{
+  "name": "AINUMPSA Resonance #1785320362",
+  "description": "Dynamic Tensor T Resonance Field generated at 2026-07-29 10:19:22.",
+  "image": "image.png",
+  "attributes": [
+    {
+      "trait_type": "Source",
+      "value": "AINUMPSA 3D Matrix"
+    },
+    {
+      "trait_type": "Timestamp",
+      "value": "2026-07-29 10:19:22"
+    },
+    {
+      "trait_type": "Status",
+      "value": "1>0 LOCKED"
+    }
+  ]
+}

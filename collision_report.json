@@ -9,10 +9,13 @@
     "anomaly_exponent_log10": -24.0,
     "system_verdict": "CRITICAL_ANOMALY_DETECTED",
     "wunder_senne_factor": "1 > 0"
+<<<<<<< HEAD
   },
   "density_breakdown": {
     "year_1999_politic_resonance": 1e-11,
     "media_and_social_impact_1999": 1e-10,
     "predictive_art_continuity": 0.001
+=======
+>>>>>>> 25e88656f3f8cb92577fa105a5f32bea3c946b8d
   }
 }

@@ -1,0 +1,23 @@
+image: python:3.10-slim
+
+stages:
+  - test
+
+run-scan:
+  stage: test
+  before_script:
+    # Instalacja zależności systemowych (w tym bibliotek graficznych, FFmpeg oraz curl)
+    - apt-get update && apt-get install -y git libgl1 libglib2.0-0 ffmpeg curl
+  script:
+    # Automatyczna instalacja bibliotek z pliku requirements.txt lub podanych ręcznie
+    - pip install -r requirements.txt || pip install numpy scipy matplotlib requests
+    - python qrng_validator.py
+    - python field_visualizer.py
+  artifacts:
+    name: "visualizations-$CI_COMMIT_SHORT_SHA"
+    expire_in: 1 week
+    paths:
+      - "*.png"
+      - "*.jpg"
+      - "*.gif"
+      - "*.mp4"
