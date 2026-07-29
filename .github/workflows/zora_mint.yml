@@ -1,4 +1,4 @@
-Name: Automated Tensor T Matrix Scan
+name: Automated Tensor T Matrix Scan
 
 on:
   push:
