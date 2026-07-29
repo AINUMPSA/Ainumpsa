@@ -1,27 +1,16 @@
-/**
- * AINUMPSA Resonance Mint & Deployment Script
- * Targets: Sepolia / Base / Ethereum Mainnet
- * Token ID: 1785312997 → ROOM_[1:1:2] (1>0_LOCKED)
- */
-
-import { createWalletClient, createPublicClient, http, parseAbi, Address } from "viem";
+cat << 'EOF' > scripts/deploy_resonance.js
+import { createWalletClient, createPublicClient, http, parseAbi } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import { sepolia, base, mainnet } from "viem/chains";
 import fs from "fs";
 import path from "path";
 
-// ─────────────────────────────────────────────────────────────
-// CONFIG – edit or set via env variables
-// ─────────────────────────────────────────────────────────────
-const PRIVATE_KEY = (process.env.PRIVATE_KEY || "0x...") as `0x${string}`;
+const PRIVATE_KEY = process.env.PRIVATE_KEY;
 const RPC_URL = process.env.RPC_URL || "https://rpc.sepolia.org";
-const TARGET_CHAIN = sepolia; // sepolia | base | mainnet
-const OPERATOR_WALLET = (process.env.OPERATOR_WALLET || "0xYourOperatorWalletHere") as Address;
+const TARGET_CHAIN = sepolia;
+const OPERATOR_WALLET = process.env.OPERATOR_WALLET;
 const CONTRACT_NAME = "AinumpsaResonanceNFT";
 
-// ─────────────────────────────────────────────────────────────
-// ABI (minimal)
-// ─────────────────────────────────────────────────────────────
 const abi = parseAbi([
   "constructor(address initialOwner)",
   "function mintResonance(address to) external",
@@ -31,11 +20,11 @@ const abi = parseAbi([
 ]);
 
 async function main() {
-  if (!PRIVATE_KEY || PRIVATE_KEY === "0x...") {
-    throw new Error("Missing or default PRIVATE_KEY in environment");
+  if (!PRIVATE_KEY || !OPERATOR_WALLET) {
+    throw new Error("Brakujace zmienne środowiskowe: PRIVATE_KEY lub OPERATOR_WALLET");
   }
 
-  const account = privateKeyToAccount(PRIVATE_KEY);
+  const account = privateKeyToAccount(PRIVATE_KEY.startsWith("0x") ? PRIVATE_KEY : `0x${PRIVATE_KEY}`);
   const publicClient = createPublicClient({
     chain: TARGET_CHAIN,
     transport: http(RPC_URL)
@@ -55,19 +44,19 @@ async function main() {
   console.log("Anchor       : ROOM_[1:1:2] → 1>0_LOCKED");
   console.log("────────────────────────────────────────");
 
-  // 1. Load Artifact & Deploy Contract
+  // 1. Wczytanie artefaktu i deployment
   console.log("\n[1/3] Deploying AinumpsaResonanceNFT...");
-  const artifactPath = path.join(__dirname, `../artifacts/contracts/${CONTRACT_NAME}.sol/${CONTRACT_NAME}.json`);
+  const artifactPath = path.resolve(`artifacts/contracts/${CONTRACT_NAME}.sol/${CONTRACT_NAME}.json`);
   
   if (!fs.existsSync(artifactPath)) {
-    throw new Error(`Artifact not found at ${artifactPath}. Run 'npx hardhat compile' first.`);
+    throw new Error(`Artefakt nie istnieje w ${artifactPath}`);
   }
 
   const artifact = JSON.parse(fs.readFileSync(artifactPath, "utf8"));
 
   const hash = await walletClient.deployContract({
     abi: artifact.abi,
-    bytecode: artifact.bytecode,
+    bytecode: `0x${artifact.bytecode.replace(/^0x/, '')}`,
     args: [account.address]
   });
 
@@ -75,12 +64,9 @@ async function main() {
   const receipt = await publicClient.waitForTransactionReceipt({ hash });
   const contractAddress = receipt.contractAddress;
   
-  if (!contractAddress) {
-    throw new Error("Contract deployment failed, no address returned.");
-  }
   console.log("Contract deployed at:", contractAddress);
 
-  // 2. Mint Resonance #1785312997
+  // 2. Minting Resonance Token #1785312997
   console.log("\n[2/3] Minting Resonance #1785312997 to operator...");
   const mintHash = await walletClient.writeContract({
     address: contractAddress,
@@ -92,7 +78,7 @@ async function main() {
   await publicClient.waitForTransactionReceipt({ hash: mintHash });
   console.log("Mint confirmed.");
 
-  // 3. Verify Anchor state
+  // 3. Weryfikacja stanu
   console.log("\n[3/3] Verifying ROOM_[1:1:2] state...");
   const [nodeType, resonance, neighbors, roomId] = await publicClient.readContract({
     address: contractAddress,
@@ -118,4 +104,4 @@ main().catch((err) => {
   console.error(err);
   process.exit(1);
 });
-
+EOF
