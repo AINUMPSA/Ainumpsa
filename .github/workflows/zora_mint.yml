@@ -35,15 +35,17 @@ jobs:
           # 3. Obliczenia kwantowe matrycy (Hyper Version 2.14)
           python hyper_version_2_14.py || true
           
-          # 4. Promieniowanie czarnej dziury przez Groka (xAI)
+          # 4. Walidator QRNG
+          python qrng_validator.py || true
+          
+          # 5. Promieniowanie czarnej dziury przez Groka (xAI)
           python grok_radiator.py || true
           
-          # 5. Analiza matrycy i mutacja README
-          python matrix_analyser.py || true
+          # 6. Mutacja README
           python readme_mutator.py || true
           
-          # 6. Wypalenie NFT na Zora
+          # 7. Wypalenie NFT na Zora
           python zora_minter.py || true
           
-          # 7. Publikacja społecznościowa
+          # 8. Publikacja społecznościowa
           python social_publisher.py || true
