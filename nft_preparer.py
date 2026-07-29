@@ -7,6 +7,7 @@ print("[START] Inicjalizacja NFT Preparer (Grok + generacja)...")
 
 # 1. Stwórz folder nft_ready
 os.makedirs("nft_ready", exist_ok=True)
+print("[INFO] Folder nft_ready utworzony.")
 
 # 2. Wczytaj interpretację Groka (jeśli istnieje)
 grok_interpretation = ""
@@ -40,5 +41,3 @@ else:
     print("[WARNING] Brak matrix_field_map.png – pomijam kopiowanie obrazu.")
 
 print("[SUCCESS] NFT przygotowane w folderze nft_ready/")
-print("[INFO] Możesz teraz ręcznie wgrać pliki na Zora lub IPFS.")
-os.makedirs("nft_ready", exist_ok=True)
