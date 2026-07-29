@@ -1,4 +1,3 @@
-cat > ainumpsa_core.py << 'EOF'
 import numpy as np
 import json
 import time
@@ -110,4 +109,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-EOF
