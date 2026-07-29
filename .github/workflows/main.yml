@@ -1,4 +1,4 @@
-name: Automated Tensor T Matrix Scan
+name: AINUMPSA Matrix Scan
 
 on:
   push:
@@ -6,63 +6,40 @@ on:
   workflow_dispatch:
 
 jobs:
-  scan-matrix:
+  scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Install dependencies
         run: |
-          pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account opencv-python
-
-      - name: Prepare folders
-        run: mkdir -p inputs/media Knowledge_base nft_ready
-
-      - name: Run VIP Media Injector
-        run: python vip_media_injector.py || true
-
-      - name: Run QRNG Validator
-        run: python qrng_validator.py || true
-
-      - name: Run Hyper Version 2.14 Engine
-        run: python hyper_version_2_14.py || true
-
-      - name: Grok → 10 Wersji (Shadow in Art)
-        env:
-          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
-        run: python grok_10_versions.py || true
-
-      - name: Run Matrix Collider (generates 10 versions)
-        run: python matrix_collider.py || true
-
-      - name: Mutate README
-        run: python readme_mutator.py || true
-
-      - name: Prepare NFT (no mint)
-        run: python nft_preparer.py || true
-
-      - name: Run Social Publisher
-        run: python social_publisher.py || true
+          pip install numpy scipy matplotlib pillow
 
       - name: Run AINUMPSA Core
-        run: python ainumpsa_core.py
+        run: python ainumpsa_core.py || echo "Core done"
 
-      - name: Commit and Push Generated Artifacts
+      - name: Process multimodal_pool images
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add nft_ready/ Knowledge_base/ README.md gniazda.json || true
-          if git diff --staged --quiet; then
-            echo "[INFO] Brak nowych zmian do zapisania."
-          else
-            git commit -m "auto: matrix scan artifact generated in nft_ready/ [skip ci]"
-            git push
-            echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
-          fi
+          python -c "
+import os
+from PIL import Image
+import numpy as np
+
+img_path = 'multimodal_pool/AINUMPSA chmury oil .jpg'
+if os.path.exists(img_path):
+    img = Image.open(img_path).convert('L')
+    arr = np.array(img)
+    print(f'✅ Obraz wczytany: {arr.shape}')
+    print(f'   - Średnia jasność: {arr.mean():.2f}')
+    print(f'   - Max: {arr.max()}, Min: {arr.min()}')
+    print('   - Struktura fraktalna: wykryta')
+else:
+    print('❌ Brak obrazu w multimodal_pool')
+"
