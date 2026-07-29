@@ -1,0 +1,14 @@
+{
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^7.0.0",
+    "@openzeppelin/contracts": "^5.6.1",
+    "@types/node": "^26.1.2",
+    "dotenv": "^17.4.2",
+    "hardhat": "^3.11.1",
+    "solc": "^0.8.36",
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2",
+    "viem": "^2.55.10"
+  },
+  "type": "module"
+}
