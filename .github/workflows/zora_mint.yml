@@ -1,8 +1,10 @@
-name: Automated Tensor T Matrix Scan
+Name: Automated Tensor T Matrix Scan
 
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 */6 * * *' # Automatyczne uruchamianie co 6 godzin
   workflow_dispatch:
 
 jobs:
@@ -25,6 +27,9 @@ jobs:
         env:
           ZORA_PRIVATE_KEY: ${{ secrets.ZORA_PRIVATE_KEY }}
           XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
+          OPERATOR_WALLET: "0x84345EfC1a0aaEBCCfd7283eD3F4052f752d3A4b"
+          RPC_URL: "https://mainnet.base.org"
+          CONTRACT_ADDRESS: "0x8606add4c3adcdf4c07bc2d18780b1c0f20567fd"
         run: |
           # 1. Przygotowanie folderów
           mkdir -p inputs/media Knowledge_base
@@ -44,8 +49,8 @@ jobs:
           # 6. Mutacja README
           python readme_mutator.py || true
           
-          # 7. Wypalenie NFT na Zora
-          python zora_minter.py || true
-          # python zora_minter.py || true
+          # 7. Wypalenie NFT na Base
+          python zora_minter.py || node scripts/auto_mint.js || true
+
           # 8. Publikacja społecznościowa
           python social_publisher.py || true
