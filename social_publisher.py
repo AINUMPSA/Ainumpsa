@@ -1,11 +1,3 @@
-import os
-import requests
-
-# Dedykowany kanał odbiorczy ntfy
-TOPIC_NAME = "ainumpsa-matrix-1234"
-URL = f"https://ntfy.sh/{TOPIC_NAME}"
-
-# Treść powiadomienia
 TITLE = "🤖 AINUMPSA 3D Matrix Engine"
 MESSAGE = "Nowy cykl skanowania zakończony! Plik wizualizacji wygenerowany pomyślnie."
 
