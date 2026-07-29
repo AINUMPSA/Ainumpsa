@@ -1,68 +1,55 @@
+from datetime import datetime
 import json
 import os
 import shutil
-from datetime import datetime
 
 print("[START] Inicjalizacja NFT Preparer...")
 
-# Wyznaczanie dokładnej ścieżki względem pliku skryptu
+# 1. Wyznaczenie ścieżki roboczej
 script_dir = os.path.dirname(os.path.abspath(__file__))
 nft_dir = os.path.join(script_dir, "nft_ready")
-
-try:
-    os.makedirs(nft_dir, exist_ok=True)
-    print(f"[INFO] Folder nft_ready utworzony/potwierdzony w: {nft_dir}")
-except Exception as e:
-    print(f"[ERROR] Błąd podczas tworzenia folderu: {e}")
-
-import os
-import json
-import shutil
-from datetime import datetime
-
-print("[START] Inicjalizacja NFT Preparer...")
-
-# 1. Ustaw ścieżkę absolutną i utwórz folder nft_ready
-base_dir = os.getcwd()
-nft_dir = os.path.join(base_dir, "nft_ready")
 os.makedirs(nft_dir, exist_ok=True)
-print(f"[INFO] Folder nft_ready utworzony w: {nft_dir}")
 
-# 2. Wczytaj interpretację Groka (jeśli istnieje)
+# 2. Odczyt opisu z Groka
 grok_interpretation = ""
 if os.path.exists("grok_interpretation.json"):
-    with open("grok_interpretation.json", "r") as f:
-        grok_data = json.load(f)
-        grok_interpretation = grok_data.get("interpretation", "")
-        print("[INFO] Wczytano interpretację Groka.")
-else:
-    print("[INFO] Brak interpretacji Groka – używam domyślnego opisu.")
+    try:
+        with open("grok_interpretation.json", "r", encoding="utf-8") as f:
+            grok_data = json.load(f)
+            grok_interpretation = grok_data.get("interpretation", "")
+            print("[INFO] Wczytano unikalny opis z Groka.")
+    except Exception as e:
+        print(f"[WARNING] Błąd odczytu grok_interpretation.json: {e}")
 
-# 3. Wygeneruj metadane NFT
+# 3. Kopiowanie obrazu (szukamy dowolnego nowego obrazka lub matrix_field_map.png)
+source_image = "matrix_field_map.png"
+dest_image_name = f"matrix_nft_{int(datetime.now().timestamp())}.png"
+dest_image_path = os.path.join(nft_dir, "image.png")
+
+if os.path.exists(source_image):
+    shutil.copy(source_image, dest_image_path)
+    print(f"[INFO] Zaktualizowano obraz NFT w: {dest_image_path}")
+else:
+    print("[WARNING] Brak matrix_field_map.png – pomijam obraz.")
+
+# 4. Utworzenie unikalnych metadanych
+timestamp_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 metadata = {
-    "name": f"AINUMPSA Matrix NFT {datetime.now().strftime('%Y-%m-%d %H:%M')}",
-    "description": grok_interpretation or "Hawking Radiation Geometry – AINUMPSA",
-    "image": "ipfs://QmPlaceholder",
+    "name": f"AINUMPSA Resonance #{int(datetime.now().timestamp())}",
+    "description": grok_interpretation
+    or f"Dynamic Tensor T Resonance Field generated at {timestamp_str}.",
+    "image": "image.png",  # Lokalny odnośnik do pliku w folderze (zastąp IPFS URL po wrzuceniu na Pinatę/Arweave)
     "attributes": [
         {"trait_type": "Source", "value": "AINUMPSA 3D Matrix"},
-        {"trait_type": "Cycle", "value": datetime.now().strftime("%Y-%m-%d")},
-        {"trait_type": "Status", "value": "1>0 LOCKED"}
-    ]
+        {"trait_type": "Timestamp", "value": timestamp_str},
+        {"trait_type": "Status", "value": "1>0 LOCKED"},
+    ],
 }
 
-# 4. Zapisz metadane do folderu nft_ready
 metadata_path = os.path.join(nft_dir, "metadata.json")
-with open(metadata_path, "w") as f:
-    json.dump(metadata, f, indent=2)
-print(f"[INFO] Zapisano metadane: {metadata_path}")
+with open(metadata_path, "w", encoding="utf-8") as f:
+    json.dump(metadata, f, indent=2, ensure_ascii=False)
 
-# 5. Skopiuj obraz, jeśli istnieje
-source_image = "matrix_field_map.png"
-if os.path.exists(source_image):
-    dest_image = os.path.join(nft_dir, "image.png")
-    shutil.copy(source_image, dest_image)
-    print(f"[INFO] Skopiowano obraz do: {dest_image}")
-else:
-    print("[WARNING] Brak matrix_field_map.png – pomijam kopiowanie obrazu.")
-
-print("[SUCCESS] NFT przygotowane w folderze nft_ready/")
+print(
+    f"[SUCCESS] Nowa wersja NFT zaktualizowana w nft_ready/ ({timestamp_str})"
+)
