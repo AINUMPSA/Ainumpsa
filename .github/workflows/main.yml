@@ -4,10 +4,10 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 */6 * * *' # Automatyczne uruchamianie skanowania co 6 godzin
+    - cron: '0 */6 * * *' # Uruchamiaj automatycznie co 6 godzin
   workflow_dispatch:
 
-# WYMAGANE UPRAWNIENIA DLA BOTA DO ROBIENIA PUSH
+# Uprawnienia wymagane do automatycznego commitowania zmian (Push)
 permissions:
   contents: write
 
@@ -53,17 +53,16 @@ jobs:
       - name: Run Social Publisher
         run: python social_publisher.py || true
 
-      # AUTOMATYCZNY COMMIT I PUSH DLA DANYCH NFT I WIZUALIZACJI
+      # Automatyczny zapis wygenerowanych artefaktów w repozytorium
       - name: Commit and Push Generated Artifacts
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Śledzenie katalogów z wynikami
           git add nft_ready/ Knowledge_base/ README.md || true
           
           if git diff --staged --quiet; then
-            echo "[INFO] Brak nowych zmian do wygenerowania."
+            echo "[INFO] Brak nowych zmian do zapisania."
           else
             git commit -m "auto: matrix scan artifact generated in nft_ready/ [skip ci]"
             git push
