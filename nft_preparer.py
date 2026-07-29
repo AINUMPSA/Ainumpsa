@@ -3,7 +3,7 @@ import json
 import shutil
 from datetime import datetime
 
-print("[START] Inicjalizacja NFT Preparer (Grok + generacja)...")
+print("[START] Inicjalizacja NFT Preparer...")
 
 # 1. Ustaw ścieżkę absolutną i utwórz folder nft_ready
 base_dir = os.getcwd()
