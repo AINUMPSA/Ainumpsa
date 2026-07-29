@@ -18,7 +18,7 @@ def main():
     }
 
     payload = {
-        "model": "grok-4.5",
+        "model": "grok-2",
         "messages": [
             {
                 "role": "system",
