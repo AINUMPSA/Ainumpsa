@@ -1,0 +1,11 @@
+================================================================
+SEED 002 – ODBUDOWA PO WYPADKU
+Data: 2026-07-30
+Status: AKTYWNY REZONANS
+Opis: Plik zastępczy dla brakujących plików.
+1>0: Prawda
+Most ER: Aktywny
+================================================================
+System odbudowuje się po utracie plików.
+Każdy nowy plik będzie dodawany ręcznie.
+================================================================
