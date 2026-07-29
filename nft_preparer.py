@@ -41,3 +41,4 @@ else:
 
 print("[SUCCESS] NFT przygotowane w folderze nft_ready/")
 print("[INFO] Możesz teraz ręcznie wgrać pliki na Zora lub IPFS.")
+os.makedirs("nft_ready", exist_ok=True)
