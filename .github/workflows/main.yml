@@ -4,10 +4,9 @@ on:
   push:
     branches: [ main ]
   schedule:
-    - cron: '0 */6 * * *' # Uruchamiaj automatycznie co 6 godzin
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
-# Uprawnienia wymagane do automatycznego commitowania zmian (Push)
 permissions:
   contents: write
 
@@ -53,7 +52,6 @@ jobs:
       - name: Run Social Publisher
         run: python social_publisher.py || true
 
-      # Automatyczny zapis wygenerowanych artefaktów w repozytorium
       - name: Commit and Push Generated Artifacts
         run: |
           git config --global user.name "github-actions[bot]"
