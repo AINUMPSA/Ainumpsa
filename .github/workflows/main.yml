@@ -3,6 +3,8 @@ name: Automated Tensor T Matrix Scan
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 */6 * * *' # Automatyczne uruchamianie skanowania co 6 godzin
   workflow_dispatch:
 
 # WYMAGANE UPRAWNIENIA DLA BOTA DO ROBIENIA PUSH
@@ -23,7 +25,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install numpy scipy matplotlib pillow requests pypdf web3
+        run: pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account
 
       - name: Prepare folders
         run: mkdir -p inputs/media Knowledge_base nft_ready
@@ -38,6 +40,8 @@ jobs:
         run: python hyper_version_2_14.py || true
 
       - name: Run Grok Radiation Engine
+        env:
+          XAI_API_KEY: ${{ secrets.XAI_API_KEY }}
         run: python grok_radiator.py || true
 
       - name: Mutate README
