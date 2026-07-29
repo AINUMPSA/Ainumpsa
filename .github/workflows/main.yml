@@ -43,3 +43,6 @@ if os.path.exists(img_path):
 else:
     print('❌ Brak obrazu w multimodal_pool')
 "
+- name: Fantom Screenshot Watcher
+  run: |
+    timeout 3600 python fantom_screenshot.py &
