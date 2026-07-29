@@ -54,3 +54,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+# Po otrzymaniu odpowiedzi od Groka
+grok_response = response.json()
+visual_params = grok_response.get("visual_params", {})
+with open("visual_params.json", "w") as f:
+    json.dump(visual_params, f, indent=2)
