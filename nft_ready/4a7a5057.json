@@ -1,0 +1,13 @@
+{
+  "source": "NAJNOWSZY_TESTAMENT.txt",
+  "weight": {
+    "size_kb": 0.6728515625,
+    "entropy": 4.674718058809061,
+    "density": 3.1453913501166437,
+    "hash": "4a7a5057"
+  },
+  "nft_count": 3,
+  "timestamp": "2026-07-30T03:48:13.422601",
+  "hash": "4a7a5057",
+  "status": "emitted"
+}
