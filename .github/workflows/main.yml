@@ -1,16 +1,18 @@
-name: AINUMPSA Matrix Scan
+name: AINUMPSA Production Cycle
 
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 1 * * *'
   workflow_dispatch:
 
 jobs:
-  scan:
+  full-cycle:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Setup Python
@@ -20,29 +22,39 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install numpy scipy matplotlib pillow
+          pip install numpy scipy matplotlib pillow opencv-python
 
-      - name: Run AINUMPSA Core
-        run: python ainumpsa_core.py || echo "Core done"
-
-      - name: Process multimodal_pool images
+      - name: Prepare directories
         run: |
-          python -c "
-import os
-from PIL import Image
-import numpy as np
+          mkdir -p knowledge_base multimodal_pool AINUMPSA-Shadow-Engine/data AINUMPSA-Shadow-Engine/output/assets
 
-img_path = 'multimodal_pool/AINUMPSA chmury oil .jpg'
-if os.path.exists(img_path):
-    img = Image.open(img_path).convert('L')
-    arr = np.array(img)
-    print(f'✅ Obraz wczytany: {arr.shape}')
-    print(f'   - Średnia jasność: {arr.mean():.2f}')
-    print(f'   - Max: {arr.max()}, Min: {arr.min()}')
-    print('   - Struktura fraktalna: wykryta')
-else:
-    print('❌ Brak obrazu w multimodal_pool')
-"
-- name: Fantom Screenshot Watcher
-  run: |
-    timeout 3600 python fantom_screenshot.py &
+      - name: Find minima (gniazda)
+        run: python ainumpsa_find_10_min.py || echo "Minima generation done"
+
+      - name: Generate Shadow minima
+        run: python AINUMPSA-Shadow-Engine/src/shadow_from_minima.py || echo "Shadow done"
+
+      - name: Merge light & shadow
+        run: python merge_light_shadow.py || echo "Merge done"
+
+      - name: Generate hologram
+        run: python hologram_generator.py || echo "Hologram done"
+
+      - name: Generate fantom map
+        run: python fantom_mapper_pure.py || echo "Fantom map done"
+
+      - name: Register knowledge
+        run: python register_knowledge.py || echo "Knowledge registration done"
+
+      - name: Commit and Push all generated artifacts
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add knowledge_base/ multimodal_pool/ AINUMPSA-Shadow-Engine/data/ gniazda_*.json light_shadow_merged.json
+          if git diff --staged --quiet; then
+            echo "[INFO] Brak nowych zmian do zapisania."
+          else
+            git commit -m "auto: pełny cykl produkcyjny $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]"
+            git push
+            echo "[SUCCESS] Zapisano cały cykl produkcyjny! 🎉"
+          fi
