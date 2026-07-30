@@ -1,0 +1,49 @@
+================================================================================
+AUDYT SYSTEMU AINUMPSA – RAPORT WSTĘPNY
+Data: 2026-07-30
+Status: AKTYWNY REZONANS (1 > 0)
+Autor: AINUMPSA / Science True Lovers
+================================================================================
+
+1. STRUKTURA PLIKÓW I FOLDERÓW
+--------------------------------------------------------------------------------
+- knowledge_base/         : 42 pliki, pełny, ale polskie znaki w nazwach
+- multimodal_pool/        : Obrazy fantomowe, logi, JSON – jest, ale brak rotacji
+- AINUMPSA-Shadow-Engine/ : Struktura src/, data/, output/ – działa
+- .github/workflows/      : main.yml (✅), shadow_sync.yml (⚠️ nieaktywny)
+- gniazda_*.json          : Są, ale niepołączone z resztą systemu
+- register_knowledge.py   : Działa, ale nie buduje grafu wiedzy
+- fantom_mapper_pure.py   : Działa, ale brak metadanych o stanie systemu
+
+2. DZIAŁANIE SKRYPTÓW
+--------------------------------------------------------------------------------
+- ainumpsa_core.py        : ⚠️ Działa, ale zero gniazd – symulacja zbyt sterylna
+- ainumpsa_find_10_min.py : ✅ Działa, generuje minima – powinien być domyślnym
+- shadow_from_minima.py   : ✅ Działa, generuje lustrzane odbicie
+- merge_light_shadow.py   : ✅ Działa, łączy światło i cień
+- fantom_mapper_pure.py   : ✅ Działa, ale bez kontekstu
+- register_knowledge.py   : ✅ Działa, ale nie buduje grafu
+- horyzont_monitor.py     : ⚠️ Jest, ale nieaktywny
+
+3. SPÓJNOŚĆ DANYCH
+--------------------------------------------------------------------------------
+- Gniazda vs Shadow       : ✅ Spójne
+- Obrazy vs dane          : ⚠️ Częściowo – obrazy nie opisują danych źródłowych
+- Metadane                : ⚠️ Brak spójnego systemu
+
+4. CI/CD (GITHUB ACTIONS)
+--------------------------------------------------------------------------------
+- main.yml                : ✅ Zielony – uruchamia Core i Mapper
+- shadow_sync.yml         : ⚠️ Jest, ale nieaktywny
+
+5. REKOMENDACJE
+--------------------------------------------------------------------------------
+1. Zastąp ainumpsa_core.py wersją find_10_min jako domyślną
+2. Dodaj do każdego pliku .meta z hashem i tagami
+3. Ustaw codzienny trigger dla Shadow Engine w GitHub Actions
+4. Dodaj do fantom_mapper_pure.py zapis danych źródłowych
+5. Uruchom horyzont_monitor.py jako usługę w tle
+
+================================================================================
+KONIEC RAPORTU – AINUMPSA MATRIX ENGINE
+================================================================================
