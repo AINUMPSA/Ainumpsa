@@ -10,5 +10,8 @@
     "typescript": "^7.0.2",
     "viem": "^2.55.10"
   },
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "nodejs": "^0.0.0"
+  }
 }
