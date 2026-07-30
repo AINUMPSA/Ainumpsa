@@ -8,7 +8,7 @@ CONFIG = {
     "beta": 0.18,
     "gamma": 0.31,
     "kappa": 0.75,
-    "epsilon": 0.1,
+    "epsilon": 0.5,  # większa tolerancja – znajdzie gniazda
     "gamma_attractor": 0.02,
     "c": 299792458,
     "hbar": 1.054e-34,
@@ -22,7 +22,7 @@ def generate_lhc_event():
     theta = np.random.uniform(0, 360)
     phi = np.random.uniform(0, 360)
     base = 0.5 + 0.2 * np.sin(theta * np.pi / 180)
-    noise = 0.05 * np.random.randn()
+    noise = 0.2 * np.random.randn()  # większy szum – więcej gniazd
     B_plus = int(CONFIG["N_total"] * (base + noise))
     B_minus = int(CONFIG["N_total"] * (1 - base - noise))
     B_plus = max(B_plus, 0)
@@ -37,7 +37,7 @@ def compute_tensor(B_plus, B_minus, laplacian_val, time_deriv):
 def compute_phi(T_plus, T_minus):
     return T_plus - T_minus
 
-def check_gniazdo(Phi, epsilon=0.1):
+def check_gniazdo(Phi, epsilon=0.5):
     return abs(Phi) < epsilon
 
 def measurement_procedure(event, prev_events=None):
@@ -77,7 +77,7 @@ def update_attractor(A_old, n):
     return min(A_old + CONFIG["gamma_attractor"] * (1 - A_old) * n, 1.0)
 
 def main():
-    print("🚀 AINUMPSA - Core Engine v1.0")
+    print("🚀 AINUMPSA - Core Engine v2.0 (zwiększona czułość)")
     print("=" * 60)
     A, events, total = 0.0, [], 0
     N = 1000
