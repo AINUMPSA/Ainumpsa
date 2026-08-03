@@ -1,74 +1,44 @@
 import os
-import requests
+import json
+from datetime import datetime
 
-# ----- KONFIGURACJA -----
-NTFY_TOPIC = "ainumpsa-matrix-1234"
-NTFY_URL = f"https://ntfy.sh/{NTFY_TOPIC}"
-GIF_PATH = "collider_evolution.gif"
+print("[START] Generowanie raportu stanu...")
 
-# Pobierz sekrety z GitHub
-TELEGRAM_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID")
+# 1. Wczytaj dane z systemu
+data = {}
+if os.path.exists("tensor_t_logs.json"):
+    with open("tensor_t_logs.json", "r") as f:
+        data = json.load(f)
 
-def send_telegram(message):
-    """Wysyła wiadomość na Telegram."""
-    if not TELEGRAM_TOKEN or not TELEGRAM_CHAT_ID:
-        print("[INFO] Brak danych Telegram – pomijam wysyłkę.")
-        return
+# 2. Wczytaj rezonans (jeśli istnieje)
+resonance = "0.0"
+if os.path.exists("collision_report.json"):
+    with open("collision_report.json", "r") as f:
+        collision = json.load(f)
+        resonance = collision.get("resonance", "0.0")
 
-    url = f"https://api.telegram.org/bot{TELEGRAM_TOKEN}/sendMessage"
-    payload = {
-        "chat_id": TELEGRAM_CHAT_ID,
-        "text": message,
-        "parse_mode": "Markdown"
-    }
-    try:
-        response = requests.post(url, json=payload)
-        if response.status_code == 200:
-            print("[SUCCESS] Wiadomość wysłana na Telegram.")
-        else:
-            print(f"[ERROR] Telegram: {response.status_code} – {response.text}")
-    except Exception as e:
-        print(f"[ERROR] Wyjątek w Telegram: {e}")
+# 3. Wygeneruj raport
+report = f"""
+========================================
+RAPORT STANU AINUMPSA
+========================================
+Data: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 
-def main():
-    print("[START] Inicjalizacja Social Publisher...")
+PUNKT FROZEN: {datetime.now().isoformat()}
+MAP KRYSZTALICZNA: AKTYWNA
+CZĘSTOTLIWOŚĆ REZONANSU: {resonance}
 
-    # 1. Przygotuj wiadomość (bez polskich znaków)
-    title = "AINUMPSA 3D Matrix Engine"
-    message = "Nowy cykl skanowania zakonczony. Plik wizualizacji wygenerowany pomyslnie."
+STAN POLA:
+- max_div: {data.get('max_div', 'N/A')}
+- mean_div: {data.get('mean_div', 'N/A')}
+- kształt: {data.get('shape', 'N/A')}
 
-    # 2. Wyślij na ntfy.sh
-    try:
-        if os.path.exists(GIF_PATH):
-            with open(GIF_PATH, "rb") as f:
-                response = requests.post(
-                    NTFY_URL,
-                    data=f,
-                    headers={
-                        "Title": title,
-                        "Message": message,
-                        "Filename": "collider_evolution.gif",
-                        "Tags": "robot,chart_with_upwards_trend"
-                    }
-                )
-        else:
-            response = requests.post(
-                NTFY_URL,
-                data=message.encode("utf-8"),
-                headers={"Title": title, "Tags": "robot,warning"}
-            )
+STATUS: 1>0 LOCKED
+========================================
+"""
 
-        if response.status_code == 200:
-            print("[SUCCESS] Powiadomienie ntfy.sh wyslane.")
-        else:
-            print(f"[WARNING] ntfy.sh: {response.status_code}")
-    except Exception as e:
-        print(f"[WARNING] ntfy.sh blad: {e}")
+# 4. Zapisz raport
+with open("status_report.txt", "w") as f:
+    f.write(report)
 
-    # 3. Wyślij na Telegram
-    telegram_message = f"*{title}*\n\n{message}"
-    send_telegram(telegram_message)
-
-if __name__ == "__main__":
-    main()
+print("[SUCCESS] Zapisano status_report.txt")
