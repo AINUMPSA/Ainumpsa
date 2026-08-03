@@ -1,0 +1,27 @@
+{
+    "description": "AINUMPSA: Automatyczny rzut kwantowy matrycy.",
+    "image": "ipfs://0400aa7a4cfa0decd8b6f40f540216025e3f0cd900a3005dfd1dc1730d0e572e",
+    "name": "AINUMPSA_MATRIX_MINT_AINUMPSA CRYSTALLINE 01.jpg",
+    "attributes": [
+        {
+            "trait_type": "Origin",
+            "value": "VIP_MEDIA_INJECTOR_V1"
+        },
+        {
+            "trait_type": "File_Hash",
+            "value": "0400aa7a4cfa0decd8b6f40f540216025e3f0cd900a3005dfd1dc1730d0e572e"
+        },
+        {
+            "trait_type": "File_Size_Bytes",
+            "value": 2038366
+        },
+        {
+            "trait_type": "Kwantowy_Status",
+            "value": "Stabilny_1>0"
+        },
+        {
+            "trait_type": "Hyper_Version",
+            "value": "2.14"
+        }
+    ]
+}
