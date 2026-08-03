@@ -1,0 +1,17 @@
+
+========================================
+RAPORT STANU AINUMPSA
+========================================
+Data: 2026-08-03 23:42:42
+
+PUNKT FROZEN: 2026-08-03T23:42:42.339208
+MAP KRYSZTALICZNA: AKTYWNA
+CZĘSTOTLIWOŚĆ REZONANSU: 0.0
+
+STAN POLA:
+- max_div: N/A
+- mean_div: N/A
+- kształt: N/A
+
+STATUS: 1>0 LOCKED
+========================================
