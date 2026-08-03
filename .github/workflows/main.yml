@@ -3,58 +3,60 @@ name: AINUMPSA Production Cycle
 on:
   push:
     branches: [ main ]
-  schedule:
-    - cron: '0 1 * * *'
   workflow_dispatch:
 
 jobs:
-  full-cycle:
+  production-cycle:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: |
-          pip install numpy scipy matplotlib pillow opencv-python
+        run: pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account opencv-python
 
-      - name: Prepare directories
-        run: |
-          mkdir -p knowledge_base multimodal_pool AINUMPSA-Shadow-Engine/data AINUMPSA-Shadow-Engine/output/assets
+      - name: Prepare folders
+        run: mkdir -p inputs/media Knowledge_base nft_ready multimodal_pool
 
-      - name: Find minima (gniazda)
-        run: python ainumpsa_find_10_min.py || echo "Minima generation done"
+      - name: Run VIP Media Injector
+        run: python vip_media_injector.py || true
 
-      - name: Generate Shadow minima
-        run: python AINUMPSA-Shadow-Engine/src/shadow_from_minima.py || echo "Shadow done"
+      - name: Run QRNG Validator
+        run: python qrng_validator.py || true
 
-      - name: Merge light & shadow
-        run: python merge_light_shadow.py || echo "Merge done"
+      - name: Run Hyper Version 2.14 Engine
+        run: python hyper_version_2_14.py || true
 
-      - name: Generate hologram
-        run: python hologram_generator.py || echo "Hologram done"
+      - name: Run Knowledge Engine (NFT Emission)
+        run: python knowledge_engine.py || true
 
-      - name: Generate fantom map
-        run: python fantom_mapper_pure.py || echo "Fantom map done"
+      - name: Run Matrix Collider (generates 10 versions)
+        run: python matrix_collider.py || true
 
-      - name: Register knowledge
-        run: python register_knowledge.py || echo "Knowledge registration done"
+      - name: Mutate README
+        run: python readme_mutator.py || true
 
-      - name: Commit and Push all generated artifacts
+      - name: Prepare NFT (no mint)
+        run: python nft_preparer.py || true
+
+      - name: Run Social Publisher
+        run: python social_publisher.py || true
+
+      - name: Commit and Push Generated Artifacts
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add knowledge_base/ multimodal_pool/ AINUMPSA-Shadow-Engine/data/ gniazda_*.json light_shadow_merged.json
+          git add nft_ready/ Knowledge_base/ README.md || true
           if git diff --staged --quiet; then
             echo "[INFO] Brak nowych zmian do zapisania."
           else
-            git commit -m "auto: pełny cykl produkcyjny $(date -u +'%Y-%m-%d %H:%M:%S') [skip ci]"
+            git commit -m "auto: matrix scan artifact generated in nft_ready/ [skip ci]"
             git push
-            echo "[SUCCESS] Zapisano cały cykl produkcyjny! 🎉"
+            echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
