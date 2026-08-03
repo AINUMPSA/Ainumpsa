@@ -1,0 +1,31 @@
+{
+    "description": "AINUMPSA: Automatyczny rzut kwantowy matrycy z pliku AINUMPSA chmury oil .jpg.",
+    "image": "ipfs://7783ba1aff255e7386c6fe1c4cc470b41278885753ac0f6e615f269301eb5f04",
+    "name": "AINUMPSA_MATRIX_MINT_AINUMPSA chmury oil .jpg",
+    "attributes": [
+        {
+            "trait_type": "Origin",
+            "value": "VIP_MEDIA_INJECTOR_V2"
+        },
+        {
+            "trait_type": "File_Hash",
+            "value": "7783ba1aff255e7386c6fe1c4cc470b41278885753ac0f6e615f269301eb5f04"
+        },
+        {
+            "trait_type": "File_Size_Bytes",
+            "value": 468574
+        },
+        {
+            "trait_type": "File_Name",
+            "value": "AINUMPSA chmury oil .jpg"
+        },
+        {
+            "trait_type": "Kwantowy_Status",
+            "value": "Stabilny_1>0"
+        },
+        {
+            "trait_type": "Hyper_Version",
+            "value": "2.14"
+        }
+    ]
+}
