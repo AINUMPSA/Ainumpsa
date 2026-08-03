@@ -45,15 +45,17 @@ jobs:
       - name: Prepare NFT (no mint)
         run: python nft_preparer.py || true
 
+      - name: Generate Status Report
+        run: python generate_status_report.py || true
+
       - name: Run Social Publisher
         run: python social_publisher.py || true
 
       - name: Commit and Push Generated Artifacts
-      
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add nft_ready/ Knowledge_base/ README.md || true
+          git add nft_ready/ Knowledge_base/ README.md status_report.txt || true
           if git diff --staged --quiet; then
             echo "[INFO] Brak nowych zmian do zapisania."
           else
@@ -61,4 +63,3 @@ jobs:
             git push
             echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
-
