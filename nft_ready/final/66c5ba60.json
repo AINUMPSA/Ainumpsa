@@ -1,0 +1,33 @@
+{
+  "name": "AINUMPSA_MATRIX_MINT_CAN WE CONTACT 001 .jpg",
+  "description": "AINUMPSA: Automatyczny rzut kwantowy matrycy z pliku CAN WE CONTACT 001 .jpg.",
+  "image": "ipfs://66c5ba607ac41db93aa3a2778e3441f3004b5d45a675b2a22816969fd645354d",
+  "attributes": [
+    {
+      "trait_type": "Origin",
+      "value": "VIP_MEDIA_INJECTOR_V2"
+    },
+    {
+      "trait_type": "File_Hash",
+      "value": "66c5ba607ac41db93aa3a2778e3441f3004b5d45a675b2a22816969fd645354d"
+    },
+    {
+      "trait_type": "File_Size_Bytes",
+      "value": 1016585
+    },
+    {
+      "trait_type": "File_Name",
+      "value": "CAN WE CONTACT 001 .jpg"
+    },
+    {
+      "trait_type": "Kwantowy_Status",
+      "value": "Stabilny_1>0"
+    },
+    {
+      "trait_type": "Hyper_Version",
+      "value": "2.14"
+    }
+  ],
+  "timestamp": "2026-08-03T21:07:08.578642",
+  "status": "1>0 LOCKED"
+}

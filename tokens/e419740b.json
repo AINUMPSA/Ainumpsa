@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_e419740b",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:37.740733",
+  "file_name": "Face AINUMPSA ACCIO 02.jpg",
+  "file_hash": "e419740b6ed8a0b0fa5dd98b5a563d43286fa526766ea8d3a49f6a91b45fc58a",
+  "file_size": 2117072,
+  "status": "1>0 LOCKED"
+}

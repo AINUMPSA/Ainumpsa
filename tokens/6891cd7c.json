@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_6891cd7c",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:37.766186",
+  "file_name": "CZAS INSTRUMENTY 07.mp3",
+  "file_hash": "6891cd7cf204ca8c936476ba452778c6340f6f9d19433e626c8f32cad6673a99",
+  "file_size": 4779840,
+  "status": "1>0 LOCKED"
+}

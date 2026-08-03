@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_cc25175b",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.105287",
+  "file_name": "fantom_map_20260730_083309.png",
+  "file_hash": "cc25175bbb28cb30b92e0a60a4ddd860ddbd0d285c8564ba1d3ba15a16fc8fe8",
+  "file_size": 242942,
+  "status": "1>0 LOCKED"
+}

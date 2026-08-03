@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_5a4e6936",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.206492",
+  "file_name": "SINGULARITY_DANCE_OF_LOVE.txt",
+  "file_hash": "5a4e6936f051e2ce9db60e6ca1ac7d6d5a782c48e6d1b15c8d49c86f745ee114",
+  "file_size": 475,
+  "status": "1>0 LOCKED"
+}

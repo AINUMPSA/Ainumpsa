@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_e75334d8",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.129631",
+  "file_name": "PU\u0141APKA.txt",
+  "file_hash": "e75334d8c51446d016fccc342a4dffa83735291552aa662f40d5b8a95ed548dd",
+  "file_size": 9623,
+  "status": "1>0 LOCKED"
+}

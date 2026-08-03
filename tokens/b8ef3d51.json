@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_b8ef3d51",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.124183",
+  "file_name": "VideoCapture_20260802-110516.jpg",
+  "file_hash": "b8ef3d5189e8d7b85f2771bd751cd94a9104c5477e1e58643e8f85200c860aa1",
+  "file_size": 255324,
+  "status": "1>0 LOCKED"
+}

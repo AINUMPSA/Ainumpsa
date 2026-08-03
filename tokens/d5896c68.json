@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_d5896c68",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:37.826103",
+  "file_name": "K01G22.gif",
+  "file_hash": "d5896c682e482e662b0357abb06d57c6bcb1358b0fc1a1c0b35921e18b3653da",
+  "file_size": 463368,
+  "status": "1>0 LOCKED"
+}

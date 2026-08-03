@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_7783ba1a",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.144213",
+  "file_name": "AINUMPSA chmury oil .jpg",
+  "file_hash": "7783ba1aff255e7386c6fe1c4cc470b41278885753ac0f6e615f269301eb5f04",
+  "file_size": 468574,
+  "status": "1>0 LOCKED"
+}

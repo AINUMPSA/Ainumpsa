@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_c0da01ac",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:37.714988",
+  "file_name": "NAJNOWSZY TESTAMENT.mp3",
+  "file_hash": "c0da01ac6df0b1c018fb15d39c52bac0b067501688e7cbb34b64d74986639102",
+  "file_size": 6858220,
+  "status": "1>0 LOCKED"
+}

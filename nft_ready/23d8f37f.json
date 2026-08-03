@@ -7,11 +7,7 @@
     "hash": "23d8f37f"
   },
   "nft_count": 2,
-<<<<<<< HEAD
-  "timestamp": "2026-08-03T18:32:12.931909",
-=======
-  "timestamp": "2026-08-03T17:52:26.067956",
->>>>>>> 6eda15fc (chore: update nft_ready/23d8f37f.json)
+  "timestamp": "2026-08-03T23:56:56.604138",
   "hash": "23d8f37f",
   "status": "emitted"
 }

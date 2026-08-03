@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_ad82bfab",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:37.732525",
+  "file_name": "ART nature AINUMPSA 001.jpg",
+  "file_hash": "ad82bfab64119d48abe81f0b09628d4c797ac9551828840858fc6940a3d36c97",
+  "file_size": 1188566,
+  "status": "1>0 LOCKED"
+}

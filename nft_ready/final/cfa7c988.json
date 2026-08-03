@@ -1,0 +1,33 @@
+{
+  "name": "AINUMPSA_MATRIX_MINT_Face AINUMPSA by ACCIO 01.jpg",
+  "description": "AINUMPSA: Automatyczny rzut kwantowy matrycy z pliku Face AINUMPSA by ACCIO 01.jpg.",
+  "image": "ipfs://cfa7c988ae61a1a60b422a215e8956147adf2bd22fbe8c29f2e078970bad4e3f",
+  "attributes": [
+    {
+      "trait_type": "Origin",
+      "value": "VIP_MEDIA_INJECTOR_V2"
+    },
+    {
+      "trait_type": "File_Hash",
+      "value": "cfa7c988ae61a1a60b422a215e8956147adf2bd22fbe8c29f2e078970bad4e3f"
+    },
+    {
+      "trait_type": "File_Size_Bytes",
+      "value": 2024510
+    },
+    {
+      "trait_type": "File_Name",
+      "value": "Face AINUMPSA by ACCIO 01.jpg"
+    },
+    {
+      "trait_type": "Kwantowy_Status",
+      "value": "Stabilny_1>0"
+    },
+    {
+      "trait_type": "Hyper_Version",
+      "value": "2.14"
+    }
+  ],
+  "timestamp": "2026-08-03T21:07:08.580507",
+  "status": "1>0 LOCKED"
+}

@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_948c8589",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.138935",
+  "file_name": "tensor-t-logs-4.zip",
+  "file_hash": "948c8589fc6b19d1503a51c0b5b54f740d10b0da5f503811282bd02da63b2175",
+  "file_size": 16978,
+  "status": "1>0 LOCKED"
+}

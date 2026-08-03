@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_7a3df1aa",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.102677",
+  "file_name": "PSX_20260730_074549.meta",
+  "file_hash": "7a3df1aa3b73976c9bb9bb634c02b3bc2f71505a9b40a3cf416e3590f23dddb0",
+  "file_size": 279,
+  "status": "1>0 LOCKED"
+}

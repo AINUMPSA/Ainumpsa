@@ -1,0 +1,14 @@
+{
+  "watermark": "AINUMPSA_MEMORY_CUBE_1>0",
+  "root": "ROOT_MEMORY_CUBE",
+  "flow_socket": {
+    "flow_socket_id": "SOCKET_a2cdb7e7",
+    "room": "ROOM_[1:1:2]",
+    "status": "ACTIVE"
+  },
+  "timestamp": "2026-08-04T00:35:38.208121",
+  "file_name": "ainumpsa#theory.pdf",
+  "file_hash": "a2cdb7e7794627df2991466b90a06201192e8246392f8ca0b676e80e77517f7f",
+  "file_size": 195135,
+  "status": "1>0 LOCKED"
+}
