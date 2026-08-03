@@ -49,6 +49,7 @@ jobs:
         run: python social_publisher.py || true
 
       - name: Commit and Push Generated Artifacts
+      
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -60,3 +61,4 @@ jobs:
             git push
             echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
+
