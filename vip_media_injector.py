@@ -6,10 +6,8 @@ from datetime import datetime
 def inject_vip_media():
     print("\n[START] Inicjalizacja VIP Media Injector...")
 
-    # Folder z mediami wejściowymi
     input_dir = "inputs/media"
 
-    # Sprawdź, czy folder istnieje, jeśli nie - stwórz
     if not os.path.exists(input_dir):
         print(f"[INFO] Tworzę folder: {input_dir}")
         os.makedirs(input_dir)
@@ -18,19 +16,16 @@ def inject_vip_media():
 
     print(f"[OK] Katalog {input_dir} jest gotowy.")
 
-    # Lista plików w katalogu (pomijamy .gitkeep)
     files = [f for f in os.listdir(input_dir) if f != ".gitkeep"]
 
     if not files:
-        print("[SKIP] Katalog inputs/media jest pusty. Nie ma nic do przetworzenia.")
+        print("[SKIP] Katalog inputs/media jest pusty.")
         return
 
-    # Przetwarzamy WSZYSTKIE pliki
     for media_file_name in files:
         media_path = os.path.join(input_dir, media_file_name)
         print(f"\n[INFO] Przetwarzanie: {media_file_name}")
 
-        # Generowanie HASH'a pliku
         try:
             with open(media_path, "rb") as f:
                 file_data = f.read()
@@ -42,7 +37,6 @@ def inject_vip_media():
             print(f"[ERROR] Nie można odczytać pliku: {e}")
             continue
 
-        # Generowanie metadanych JSON
         metadata = {
             "description": f"AINUMPSA: Automatyczny rzut kwantowy matrycy z pliku {media_file_name}.",
             "image": f"ipfs://{file_hash}",
@@ -57,7 +51,6 @@ def inject_vip_media():
             ]
         }
 
-        # Zapisz metadane jako osobny plik w nft_ready/
         os.makedirs("nft_ready", exist_ok=True)
         output_filename = f"nft_ready/{file_hash[:8]}.json"
         try:
