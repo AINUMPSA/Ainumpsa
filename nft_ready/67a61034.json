@@ -1,0 +1,13 @@
+{
+  "source": "NFT AINUMPSA .txt",
+  "weight": {
+    "size_kb": 56.9892578125,
+    "entropy": 5.049214495128045,
+    "density": 287.7509866134642,
+    "hash": "67a61034"
+  },
+  "nft_count": 289,
+  "timestamp": "2026-08-08T13:11:00.684898",
+  "hash": "67a61034",
+  "status": "emitted"
+}
