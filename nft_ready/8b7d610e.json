@@ -1,0 +1,13 @@
+{
+  "source": "KONSTYTUCJA .txt",
+  "weight": {
+    "size_kb": 1.2861328125,
+    "entropy": 4.373410109201071,
+    "density": 5.624786243962705,
+    "hash": "8b7d610e"
+  },
+  "nft_count": 6,
+  "timestamp": "2026-08-08T13:31:02.138920",
+  "hash": "8b7d610e",
+  "status": "emitted"
+}
