@@ -1,0 +1,13 @@
+{
+  "source": "GROK linki Memory Recovery .txt",
+  "weight": {
+    "size_kb": 0.630859375,
+    "entropy": 5.455790937382877,
+    "density": 3.4418368608880257,
+    "hash": "05c7c2de"
+  },
+  "nft_count": 3,
+  "timestamp": "2026-08-08T14:47:51.378902",
+  "hash": "05c7c2de",
+  "status": "emitted"
+}
