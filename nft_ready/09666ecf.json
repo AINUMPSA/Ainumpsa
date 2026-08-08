@@ -1,0 +1,13 @@
+{
+  "source": "AINUMPSA knowledge 001.txt",
+  "weight": {
+    "size_kb": 2.890625,
+    "entropy": 4.678043714768034,
+    "density": 13.522470113001347,
+    "hash": "09666ecf"
+  },
+  "nft_count": 13,
+  "timestamp": "2026-08-08T14:57:54.668684",
+  "hash": "09666ecf",
+  "status": "emitted"
+}
