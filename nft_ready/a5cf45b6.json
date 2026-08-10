@@ -1,0 +1,13 @@
+{
+  "source": "META 0951100826 DS.txt",
+  "weight": {
+    "size_kb": 3.0869140625,
+    "entropy": 4.81223629815044,
+    "density": 14.854959900833535,
+    "hash": "a5cf45b6"
+  },
+  "nft_count": 15,
+  "timestamp": "2026-08-10T08:54:21.824034",
+  "hash": "a5cf45b6",
+  "status": "emitted"
+}
