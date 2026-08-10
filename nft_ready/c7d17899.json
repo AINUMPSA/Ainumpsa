@@ -1,0 +1,13 @@
+{
+  "source": "META 0917100826.txt",
+  "weight": {
+    "size_kb": 24.412109375,
+    "entropy": 4.805691761146156,
+    "density": 117.31707289563634,
+    "hash": "c7d17899"
+  },
+  "nft_count": 118,
+  "timestamp": "2026-08-10T08:19:06.704437",
+  "hash": "c7d17899",
+  "status": "emitted"
+}
