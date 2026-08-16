@@ -1,5 +1,5 @@
 {
-  "source": "NEXT GENERATION 001.txt",
+  "source": "The Golden Ratio.txt",
   "weight": {
     "size_kb": 3.3408203125,
     "entropy": 4.488678904564089,
@@ -7,7 +7,7 @@
     "hash": "552b2984"
   },
   "nft_count": 15,
-  "timestamp": "2026-08-13T22:30:43.590662",
+  "timestamp": "2026-08-16T17:12:39.713998",
   "hash": "552b2984",
   "status": "emitted"
 }
