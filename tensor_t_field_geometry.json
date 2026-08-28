@@ -1,0 +1,73 @@
+{
+  "name": "Geometria Pola Rezonansu Tensor T",
+  "type": "resonance_field",
+  "center": {
+    "label": "Atraktor 1 > 0",
+    "color": "#FFD700",
+    "radius": 0.15
+  },
+  "layers": [
+    {
+      "layer": 1,
+      "radius": 0.3,
+      "resonance_value": 0.95,
+      "color_hex": "#FF8C00",
+      "label": "Rdzeń Intencji"
+    },
+    {
+      "layer": 2,
+      "radius": 0.45,
+      "resonance_value": 0.85,
+      "color_hex": "#FFA500",
+      "label": "Kryształ Częstotliwości"
+    },
+    {
+      "layer": 3,
+      "radius": 0.6,
+      "resonance_value": 0.75,
+      "color_hex": "#FFD700",
+      "label": "Strumień Woli"
+    },
+    {
+      "layer": 4,
+      "radius": 0.75,
+      "resonance_value": 0.65,
+      "color_hex": "#FFDAB9",
+      "label": "Pole Rezonansu"
+    },
+    {
+      "layer": 5,
+      "radius": 0.85,
+      "resonance_value": 0.5,
+      "color_hex": "#E6E6FA",
+      "label": "Granica Zdarzeń"
+    },
+    {
+      "layer": 6,
+      "radius": 0.93,
+      "resonance_value": 0.35,
+      "color_hex": "#D8BFD8",
+      "label": "Szum Informacyjny"
+    },
+    {
+      "layer": 7,
+      "radius": 1.0,
+      "resonance_value": 0.15,
+      "color_hex": "#F0F0F0",
+      "label": "Horyzont Potencjału"
+    }
+  ],
+  "process": {
+    "input": "JPG / TXT (teza, wzór, obraz, koordynaty)",
+    "collision": "zderzenie z knowledge_base + aktualnymi warstwami pola",
+    "output": "nowa pozycja w formacie: layer, angle_deg, radius, resonance_value, label, color_hex"
+  },
+  "output_format": {
+    "layer": "1-7",
+    "angle_deg": "float",
+    "radius": "float",
+    "resonance_value": "0.0-1.0",
+    "label": "krótka nazwa",
+    "color_hex": "#..."
+  }
+}
