@@ -1,0 +1,61 @@
+{
+  "name": "Mapa Zderzeń w Układzie Biegunowym",
+  "type": "collision_matrix",
+  "coordinates": {
+    "center": {
+      "angle_deg": 0,
+      "radius": 0,
+      "type": "attractor",
+      "label": "1 > 0",
+      "color": "#FFD700"
+    },
+    "fixed_points": [
+      {
+        "id": "point_a",
+        "angle_deg": 45,
+        "radius": 0.6,
+        "type": "resonance",
+        "color": "#40E0D0",
+        "label": "Rezonans A"
+      },
+      {
+        "id": "point_b",
+        "angle_deg": 135,
+        "radius": 0.75,
+        "type": "resonance",
+        "color": "#40E0D0",
+        "label": "Rezonans B"
+      },
+      {
+        "id": "point_c",
+        "angle_deg": 225,
+        "radius": 0.5,
+        "type": "anomaly",
+        "color": "#FF4444",
+        "label": "Anomalia X1",
+        "icon": "X"
+      },
+      {
+        "id": "point_d",
+        "angle_deg": 315,
+        "radius": 0.4,
+        "type": "anomaly",
+        "color": "#FF4444",
+        "label": "Anomalia X2",
+        "icon": "X"
+      }
+    ]
+  },
+  "process": {
+    "input": "JPG / TXT (teza, wzór, obraz)",
+    "collision": "zderzenie wejścia z knowledge_base",
+    "output": "nowa pozycja w formacie: angle_deg, radius, type, source, collision_strength"
+  },
+  "output_format": {
+    "angle_deg": "float 0-360",
+    "radius": "float 0-1",
+    "type": "resonance | anomaly | attractor",
+    "source": "nazwa wejścia",
+    "collision_strength": "float 0-1"
+  }
+}
