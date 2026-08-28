@@ -1,0 +1,13 @@
+{
+  "source": "Prompt mapa 02 _260828_213240.txt",
+  "weight": {
+    "size_kb": 0.54296875,
+    "entropy": 5.165366471197858,
+    "density": 2.804632576158212,
+    "hash": "5ed4e38e"
+  },
+  "nft_count": 3,
+  "timestamp": "2026-08-28T23:26:37.520273",
+  "hash": "5ed4e38e",
+  "status": "emitted"
+}
