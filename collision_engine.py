@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
 """
-AINUMPSA – Collision Engine (minimal)
--------------------------------------
-Wejście: najnowszy plik z knowledge_base/
-Wyjście: 3 namiary (pozycje) według 3 matryc stylów
+AINUMPSA – Collision Engine (v2 – z geometrią warstw)
 """
 
 import os
 import json
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
-# === KONFIGURACJA ===
 KNOWLEDGE_DIR = Path("knowledge_base")
 RESULTS_DIR = Path("collision_results")
+GEOMETRY_FILE = Path("tensor_t_field_geometry.json")
 RESULTS_DIR.mkdir(exist_ok=True)
 
-# 3 matryce stylów
 STYLES = [
     {
         "id": "sovereign_impasse_expressive",
@@ -43,8 +39,41 @@ STYLES = [
 ]
 
 
+def load_geometry():
+    if GEOMETRY_FILE.exists():
+        with open(GEOMETRY_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return None
+
+
+def get_layer_info(radius: float, geometry: dict):
+    """Dopasuj warstwę na podstawie promienia"""
+    if not geometry or "layers" not in geometry:
+        return {
+            "layer": 2,
+            "label": "Nieznana",
+            "resonance_value": 0.5,
+            "color_hex": "#888888"
+        }
+
+    # sortujemy warstwy od najmniejszego promienia
+    layers = sorted(geometry["layers"], key=lambda x: x["radius"])
+    chosen = layers[-1]  # domyślnie ostatnia
+
+    for layer in layers:
+        if radius <= layer["radius"]:
+            chosen = layer
+            break
+
+    return {
+        "layer": chosen["layer"],
+        "label": chosen.get("label", ""),
+        "resonance_value": chosen.get("resonance_value", 0.5),
+        "color_hex": chosen.get("color_hex", "#888888")
+    }
+
+
 def get_latest_input():
-    """Znajdź najnowszy plik w knowledge_base/"""
     if not KNOWLEDGE_DIR.exists():
         return None, None
 
@@ -60,27 +89,23 @@ def get_latest_input():
     try:
         content = latest.read_text(encoding="utf-8", errors="ignore")
     except Exception:
-        content = latest.name  # fallback dla obrazów / binariów
-
+        content = latest.name
     return latest.name, content
 
 
 def text_to_seed(text: str) -> int:
-    """Prosty, deterministyczny seed z treści pliku"""
     return int(hashlib.sha256(text.encode("utf-8")).hexdigest()[:8], 16)
 
 
-def compute_position(style: dict, seed: int) -> dict:
-    """Wylicz pozycję na podstawie stylu + seedu z wejścia"""
-    # małe, deterministyczne przesunięcie zależne od treści
-    angle_offset = (seed % 1000) / 1000 * 40 - 20          # ±20°
-    radius_offset = ((seed // 1000) % 1000) / 1000 * 0.25 - 0.12  # ±0.12
+def compute_position(style: dict, seed: int, geometry: dict) -> dict:
+    angle_offset = (seed % 1000) / 1000 * 40 - 20
+    radius_offset = ((seed // 1000) % 1000) / 1000 * 0.25 - 0.12
 
     angle = (style["base_angle"] + angle_offset) % 360
     radius = max(0.05, min(0.95, style["base_radius"] + radius_offset))
-
-    # siła zderzenia (0.4 – 0.95)
     strength = 0.4 + ((seed % 560) / 560) * 0.55
+
+    layer_info = get_layer_info(radius, geometry)
 
     return {
         "style_id": style["id"],
@@ -89,12 +114,15 @@ def compute_position(style: dict, seed: int) -> dict:
         "radius": round(radius, 3),
         "type": style["type"],
         "collision_strength": round(strength, 3),
-        "layer": 1 if style["type"] == "collapse" else 2
+        "layer": layer_info["layer"],
+        "layer_label": layer_info["label"],
+        "resonance_value": layer_info["resonance_value"],
+        "color_hex": layer_info["color_hex"]
     }
 
 
 def run_collision():
-    print("[COLLISION ENGINE] Start")
+    print("[COLLISION ENGINE v2] Start")
 
     filename, content = get_latest_input()
     if not filename:
@@ -103,28 +131,28 @@ def run_collision():
 
     print(f"[INFO] Wejście: {filename}")
     seed = text_to_seed(content if content else filename)
+    geometry = load_geometry()
 
     proposals = []
     for style in STYLES:
-        pos = compute_position(style, seed)
+        pos = compute_position(style, seed, geometry)
         pos["source"] = filename
         proposals.append(pos)
 
     result = {
-        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "timestamp": datetime.now(timezone.utc).isoformat(),
         "input_file": filename,
         "seed": seed,
         "proposals": proposals,
         "status": "ok"
     }
 
-    # zapis
-    out_name = f"collision_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}.json"
+    out_name = f"collision_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
     out_path = RESULTS_DIR / out_name
+
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
 
-    # dodatkowo latest.json dla łatwego podglądu
     with open(RESULTS_DIR / "latest.json", "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
 
