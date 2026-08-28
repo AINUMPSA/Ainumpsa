@@ -1,0 +1,7 @@
+{
+  "source": "input/test.jpg",
+  "output": "processed/test_amber_20260828_093718.jpg",
+  "timestamp": "2026-08-28T08:37:18.811559Z",
+  "hash": "323982c8947d29cab20d05f48ad22a0d2257ac701a9ef4147f40646f39e85598",
+  "status": "1 > 0 LOCKED"
+}
