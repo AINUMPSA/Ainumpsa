@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-08-28T23:51:28.376451+00:00",
+  "input_file": "ainumpsa#theory.pdf",
+  "seed": 3799146406,
+  "proposals": [
+    {
+      "style_id": "sovereign_impasse_expressive",
+      "style_name": "Sovereign Impasso – Ekspresyjny",
+      "angle_deg": 41.24,
+      "radius": 0.467,
+      "type": "resonance",
+      "collision_strength": 0.406,
+      "layer": 3,
+      "layer_label": "Strumień Woli",
+      "resonance_value": 0.75,
+      "color_hex": "#FFD700",
+      "source": "ainumpsa#theory.pdf"
+    },
+    {
+      "style_id": "sovereign_impasse_dark",
+      "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
+      "angle_deg": 221.24,
+      "radius": 0.536,
+      "type": "resonance",
+      "collision_strength": 0.406,
+      "layer": 3,
+      "layer_label": "Strumień Woli",
+      "resonance_value": 0.75,
+      "color_hex": "#FFD700",
+      "source": "ainumpsa#theory.pdf"
+    },
+    {
+      "style_id": "collapse_to_attractor",
+      "style_name": "Kolaps Informacji do Atraktora 1>0",
+      "angle_deg": 356.24,
+      "radius": 0.05,
+      "type": "collapse",
+      "collision_strength": 0.406,
+      "layer": 1,
+      "layer_label": "Rdzeń Intencji",
+      "resonance_value": 0.95,
+      "color_hex": "#FF8C00",
+      "source": "ainumpsa#theory.pdf"
+    }
+  ],
+  "status": "ok"
+}
