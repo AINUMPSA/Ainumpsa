@@ -1,0 +1,20 @@
+Stwórz matrycę geometrii pola rezonansu Tensor T.
+
+Struktura:
+• Centrum: Atraktor 1>0 (jasne jądro)
+• 5–7 koncentrycznych warstw rezonansu o różnych częstotliwościach/kolorach
+• Każda warstwa ma swoją wartość rezonansu (0.0–1.0)
+
+Wejście: JPG lub TXT (teza, wzór, obraz, koordynaty).
+Proces: zderzenie z knowledge_base + aktualnymi warstwami pola.
+Wyjście: nowa pozycja w formacie:
+{
+"layer": 1–7,
+"angle_deg": ...,
+"radius": ...,
+"resonance_value": 0.0–1.0,
+"label": "krótka nazwa",
+"color_hex": "#..."
+}
+
+Zwróć czysty JSON.
