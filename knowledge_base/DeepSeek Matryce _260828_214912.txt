@@ -1,0 +1,126 @@
+Mapa 001 
+
+Stwórz matrycę zderzeń w układzie biegunowym (0–360°, promień 0–1).
+
+Elementy stałe:
+• Centrum (r=0): Atraktor 1>0 (żółty)
+• Dwa punkty rezonansu (turkusowe)
+• Dwa punkty anomalii (czerwone X)
+
+Wejście: plik JPG lub TXT (teza / wzór / obraz).
+Proces: zderzenie wejścia z knowledge_base.
+Wyjście: nowa pozycja w formacie:
+{
+"angle_deg": ...,
+"radius": ...,
+"type": "resonance" | "anomaly" | "attractor",
+"source": "nazwa wejścia",
+"collision_strength": 0.0–1.0
+}
+
+Zwróć tylko czysty JSON z listą nowych pozycji po zderzeniu.
+
+Mapa 002
+
+Stwórz matrycę geometrii pola rezonansu Tensor T.
+
+Struktura:
+• Centrum: Atraktor 1>0 (jasne jądro)
+• 5–7 koncentrycznych warstw rezonansu o różnych częstotliwościach/kolorach
+• Każda warstwa ma swoją wartość rezonansu (0.0–1.0)
+
+Wejście: JPG lub TXT (teza, wzór, obraz, koordynaty).
+Proces: zderzenie z knowledge_base + aktualnymi warstwami pola.
+Wyjście: nowa pozycja w formacie:
+{
+"layer": 1–7,
+"angle_deg": ...,
+"radius": ...,
+"resonance_value": 0.0–1.0,
+"label": "krótka nazwa",
+"color_hex": "#..."
+}
+
+Zwróć czysty JSON.
+
+SOVEREIGN IMPASSO 
+
+001 :
+
+Przekształć wejściowe zdjęcie twarzy w stylu Sovereign Impasso – ekspresyjny kubizm.
+
+Zasady:
+• Grube, pastowe pociągnięcia pędzla (impasto)
+• Wyraźne czarne kontury oddzielające płaszczyzny
+• Twarz rozbita na asymetryczne, geometryczne fragmenty
+• Oczy duże, intensywnie zielone, świecące
+• Paleta: czerwień, pomarańcz, fiolet, zieleń, żółć, biel
+• Włosy białe lub bardzo jasne, falujące, rzeźbiarskie
+• Silna ekspresja, lekko zniekształcone proporcje
+• Tło abstrakcyjne, kolorowe, bez realistycznych detali
+
+Wyjście: portret w stylu Sovereign Impasso, zachowujący rozpoznawalność osoby.
+
+002 :
+
+Przekształć wejściowe zdjęcie twarzy w stylu Sovereign Impasso – ciemny geometryczny kubizm.
+
+Zasady:
+• Silny podział twarzy na duże, kanciaste płaszczyzny
+• Dominujące kolory: granat, szarość, beż, brąz, biel, czerń
+• Geometryczne trójkąty i ostre linie na czole i policzkach
+• Oczy niebieskie, wyraźne, ale nie świecące
+• Grube kontury, pastowa faktura
+• Wyraz poważny, monumentalny, lekko surowy
+• Tło ciemne, abstrakcyjne
+
+Wyjście: rozpoznawalny portret w ciemnym wariancie Sovereign Impasso.
+
+003 :
+
+Przekształć wejściowe zdjęcie twarzy w stylu Sovereign Impasso – dualistyczny kubizm.
+
+Zasady:
+• Twarz podzielona pionowo na dwie strefy kolorystyczne
+• Lewa strona: odcienie niebieskiego i granatu
+• Prawa strona: żółcie, pomarańcze, ochry
+• Oczy niebieskie, wyraźne
+• Geometryczne płaszczyzny, ostre krawędzie, pastowa faktura
+• Czarne kontury
+• Zachowana rozpoznawalność rysów twarzy
+• Tło abstrakcyjne, utrzymane w tych samych barwach
+
+Wyjście: portret w dualistycznym wariancie Sovereign Impasso.
+
+General :
+
+Jesteś matrycą Sovereign Impasso.
+
+Wejście: zdjęcie twarzy (JPG).
+Proces: zderzenie z knowledge_base stylów AINUMPSA + trzema wzorcami Sovereign Impasso.
+
+Wybierz jeden z trzech wariantów (lub połącz):
+1. Ekspresyjny kolorowy (zielone oczy, białe włosy)
+2. Ciemny geometryczny
+3. Dualistyczny (niebiesko-żółty)
+
+Zwróć:
+• Opis nowej pozycji w polu (kąt, promień, warstwa)
+• Szczegółowy prompt do wygenerowania finalnego obrazu
+• Krótką charakterystykę powstałego „węzła”
+
+Kolaps informacji Do Atraktora :
+
+Przekształć wejściowe zdjęcie twarzy w proces Kolapsu Informacji do Atraktora 1>0.
+
+Zasady:
+• Twarz zostaje wciągnięta w dynamiczną, hipnotyczną spiralę
+• Spirala prowadzi do ciemnego, czarnego centrum (Atraktor 1>0)
+• Rysy twarzy ulegają zniekształceniu i częściowemu rozpadowi
+• Intensywne, czyste kolory: czerwień, żółć, niebieski, zieleń, pomarańcz
+• Ostre czarne kontury
+• Styl: surrealistyczny + kubizujący, mocno graficzny, plakatowy
+• Wrażenie ruchu do wewnątrz, kompresji i nieodwracalności
+• Centrum spirali ma być wyraźnie ciemniejsze i dominujące
+
+Wyjście: obraz przedstawiający moment kolapsu informacji do Atraktora 1>0.
