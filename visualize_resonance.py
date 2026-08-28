@@ -8,7 +8,7 @@ def generate_resonance_visuals(billboard_path='matrix_billboard.json', output_di
     os.makedirs(output_dir, exist_ok=True)
     with open(billboard_path, 'r') as f:
         data = json.load(f)
-    
+
     correlations = data.get("pinned_correlations", [])
     if not correlations:
         print("Brak rezonansów do wizualizacji.")
@@ -38,3 +38,7 @@ def generate_resonance_visuals(billboard_path='matrix_billboard.json', output_di
     plt.savefig(filename, dpi=150, bbox_inches='tight')
     plt.close()
     print(f"✅ Wygenerowano wizualizację: {filename}")
+
+# TO JEST KLUCZOWE – wywołanie funkcji, gdy skrypt jest uruchamiany
+if __name__ == "__main__":
+    generate_resonance_visuals()
