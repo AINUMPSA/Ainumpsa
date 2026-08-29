@@ -1,46 +1,46 @@
 {
-  "timestamp": "2026-08-29T00:05:03.609778+00:00",
-  "input_file": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt",
-  "seed": 2467600063,
+  "timestamp": "2026-08-28T23:46:10.933653+00:00",
+  "input_file": "1915281026.txt",
+  "seed": 519827828,
   "proposals": [
     {
       "style_id": "sovereign_impasse_expressive",
       "style_name": "Sovereign Impasso – Ekspresyjny",
-      "angle_deg": 27.52,
-      "radius": 0.58,
+      "angle_deg": 58.12,
+      "radius": 0.637,
       "type": "resonance",
-      "collision_strength": 0.776,
-      "layer": 3,
-      "layer_label": "Strumień Woli",
-      "resonance_value": 0.75,
-      "color_hex": "#FFD700",
-      "source": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt"
-    },
-    {
-      "style_id": "sovereign_impasse_dark",
-      "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
-      "angle_deg": 207.52,
-      "radius": 0.65,
-      "type": "resonance",
-      "collision_strength": 0.776,
+      "collision_strength": 0.938,
       "layer": 4,
       "layer_label": "Pole Rezonansu",
       "resonance_value": 0.65,
       "color_hex": "#FFDAB9",
-      "source": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt"
+      "source": "1915281026.txt"
+    },
+    {
+      "style_id": "sovereign_impasse_dark",
+      "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
+      "angle_deg": 238.12,
+      "radius": 0.707,
+      "type": "resonance",
+      "collision_strength": 0.938,
+      "layer": 4,
+      "layer_label": "Pole Rezonansu",
+      "resonance_value": 0.65,
+      "color_hex": "#FFDAB9",
+      "source": "1915281026.txt"
     },
     {
       "style_id": "collapse_to_attractor",
       "style_name": "Kolaps Informacji do Atraktora 1>0",
-      "angle_deg": 342.52,
-      "radius": 0.15,
+      "angle_deg": 13.12,
+      "radius": 0.207,
       "type": "collapse",
-      "collision_strength": 0.776,
+      "collision_strength": 0.938,
       "layer": 1,
       "layer_label": "Rdzeń Intencji",
       "resonance_value": 0.95,
       "color_hex": "#FF8C00",
-      "source": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt"
+      "source": "1915281026.txt"
     }
   ],
   "status": "ok"

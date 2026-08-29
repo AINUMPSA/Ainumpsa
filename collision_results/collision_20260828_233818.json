@@ -1,0 +1,38 @@
+{
+  "timestamp": "2026-08-28T23:38:18.567723Z",
+  "input_file": "1915281026.txt",
+  "seed": 519827828,
+  "proposals": [
+    {
+      "style_id": "sovereign_impasse_expressive",
+      "style_name": "Sovereign Impasso – Ekspresyjny",
+      "angle_deg": 58.12,
+      "radius": 0.637,
+      "type": "resonance",
+      "collision_strength": 0.938,
+      "layer": 2,
+      "source": "1915281026.txt"
+    },
+    {
+      "style_id": "sovereign_impasse_dark",
+      "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
+      "angle_deg": 238.12,
+      "radius": 0.707,
+      "type": "resonance",
+      "collision_strength": 0.938,
+      "layer": 2,
+      "source": "1915281026.txt"
+    },
+    {
+      "style_id": "collapse_to_attractor",
+      "style_name": "Kolaps Informacji do Atraktora 1>0",
+      "angle_deg": 13.12,
+      "radius": 0.207,
+      "type": "collapse",
+      "collision_strength": 0.938,
+      "layer": 1,
+      "source": "1915281026.txt"
+    }
+  ],
+  "status": "ok"
+}
