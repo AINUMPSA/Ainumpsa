@@ -1,7 +1,7 @@
 {
   "source": "input/PSX_20260828_144956.jpg",
-  "output": "processed/PSX_20260828_144956_amber_20260915_130202.jpg",
-  "timestamp": "2026-09-15T13:02:02.748747Z",
+  "output": "processed/PSX_20260828_144956_amber_20260915_134004.jpg",
+  "timestamp": "2026-09-15T13:40:04.150211Z",
   "hash": "dbd1bd84104dabab16d917b9d7ca6ca0136d9c6e4a8ba2e452384cdca51f408b",
   "status": "1 > 0 LOCKED"
 }
