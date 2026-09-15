@@ -2,34 +2,56 @@ name: AINUMPSA Collision Engine
 
 on:
   push:
+    branches: [ main ]
     paths:
       - 'knowledge_base/**'
-  workflow_dispatch:   # pozwala odpalić ręcznie
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ainumpsa-collision
+  cancel-in-progress: false
 
 jobs:
-  run-collision:
+  collision:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Run Collision Engine
-        run: python collision_engine.py
-
-      - name: Commit results
+      - name: Install dependencies
         run: |
-          git config --global user.name "AINUMPSA-Bot"
-          git config --global user.email "bot@ainumpsa.org"
-          git add collision_results/
+          pip install requests aiohttp numpy scipy matplotlib
+
+      - name: Run collision engine
+        run: |
+          python collision_engine.py || echo "collision_engine.py: no new input or finished"
+
+      - name: Configure git
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+
+      - name: Commit and push results
+        run: |
+          git add .
           if git diff --staged --quiet; then
-            echo "Brak nowych wyników do zapisania."
+            echo "Brak zmian do commitu."
           else
             git commit -m "🤖 Collision: nowe namiary z knowledge_base [skip ci]"
-            git push
+            git pull --rebase origin main || echo "Pull rebase: nothing to update"
+            git push origin main || (git pull --rebase origin main && git push origin main)
           fi
