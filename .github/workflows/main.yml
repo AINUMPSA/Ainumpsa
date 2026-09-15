@@ -93,3 +93,8 @@ jobs:
             git push origin main || (git pull --rebase origin main && git push origin main)
             echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
+
+   - name: Generate HQ images via Replicate
+  env:
+    REPLICATE_API_TOKEN: ${{ secrets.REPLICATE_API_TOKEN }}
+  run: python generate_hq.py || true
