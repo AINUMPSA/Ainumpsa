@@ -1,5 +1,39 @@
-multimodal_pool/*.png
-knowledge_base/*.meta
-knowledge_base/Memory Recovery .txt
-knowledge_base/My Rodzice.txt
+# AINUMPSA - pliki ignorowane
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Node
+node_modules/
+
+# Systemowe
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# IDE
+.vscode/
+.idea/
+
+# Logi i cache
+*.log
+.cache/
+
+# Srodowisko
+.env
+.env.local
+
+# AINUMPSA - artefakty runtime
 collision_results/latest.json
+*.tmp
+*.bak
+*_backup.py
+visuals/*.jpg
+visuals/*.png
