@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AINUMPSA – Collision Engine (v2 – z geometrią warstw)
+AINUMPSA – Collision Engine (v2.1 – z geometrią warstw + smart save)
 """
 
 import os
@@ -56,9 +56,8 @@ def get_layer_info(radius: float, geometry: dict):
             "color_hex": "#888888"
         }
 
-    # sortujemy warstwy od najmniejszego promienia
     layers = sorted(geometry["layers"], key=lambda x: x["radius"])
-    chosen = layers[-1]  # domyślnie ostatnia
+    chosen = layers[-1]
 
     for layer in layers:
         if radius <= layer["radius"]:
@@ -121,8 +120,31 @@ def compute_position(style: dict, seed: int, geometry: dict) -> dict:
     }
 
 
+def save_latest(result: dict, path: Path):
+    """
+    Zapisz latest.json TYLKO jeśli zmieniła się treść (proposals / input_file).
+    Timestamp sam w sobie nie jest powodem do nadpisania.
+    """
+    if path.exists():
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                old = json.load(f)
+            same_input = old.get("input_file") == result.get("input_file")
+            same_proposals = old.get("proposals") == result.get("proposals")
+            if same_input and same_proposals:
+                print("[SKIP] latest.json bez zmian — pomijam zapis")
+                return False
+        except Exception as e:
+            print(f"[WARN] Nie można odczytać starego latest.json: {e}")
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print("[SUCCESS] Zapisano: collision_results/latest.json")
+    return True
+
+
 def run_collision():
-    print("[COLLISION ENGINE v2] Start")
+    print("[COLLISION ENGINE v2.1] Start")
 
     filename, content = get_latest_input()
     if not filename:
@@ -147,17 +169,16 @@ def run_collision():
         "status": "ok"
     }
 
+    # Zawsze zapisujemy "historyczny" plik z timestampem
     out_name = f"collision_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
     out_path = RESULTS_DIR / out_name
-
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
-
-    with open(RESULTS_DIR / "latest.json", "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2, ensure_ascii=False)
-
     print(f"[SUCCESS] Zapisano: {out_path}")
-    print(f"[SUCCESS] Zapisano: collision_results/latest.json")
+
+    # latest.json tylko gdy zmiana treści
+    save_latest(result, RESULTS_DIR / "latest.json")
+
     return result
 
 
