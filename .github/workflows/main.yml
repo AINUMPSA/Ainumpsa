@@ -3,7 +3,16 @@ name: AINUMPSA Production Cycle
 on:
   push:
     branches: [ main ]
+  schedule:
+    - cron: '0 */8 * * *'
   workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ainumpsa-collision
+  cancel-in-progress: false
 
 jobs:
   production-cycle:
@@ -12,6 +21,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -60,6 +72,7 @@ jobs:
             echo "[INFO] Brak nowych zmian do zapisania."
           else
             git commit -m "auto: matrix scan artifact generated in nft_ready/ [skip ci]"
-            git push
+            git pull --rebase origin main || echo "[INFO] Pull rebase: nothing to update"
+            git push origin main || (git pull --rebase origin main && git push origin main)
             echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
           fi
