@@ -1,7 +1,7 @@
 {
   "source": "input/VideoCapture_20260828-132329.jpg",
-  "output": "processed/VideoCapture_20260828-132329_amber_20260915_140513.jpg",
-  "timestamp": "2026-09-15T14:05:13.075695Z",
+  "output": "processed/VideoCapture_20260828-132329_amber_20260915_141126.jpg",
+  "timestamp": "2026-09-15T14:11:26.691124Z",
   "hash": "abfe22b3a695e6118c2bc422fc1299e8eefc94d74a021da13b2c845f26eead97",
   "status": "1 > 0 LOCKED"
 }
