@@ -34,7 +34,7 @@ jobs:
         run: pip install numpy scipy matplotlib pillow requests pypdf web3 eth-account opencv-python
 
       - name: Prepare folders
-        run: mkdir -p inputs/media Knowledge_base nft_ready multimodal_pool
+        run: mkdir -p inputs/media Knowledge_base knowledge_base nft_ready multimodal_pool processed visuals
 
       - name: Run VIP Media Injector
         run: python vip_media_injector.py || true
@@ -50,6 +50,23 @@ jobs:
 
       - name: Run Matrix Collider (generates 10 versions)
         run: python matrix_collider.py || true
+
+      - name: Process new images from input/
+        run: |
+          shopt -s nullglob
+          for f in input/*.jpg input/*.jpeg input/*.png input/*.webp; do
+            echo "Przetwarzam: $f"
+            python process_image.py "$f" || true
+          done
+
+      - name: Refresh Memory Cube Map
+        run: python dimensional_mapper.py || true
+
+      - name: Run Collision Engine
+        run: python collision_engine.py || true
+
+      - name: Visualize Resonance
+        run: python visualize_resonance.py || true
 
       - name: Mutate README
         run: python readme_mutator.py || true
@@ -67,11 +84,11 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add nft_ready/ Knowledge_base/ README.md status_report.txt || true
+          git add nft_ready/ knowledge_base/ Knowledge_base/ processed/ visuals/ collision_results/ README.md status_report.txt memory_cube_map.json || true
           if git diff --staged --quiet; then
             echo "[INFO] Brak nowych zmian do zapisania."
           else
-            git commit -m "auto: matrix scan artifact generated in nft_ready/ [skip ci]"
+            git commit -m "auto: matrix scan + image processing + cube refresh [skip ci]"
             git pull --rebase origin main || echo "[INFO] Pull rebase: nothing to update"
             git push origin main || (git pull --rebase origin main && git push origin main)
             echo "[SUCCESS] Zapisano pliki w repozytorium! 🎉"
