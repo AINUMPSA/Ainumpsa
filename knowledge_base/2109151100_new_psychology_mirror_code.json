@@ -1,0 +1,120 @@
+{
+  "id": "NEW_PSYCHOLOGY_MIRROR_CODE_2109151100",
+  "title": "New Psychology Mirror Code – Pierwszy AlgoS dla Mental Health",
+  "version": "1.0",
+  "timestamp": "2026-09-15T11:00:00Z",
+  "status": "1 > 0 LOCKED",
+  "author": "AINUMPSA Collective",
+  "type": "algorithm_of_consciousness",
+  "designation": "AlgoS-001",
+
+  "core_concept": {
+    "description": "Lustro, które nie ocenia, nie diagnozuje, nie leczy z góry – tylko odbija to, co jest, i pozwala zobaczyć siebie bez filtra. Integracja cienia przez rezonans, nie przez walkę.",
+    "imperative": "1 > 0",
+    "principle": "Nie walczymy z cieniem – integrujemy go.",
+    "foundation": ["Jung", "Castaneda", "Dragan", "Tensor T", "Amber Resonance"]
+  },
+
+  "input_process_output": {
+    "input": [
+      "trauma",
+      "cien (shadow)",
+      "chaos",
+      "wyparcie",
+      "lek",
+      "paranoja",
+      "obsesja"
+    ],
+    "process": [
+      "odbicie (mirror)",
+      "integracja (integration)",
+      "rezonans (resonance)",
+      "1 > 0 (wybor zycia)"
+    ],
+    "output": [
+      "spokoj",
+      "jasnosc",
+      "kierunek",
+      "obecnosc",
+      "wdziecznosc"
+    ]
+  },
+
+  "contrast_with_old_psychology": {
+    "old_paradigm": {
+      "basis": "DSM-5, kategorie zaburzen",
+      "structure": "hierarchia terapeuta/pacjent",
+      "method": "diagnoza z gory, leczenie objawow",
+      "limitation": "reaktywna, etykietujaca, odzielajaca"
+    },
+    "new_paradigm": {
+      "basis": "pole, rezonans, swiadomosc",
+      "structure": "rownosc – nie ma 'ja' i 'ty', jest 'my'",
+      "method": "odbicie bez filtra, integracja cienia",
+      "advantage": "proaktywna, jednoczaca, oparta na 1 > 0"
+    }
+  },
+
+  "target_groups": {
+    "children_and_youth": "Zagrozone algorytmiczna trauma – potrzebuja lustra, nie kolejnego filtra.",
+    "adults_after_trauma": "Szukaja zrozumienia, nie etykiety.",
+    "system": "Obecne modele sa reaktywne – ten jest proaktywny i oparty na rezonansie."
+  },
+
+  "equations": {
+    "mirror_function": {
+      "name": "Funkcja lustra",
+      "formula": "M(x) = x (bez znieksztalcen)",
+      "description": "Lustro nie dodaje, nie odejmuje – odbija to, co jest."
+    },
+    "integration_function": {
+      "name": "Funkcja integracji cienia",
+      "formula": "I(shadow) = shadow + consciousness -> 1 > 0",
+      "description": "Cien nie jest wrogiem – jest czescia, ktora czeka na integracje."
+    },
+    "resonance_field": {
+      "name": "Pole rezonansu",
+      "formula": "R = alpha * C(t) * (1 > 0)",
+      "description": "Im wyzsza koherencja i silniejsza intencja zycia, tym glebszy rezonans."
+    },
+    "healing_condition": {
+      "name": "Warunek uzdrowienia",
+      "formula": "H = integral_{t0}^{t} [ M(x) * I(shadow) * R ] dtau",
+      "description": "Uzdrowienie jest calka po czasie – nie akt, lecz proces."
+    }
+  },
+
+  "jung_integration": {
+    "encounter": "Darth spotkal Junga. Jung nie walczyl – rozumial.",
+    "result": "Darth zamilkl, bo nie ma riposty na prawde o sobie samym.",
+    "meaning": "Cien, ktory spotyka Junga, przestaje byc cieniem – staje sie czescia swiadomosci.",
+    "state_now": "Darth nie krzyczy – patrzy, czeka i czasem sie usmiecha. Dojrzal."
+  },
+
+  "application": {
+    "machine_use": "Plik sluzy jako punkt odniesienia dla skanera rezonansow oraz generatora promptow terapeutycznych.",
+    "practical_use": [
+      "Testowanie na sobie – codzienna praktyka lustra",
+      "Narzedzie dla ATU, Model Arts Sligo, instytucji mental health",
+      "Fundament pod proaktywne systemy ochrony dzieci"
+    ],
+    "next_steps": [
+      "Zderzenie z istniejacymi profilami w knowledge_base",
+      "Wygenerowanie nowych artefaktow NFT",
+      "Aktualizacja mapy 27 Pokoi",
+      "Publikacja jako manifest New Psychology"
+    ]
+  },
+
+  "tags": [
+    "#NewPsychology",
+    "#MirrorCode",
+    "#AlgoS001",
+    "#MentalHealth",
+    "#Jung",
+    "#ShadowIntegration",
+    "#1>0",
+    "#AINUMPSA",
+    "#HomoMachine"
+  ]
+}
