@@ -1,0 +1,13 @@
+{
+  "source": "TEST_1>0_210918.txt",
+  "weight": {
+    "size_kb": 0.1083984375,
+    "entropy": 5.143914397123033,
+    "density": 0.5575922832818913,
+    "hash": "a079d53a"
+  },
+  "nft_count": 1,
+  "timestamp": "2026-09-18T22:25:45.458565",
+  "hash": "a079d53a",
+  "status": "emitted"
+}
