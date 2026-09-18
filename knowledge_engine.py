@@ -63,9 +63,21 @@ class KnowledgeEngine:
             "status": "emitted"
         }
         
-        # Zapisz NFT do pliku
+        # Zapisz NFT do pliku (tylko jesli zmiana tresci poza timestampem)
         os.makedirs("nft_ready", exist_ok=True)
-        with open(f"nft_ready/{weight_data['hash']}.json", "w") as f:
+        path = f"nft_ready/{weight_data['hash']}.json"
+        if os.path.exists(path):
+            try:
+                with open(path, "r") as f:
+                    old = json.load(f)
+                old_copy = {k: v for k, v in old.items() if k != "timestamp"}
+                new_copy = {k: v for k, v in nft_data.items() if k != "timestamp"}
+                if old_copy == new_copy:
+                    print(f"[SKIP] {path} - brak zmian w tresci")
+                    return nft_data
+            except Exception as e:
+                print(f"[WARN] Nie mozna odczytac {path}: {e}")
+        with open(path, "w") as f:
             json.dump(nft_data, f, indent=2)
         
         print(f"✅ {nft_count} NFT wyemitowanych z {filepath}")
