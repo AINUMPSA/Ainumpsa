@@ -54,9 +54,21 @@ def inject_vip_media():
         os.makedirs("nft_ready", exist_ok=True)
         output_filename = f"nft_ready/{file_hash[:8]}.json"
         try:
-            with open(output_filename, "w", encoding='utf-8') as f:
-                json.dump(metadata, f, indent=4, ensure_ascii=False)
-            print(f"[SUCCESS] Zapisano metadane do: {output_filename}")
+            # Zapisz tylko jesli zmiana tresci
+            skip = False
+            if os.path.exists(output_filename):
+                try:
+                    with open(output_filename, "r", encoding='utf-8') as f:
+                        old = json.load(f)
+                    if old == metadata:
+                        print(f"[SKIP] {output_filename} - brak zmian")
+                        skip = True
+                except Exception:
+                    pass
+            if not skip:
+                with open(output_filename, "w", encoding='utf-8') as f:
+                    json.dump(metadata, f, indent=4, ensure_ascii=False)
+                print(f"[SUCCESS] Zapisano metadane do: {output_filename}")
         except Exception as e:
             print(f"[ERROR] Nie można zapisać metadanych: {e}")
 

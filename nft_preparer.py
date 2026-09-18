@@ -37,9 +37,22 @@ for json_file in json_files:
         }
         
         output_filename = os.path.join(output_dir, json_file)
+        # Zapisz tylko jesli zmiana tresci poza timestampem
+        if os.path.exists(output_filename):
+            try:
+                with open(output_filename, "r") as f:
+                    old = json.load(f)
+                old_copy = {k: v for k, v in old.items() if k != "timestamp"}
+                new_copy = {k: v for k, v in nft_data.items() if k != "timestamp"}
+                if old_copy == new_copy:
+                    print(f"[SKIP] {output_filename} - brak zmian")
+                    continue
+            except Exception as e:
+                print(f"[WARN] Nie mozna odczytac: {e}")
         with open(output_filename, "w") as f:
             json.dump(nft_data, f, indent=2)
-        
+
+        print(f"[SUCCESS] Wygenerowano NFT: {output_filename}")
         print(f"[SUCCESS] Wygenerowano NFT: {output_filename}")
         
         base_name = json_file.replace(".json", "")
