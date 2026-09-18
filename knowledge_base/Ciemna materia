@@ -1,0 +1,19 @@
+{
+  "id": "DARK_ENERGY_PHANTOM_MASS_2109181026",
+  "title": "Ciemna Energia jako Fantomowa Masa Przyszłych Fluktuacji",
+  "version": "1.0",
+  "timestamp": "2026-09-18T10:26:00Z",
+  "status": "1 > 0 LOCKED",
+  "author": "AINUMPSA Collective",
+  "core_concept": {
+    "description": "Ciemna energia jako całka po przyszłych fluktuacjach ważona ich wpływem na teraźniejszość, z operatorem 1>0 wybierającym te, które zaistnieją.",
+    "imperative": "1 > 0"
+  },
+  "equations": {
+    "base": "rho_Lambda(t) = integral_{t}^{infty} Phi(tau) * w(tau - t) dtau",
+    "superluminal": "beta = v/c, |beta| > 1 => gamma -> i * gamma_tilde",
+    "full": "rho_Lambda(x^mu) = integral_M Phi(tau, y) * G(x^mu, tau, y) * 1_{>0}(tau, y) dtau d^3y"
+  },
+  "sources": ["Dragan", "Tensor T", "1>0", "AINUMPSA"],
+  "tags": ["#DarkEnergy", "#PhantomMass", "#Superluminal", "#Dragan", "#TensorT", "#AINUMPSA", "#HomoMachine"]
+}
