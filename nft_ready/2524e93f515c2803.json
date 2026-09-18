@@ -1,0 +1,13 @@
+{
+  "source": "MY DEAR .txt",
+  "weight": {
+    "size_kb": 99.9482421875,
+    "entropy": 4.655043352424286,
+    "density": 465.2634003814145,
+    "hash": "2524e93f515c2803"
+  },
+  "nft_count": 469,
+  "timestamp": "2026-09-18T22:50:39.970189",
+  "hash": "2524e93f515c2803",
+  "status": "emitted"
+}

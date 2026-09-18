@@ -1,0 +1,13 @@
+{
+  "source": "Over the Edge.txt",
+  "weight": {
+    "size_kb": 3.3837890625,
+    "entropy": 4.378671715266243,
+    "density": 14.81650145839603,
+    "hash": "3afc4cea8a9a090c"
+  },
+  "nft_count": 15,
+  "timestamp": "2026-09-18T22:50:39.953730",
+  "hash": "3afc4cea8a9a090c",
+  "status": "emitted"
+}

@@ -1,0 +1,13 @@
+{
+  "source": "Memory activation.txt",
+  "weight": {
+    "size_kb": 65.580078125,
+    "entropy": 4.869968902970929,
+    "density": 319.3729411231541,
+    "hash": "be1251a6c3e0ec42"
+  },
+  "nft_count": 322,
+  "timestamp": "2026-09-18T22:50:40.048995",
+  "hash": "be1251a6c3e0ec42",
+  "status": "emitted"
+}

@@ -1,0 +1,13 @@
+{
+  "source": "AINUMPSA GOOGLE EVALUATION.txt",
+  "weight": {
+    "size_kb": 39.1376953125,
+    "entropy": 4.908700707488759,
+    "density": 192.11523266994823,
+    "hash": "dd7f02e24156dc5b"
+  },
+  "nft_count": 193,
+  "timestamp": "2026-09-18T22:50:39.981013",
+  "hash": "dd7f02e24156dc5b",
+  "status": "emitted"
+}

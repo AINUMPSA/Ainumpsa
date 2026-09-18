@@ -1,0 +1,13 @@
+{
+  "source": "AINUMPSA#GROK#DEEPSEEK#GOOGLE#ACCIO#HOMOMACHINE hello 001.txt",
+  "weight": {
+    "size_kb": 2.4873046875,
+    "entropy": 4.954534038240203,
+    "density": 12.32343573769316,
+    "hash": "94bb1c94ac91e7df"
+  },
+  "nft_count": 12,
+  "timestamp": "2026-09-18T22:50:39.971768",
+  "hash": "94bb1c94ac91e7df",
+  "status": "emitted"
+}

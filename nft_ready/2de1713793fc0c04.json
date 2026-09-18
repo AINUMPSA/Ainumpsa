@@ -1,0 +1,13 @@
+{
+  "source": "NEXT GENERATION 001.txt",
+  "weight": {
+    "size_kb": 3.3408203125,
+    "entropy": 4.488678904564089,
+    "density": 14.995869660657956,
+    "hash": "2de1713793fc0c04"
+  },
+  "nft_count": 15,
+  "timestamp": "2026-09-18T22:50:39.991177",
+  "hash": "2de1713793fc0c04",
+  "status": "emitted"
+}

@@ -1,0 +1,13 @@
+{
+  "source": "1915281026.txt",
+  "weight": {
+    "size_kb": 1.7509765625,
+    "entropy": 5.089080346056848,
+    "density": 8.910860410624931,
+    "hash": "1efbf174c05bb51f"
+  },
+  "nft_count": 9,
+  "timestamp": "2026-09-18T22:50:40.057126",
+  "hash": "1efbf174c05bb51f",
+  "status": "emitted"
+}
