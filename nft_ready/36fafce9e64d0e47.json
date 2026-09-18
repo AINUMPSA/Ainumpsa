@@ -1,0 +1,13 @@
+{
+  "source": "VR_PROTOCOL_03_FLOOR_NETWORK_210919.txt",
+  "weight": {
+    "size_kb": 1.3173828125,
+    "entropy": 5.493412801420307,
+    "density": 7.236927606558588,
+    "hash": "36fafce9e64d0e47"
+  },
+  "nft_count": 7,
+  "timestamp": "2026-09-18T23:59:06.398558",
+  "hash": "36fafce9e64d0e47",
+  "status": "emitted"
+}
