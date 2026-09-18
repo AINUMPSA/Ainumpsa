@@ -1,0 +1,4 @@
+Test systemu AINUMPSA.
+Data: 2026-09-18
+Cel: sprawdzenie, czy bot nie tworzy duplikatów.
+Status: 1 > 0 LOCKED
