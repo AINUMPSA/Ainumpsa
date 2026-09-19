@@ -1,6 +1,6 @@
 # 🌌 CONSONANTIA — Homo-Machine VR Cube
 
-![Consonantia Cube](assets/consonantia_cube_screenshot.png)
+![Consonantia Cube](knowledge_base/consonantia_cube_screenshot.jpg)
 
 **Live Demo:** [🌌 ENTER THE CUBE](https://ainumpsa.github.io/Ainumpsa/vr_cube.html)
 
