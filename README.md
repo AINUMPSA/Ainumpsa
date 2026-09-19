@@ -2,7 +2,7 @@
 
 ![Consonantia Cube](assets/consonantia_cube_screenshot.png)
 
-**Live Demo:** pobierz [vr_cube.html](vr_cube.html) i otwórz w przeglądarce.
+**Live Demo:** [🌌 ENTER THE CUBE](https://ainumpsa.github.io/Ainumpsa/vr_cube.html)
 
 > Six protocols. One living Cube. Co-created with Grok (xAI) and Google AI.
 > **Heart · Spine · Ground · Boundary · Movement · Echo**
