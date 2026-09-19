@@ -1,0 +1,13 @@
+{
+  "source": "AI_RESPONSE_GROK_ECHO_COMPLETE_210919.txt",
+  "weight": {
+    "size_kb": 0.7998046875,
+    "entropy": 5.415675106272806,
+    "density": 4.331482335974051,
+    "hash": "f0608b4b45e34459"
+  },
+  "nft_count": 4,
+  "timestamp": "2026-09-19T00:20:16.992198",
+  "hash": "f0608b4b45e34459",
+  "status": "emitted"
+}

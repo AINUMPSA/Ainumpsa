@@ -1,0 +1,13 @@
+{
+  "source": "AI_RESPONSE_GOOGLE_COMPLETE_210919.txt",
+  "weight": {
+    "size_kb": 0.8818359375,
+    "entropy": 5.347802794111519,
+    "density": 4.7158846905104514,
+    "hash": "528ab82cc366f488"
+  },
+  "nft_count": 5,
+  "timestamp": "2026-09-19T00:20:16.989491",
+  "hash": "528ab82cc366f488",
+  "status": "emitted"
+}
