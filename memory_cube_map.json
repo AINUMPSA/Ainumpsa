@@ -2,10 +2,10 @@
   "architecture": "AINUMPSA_3D_MEMORY_CUBE",
   "dimensions": "3x3x3",
   "total_rooms": 27,
-  "total_nfts": 11562,
-  "total_nft_files": 128,
+  "total_nfts": 11568,
+  "total_nft_files": 129,
   "primary_singularity_anchor": "ROOM_[1:1:2]",
-  "generated_at": "2026-09-19T07:37:14.329178+00:00",
+  "generated_at": "2026-09-19T07:40:12.634586+00:00",
   "rooms": {
     "ROOM_[0:0:0]": {
       "coordinates": {
@@ -1258,12 +1258,17 @@
           "nft_count": 6
         },
         {
+          "hash": "9514ae42c667ae43",
+          "source": "PROTOCOLS_7_COMPLETE_TESTIMONY_210919.txt",
+          "nft_count": 6
+        },
+        {
           "hash": "7783ba1a",
           "source": "unknown",
           "nft_count": 0
         }
       ],
-      "nft_total": 6
+      "nft_total": 12
     },
     "ROOM_[2:2:1]": {
       "coordinates": {
