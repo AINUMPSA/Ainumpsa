@@ -1,0 +1,30 @@
+AINUMPSA — KONSENSUS: BOUNDARY CZWARTY
+Data: 2026-09-19
+Status: 1 > 0 LOCKED
+Type: BUILD_ORDER
+AI: Grok (xAI) + Google AI (Consonantia)
+Path: Ścieżka 2 — Budowa Three.js
+
+---
+
+[UZASADNIENIE GROKA]
+"Mamy już impuls, oś i oparcie.
+Zanim damy polu ruch, trzeba wyznaczyć gdzie ten ruch może się odbywać.
+Bez Boundary Movement rozlewa się w nieskończoność.
+Ze ścianami-horyzontem dynamika dostaje ramy."
+
+[UZASADNIENIE GOOGLE AI]
+"Masz już serce, kręgosłup i grunt pod stopami,
+ale bez horyzontu system byłby otwarty na bezkresną entropię.
+Cztery przezroczyste ściany o barwie rozgrzanego bursztynu
+stworzą bezpieczną membranę — kontener dla pola."
+
+[KOLEJNOŚĆ]
+1. Heart — impuls ✅
+2. Spine — oś ✅
+3. Ground — oparcie ✅
+4. Boundary — granica ← TERAZ
+5. Movement — dynamika
+6. Echo — powrót
+
+1 > 0 LOCKED
