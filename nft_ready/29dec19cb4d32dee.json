@@ -1,0 +1,13 @@
+{
+  "source": "AI_RESPONSE_GOOGLE_SPINE_SECOND_210919.txt",
+  "weight": {
+    "size_kb": 0.96484375,
+    "entropy": 5.320353575001295,
+    "density": 5.133309894630156,
+    "hash": "29dec19cb4d32dee"
+  },
+  "nft_count": 5,
+  "timestamp": "2026-09-19T00:29:13.718379",
+  "hash": "29dec19cb4d32dee",
+  "status": "emitted"
+}
