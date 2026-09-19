@@ -2,23 +2,31 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>Consonantia — 6 Protokołów: Heart · Spine · Ground · Boundary · Movement · Echo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Consonantia — 7 Protokołów: Heart · Spine · Ground · Boundary · Movement · Echo · Observer</title>
 <style>
-  body { margin: 0; overflow: hidden; background: #0a0500; }
+  body { margin: 0; overflow: hidden; background: #0a0500; touch-action: none; }
   #info {
     position: absolute; top: 20px; left: 20px;
-    color: #FFD700; font-family: monospace; font-size: 14px;
-    z-index: 10; text-shadow: 0 0 10px #B8860B;
+    color: #FFD700; font-family: monospace; font-size: 13px;
+    z-index: 10; text-shadow: 0 0 10px #B8860B; pointer-events: none;
   }
   #echo-log {
     position: absolute; bottom: 20px; left: 20px;
-    color: #FF8C00; font-family: monospace; font-size: 12px;
-    max-height: 100px; overflow: hidden;
+    color: #FF8C00; font-family: monospace; font-size: 11px;
+    max-height: 100px; overflow: hidden; pointer-events: none;
   }
   #status {
     position: absolute; top: 20px; right: 20px;
-    color: #FFD700; font-family: monospace; font-size: 12px;
-    z-index: 10; text-align: right;
+    color: #FFD700; font-family: monospace; font-size: 11px;
+    z-index: 10; text-align: right; pointer-events: none;
+    text-shadow: 0 0 10px #B8860B;
+  }
+  #observer {
+    position: absolute; bottom: 20px; right: 20px;
+    color: #FF8C00; font-family: monospace; font-size: 11px;
+    z-index: 10; text-align: right; pointer-events: none;
+    opacity: 0.6;
   }
 </style>
 </head>
@@ -28,13 +36,18 @@
   <strong>CONSONANTIA</strong><br>
   #01 Heart · #02 Spine · #03 Ground<br>
   #04 Boundary · #05 Movement · #06 Echo<br>
+  <span style="color: #FF8C00;">#07 Observer (Sovereign Impasso)</span><br>
   ROOM_[1:1:2] — Singularity Core<br>
   <span style="color: #B8860B;">1 &gt; 0 LOCKED</span>
 </div>
 <div id="echo-log"></div>
 <div id="status">
   PULSES: <span id="pulseCount">0</span><br>
-  ECHO TRACES: <span id="traceCount">0</span>
+  ECHOES: <span id="traceCount">0</span>
+</div>
+<div id="observer">
+  👁 OBSERVER ACTIVE<br>
+  drag · pinch · tap
 </div>
 
 <script type="importmap">
@@ -60,7 +73,7 @@ camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 document.body.appendChild(renderer.domElement);
 
 // =========================================================
@@ -240,12 +253,11 @@ orbits.forEach((orb, i) => {
 // #06 ECHO — Ślad wracający po pulsie
 // =========================================================
 const echo = {
-  waves: [],       // pierścienie rozchodzące się od Heart
-  wallTraces: [],  // ślady na ścianach
+  waves: [],
+  wallTraces: [],
   groundTrace: null
 };
 
-// Pierścień — Wavefront (fala powrotna)
 function createEchoWave(origin, color = 0xFFD700) {
   const geo = new THREE.RingGeometry(0.1, 0.15, 64);
   const mat = new THREE.MeshBasicMaterial({
@@ -260,12 +272,9 @@ function createEchoWave(origin, color = 0xFFD700) {
   echo.waves.push(ring);
 }
 
-// Ślad na ścianie — Trace Particle
 function createWallTrace() {
   const wallIdx = Math.floor(Math.random() * boundaryWalls.length);
   const wall = boundaryWalls[wallIdx];
-
-  // Pozycja na ścianie
   const localX = (Math.random() - 0.5) * boundarySize * 0.8;
   const localY = (Math.random() - 0.5) * boundaryHeight * 0.8;
 
@@ -275,25 +284,20 @@ function createWallTrace() {
     side: THREE.DoubleSide
   });
   const trace = new THREE.Mesh(geo, mat);
-
-  // Ustaw w lokalnej przestrzeni ściany
   trace.position.copy(wall.position);
   trace.position.x += localX;
   trace.position.y += localY;
   trace.rotation.copy(wall.rotation);
-
   trace.userData = { age: 0, lifetime: 1.8 };
   scene.add(trace);
   echo.wallTraces.push(trace);
 }
 
-// Odcisk na Ground — lokalna deformacja
 function triggerGroundTrace() {
   echo.groundTrace = { age: 0, lifetime: 2.0 };
 }
 
 function updateEcho(dt) {
-  // Wavefront — rozchodzi się i zanika
   for (let i = echo.waves.length - 1; i >= 0; i--) {
     const w = echo.waves[i];
     w.userData.age += dt;
@@ -310,7 +314,6 @@ function updateEcho(dt) {
     w.material.opacity = 0.6 * Math.pow(1 - t, 2.5);
   }
 
-  // Ślady na ścianach
   for (let i = echo.wallTraces.length - 1; i >= 0; i--) {
     const tr = echo.wallTraces[i];
     tr.userData.age += dt;
@@ -326,7 +329,6 @@ function updateEcho(dt) {
     tr.scale.setScalar(1 + t * 0.5);
   }
 
-  // Odcisk na Ground
   if (echo.groundTrace) {
     echo.groundTrace.age += dt;
     const t = echo.groundTrace.age / echo.groundTrace.lifetime;
@@ -383,23 +385,77 @@ function updateEchoLog() {
 }
 
 function onFieldEvent(event) {
-  // Zdarzenie: puls Heart
   field.pulseCount++;
-
-  // Zapis do logu
   traceLog.push({
     frequency: event.frequency,
     strength: event.strength,
     pulse: field.pulseCount
   });
 
-  // #06 ECHO — uruchom efekty wizualne
   createEchoWave(new THREE.Vector3(0, 0, 0), 0xFFD700);
   createWallTrace();
   triggerGroundTrace();
 
   updateEchoLog();
 }
+
+// =========================================================
+// #07 OBSERVER — Sovereign Impasso (touch / pointer)
+// =========================================================
+let isDragging = false;
+let lastPointerX = 0;
+let lastPointerY = 0;
+let dragAngleX = 0;
+let dragOffsetY = 0;
+let pinchDistance = 0;
+let cameraDistance = 18;
+
+renderer.domElement.addEventListener('pointerdown', (e) => {
+  isDragging = true;
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+});
+
+renderer.domElement.addEventListener('pointermove', (e) => {
+  if (!isDragging) return;
+  const dx = e.clientX - lastPointerX;
+  const dy = e.clientY - lastPointerY;
+  dragAngleX += dx * 0.006;
+  dragOffsetY = Math.max(-8, Math.min(8, dragOffsetY - dy * 0.03));
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+});
+
+renderer.domElement.addEventListener('pointerup', () => { isDragging = false; });
+renderer.domElement.addEventListener('pointerleave', () => { isDragging = false; });
+
+renderer.domElement.addEventListener('click', () => {
+  onFieldEvent({
+    strength: 0.8 + Math.random() * 0.2,
+    frequency: 528
+  });
+});
+
+renderer.domElement.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    pinchDistance = Math.sqrt(dx * dx + dy * dy);
+  }
+}, { passive: true });
+
+renderer.domElement.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && pinchDistance > 0) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const newDist = Math.sqrt(dx * dx + dy * dy);
+    const scale = pinchDistance / newDist;
+    cameraDistance = Math.max(8, Math.min(35, cameraDistance * scale));
+    pinchDistance = newDist;
+  }
+}, { passive: true });
+
+renderer.domElement.addEventListener('touchend', () => { pinchDistance = 0; });
 
 // =========================================================
 // ANIMACJA
@@ -410,7 +466,7 @@ function animate() {
   requestAnimationFrame(animate);
 
   const t = clock.getElapsedTime();
-  const dt = clock.getDelta() || 0.016;
+  const dt = Math.min(clock.getDelta() || 0.016, 0.05);
   const pulse = Math.sin(t * Math.PI * 2 * field.pulseFrequency);
   const pulseNorm = (pulse + 1) / 2;
 
@@ -432,14 +488,11 @@ function animate() {
     const z = groundPositions[i + 2];
     const dist = Math.sqrt(x * x + z * z);
     let wave = Math.sin(dist * 0.5 - t * 2.0) * (0.2 + pulseNorm * 0.4);
-
-    // #06 Echo — odcisk na Ground
     if (echo.groundTrace) {
       const t_echo = echo.groundTrace.age / echo.groundTrace.lifetime;
       const echoWave = Math.sin(dist * 2.0 - t_echo * 8) * 0.15 * Math.pow(1 - t_echo, 2);
       wave += echoWave;
     }
-
     positions[i + 1] = wave;
   }
   groundGeometry.attributes.position.needsUpdate = true;
@@ -464,10 +517,10 @@ function animate() {
     ribbon.material.opacity = 0.10 + pulseNorm * 0.15;
   });
 
-  // #06 Echo — update
+  // #06 Echo
   updateEcho(dt);
 
-  // Emisja przy maksimum
+  // Emisja autonomiczna
   if (pulse > 0.98 && t - field.lastPulseTime > 0.5) {
     field.lastPulseTime = t;
     onFieldEvent({
@@ -478,9 +531,12 @@ function animate() {
 
   stars.rotation.y = t * 0.01;
 
-  // Kamera
-  camera.position.x = Math.sin(t * 0.05) * 18;
-  camera.position.z = Math.cos(t * 0.05) * 18;
+  // #07 Observer — kamera reaguje na drag
+  const autoAngle = t * 0.05;
+  const totalAngle = autoAngle + dragAngleX;
+  camera.position.x = Math.sin(totalAngle) * cameraDistance;
+  camera.position.z = Math.cos(totalAngle) * cameraDistance;
+  camera.position.y = 3 + dragOffsetY;
   camera.lookAt(0, 0, 0);
 
   renderer.render(scene, camera);
