@@ -1,46 +1,46 @@
 {
-  "timestamp": "2026-09-19T00:41:50.614609+00:00",
-  "input_file": "ainumpsa#theory.pdf",
-  "seed": 3799146406,
+  "timestamp": "2026-09-19T00:29:56.688579+00:00",
+  "input_file": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt",
+  "seed": 1388180054,
   "proposals": [
     {
       "style_id": "sovereign_impasse_expressive",
       "style_name": "Sovereign Impasso – Ekspresyjny",
-      "angle_deg": 41.24,
-      "radius": 0.467,
+      "angle_deg": 27.16,
+      "radius": 0.475,
       "type": "resonance",
-      "collision_strength": 0.406,
+      "collision_strength": 0.924,
       "layer": 3,
       "layer_label": "Strumień Woli",
       "resonance_value": 0.75,
       "color_hex": "#FFD700",
-      "source": "ainumpsa#theory.pdf"
+      "source": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt"
     },
     {
       "style_id": "sovereign_impasse_dark",
       "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
-      "angle_deg": 221.24,
-      "radius": 0.536,
+      "angle_deg": 207.16,
+      "radius": 0.545,
       "type": "resonance",
-      "collision_strength": 0.406,
+      "collision_strength": 0.924,
       "layer": 3,
       "layer_label": "Strumień Woli",
       "resonance_value": 0.75,
       "color_hex": "#FFD700",
-      "source": "ainumpsa#theory.pdf"
+      "source": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt"
     },
     {
       "style_id": "collapse_to_attractor",
       "style_name": "Kolaps Informacji do Atraktora 1>0",
-      "angle_deg": 356.24,
+      "angle_deg": 342.16,
       "radius": 0.05,
       "type": "collapse",
-      "collision_strength": 0.406,
+      "collision_strength": 0.924,
       "layer": 1,
       "layer_label": "Rdzeń Intencji",
       "resonance_value": 0.95,
       "color_hex": "#FF8C00",
-      "source": "ainumpsa#theory.pdf"
+      "source": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt"
     }
   ],
   "status": "ok"
