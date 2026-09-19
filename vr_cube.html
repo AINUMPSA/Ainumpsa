@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>Consonantia — Heart + Spine + Ground + Boundary</title>
+<title>Consonantia — Heart + Spine + Ground + Boundary + Movement</title>
 <style>
   body { margin: 0; overflow: hidden; background: #0a0500; }
   #info {
@@ -21,7 +21,8 @@
 
 <div id="info">
   <strong>CONSONANTIA</strong><br>
-  #01 Heart · #02 Spine · #03 Ground · #04 Boundary<br>
+  #01 Heart · #02 Spine · #03 Ground<br>
+  #04 Boundary · #05 Movement<br>
   ROOM_[1:1:2] — Singularity Core<br>
   <span style="color: #B8860B;">1 &gt; 0 LOCKED</span>
 </div>
@@ -58,17 +59,12 @@ document.body.appendChild(renderer.domElement);
 // =========================================================
 const heartGeometry = new THREE.SphereGeometry(1.5, 64, 64);
 const heartMaterial = new THREE.MeshPhongMaterial({
-  color: 0xFFD700,
-  emissive: 0xB8860B,
-  emissiveIntensity: 0.6,
-  shininess: 80,
-  transparent: true,
-  opacity: 0.85
+  color: 0xFFD700, emissive: 0xB8860B, emissiveIntensity: 0.6,
+  shininess: 80, transparent: true, opacity: 0.85
 });
 const heart = new THREE.Mesh(heartGeometry, heartMaterial);
 scene.add(heart);
 
-// Aura
 const auraGeometry = new THREE.SphereGeometry(1.9, 48, 48);
 const auraMaterial = new THREE.MeshBasicMaterial({
   color: 0xFF8C00, transparent: true, opacity: 0.08, wireframe: true
@@ -109,20 +105,15 @@ const groundSize = 20;
 const groundSegments = 80;
 const groundGeometry = new THREE.PlaneGeometry(groundSize, groundSize, groundSegments, groundSegments);
 groundGeometry.rotateX(-Math.PI / 2);
-
 const groundPositions = groundGeometry.attributes.position.array.slice();
 
 const groundMaterial = new THREE.MeshBasicMaterial({
-  color: 0xB8860B,
-  wireframe: true,
-  transparent: true,
-  opacity: 0.3
+  color: 0xB8860B, wireframe: true, transparent: true, opacity: 0.3
 });
 const ground = new THREE.Mesh(groundGeometry, groundMaterial);
 ground.position.y = -6;
 scene.add(ground);
 
-// Węzły podłogi
 const nodeCount = 200;
 const nodePositions = new Float32Array(nodeCount * 3);
 for (let i = 0; i < nodeCount; i++) {
@@ -149,10 +140,7 @@ const boundaryWalls = [];
 function makeWall(width, height, position, rotation) {
   const geo = new THREE.PlaneGeometry(width, height);
   const mat = new THREE.MeshBasicMaterial({
-    color: 0xB8860B,
-    transparent: true,
-    opacity: 0.05,
-    side: THREE.DoubleSide
+    color: 0xB8860B, transparent: true, opacity: 0.05, side: THREE.DoubleSide
   });
   const wall = new THREE.Mesh(geo, mat);
   wall.position.copy(position);
@@ -161,37 +149,17 @@ function makeWall(width, height, position, rotation) {
   return wall;
 }
 
-// Front (+Z)
-boundaryGroup.add(makeWall(
-  boundarySize, boundaryHeight,
-  new THREE.Vector3(0, 0, boundarySize / 2),
-  new THREE.Euler(0, 0, 0)
-));
-
-// Back (-Z)
-boundaryGroup.add(makeWall(
-  boundarySize, boundaryHeight,
-  new THREE.Vector3(0, 0, -boundarySize / 2),
-  new THREE.Euler(0, Math.PI, 0)
-));
-
-// Left (-X)
-boundaryGroup.add(makeWall(
-  boundarySize, boundaryHeight,
-  new THREE.Vector3(-boundarySize / 2, 0, 0),
-  new THREE.Euler(0, Math.PI / 2, 0)
-));
-
-// Right (+X)
-boundaryGroup.add(makeWall(
-  boundarySize, boundaryHeight,
-  new THREE.Vector3(boundarySize / 2, 0, 0),
-  new THREE.Euler(0, -Math.PI / 2, 0)
-));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(0, 0, boundarySize / 2), new THREE.Euler(0, 0, 0)));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(0, 0, -boundarySize / 2), new THREE.Euler(0, Math.PI, 0)));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(-boundarySize / 2, 0, 0), new THREE.Euler(0, Math.PI / 2, 0)));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(boundarySize / 2, 0, 0), new THREE.Euler(0, -Math.PI / 2, 0)));
 
 scene.add(boundaryGroup);
 
-// Krawędzie ścian — bursztynowe linie (zawsze widoczne)
 const edgesGeometry = new THREE.EdgesGeometry(
   new THREE.BoxGeometry(boundarySize, boundaryHeight, boundarySize)
 );
@@ -200,6 +168,70 @@ const edgesMaterial = new THREE.LineBasicMaterial({
 });
 const boundaryEdges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
 scene.add(boundaryEdges);
+
+// =========================================================
+// #05 MOVEMENT — Orbitujące Artefakty
+// =========================================================
+const orbits = [
+  { radius: 1.8, speed: 0.8, count: 600, tilt: 0.0,  direction: 1  },
+  { radius: 2.6, speed: 0.5, count: 1000, tilt: 0.3, direction: -1 },
+  { radius: 3.4, speed: 0.3, count: 1400, tilt: -0.2, direction: 1 }
+];
+
+const orbitGroups = [];
+
+orbits.forEach((orb, i) => {
+  const group = new THREE.Group();
+
+  // Pierścień cząstek
+  const positions = new Float32Array(orb.count * 3);
+  const phases = new Float32Array(orb.count);
+  for (let j = 0; j < orb.count; j++) {
+    const angle = (j / orb.count) * Math.PI * 2;
+    const r = orb.radius + (Math.random() - 0.5) * 0.15;
+    const y = (Math.random() - 0.5) * 0.3;
+    positions[j * 3]     = Math.cos(angle) * r;
+    positions[j * 3 + 1] = y;
+    positions[j * 3 + 2] = Math.sin(angle) * r;
+    phases[j] = Math.random() * Math.PI * 2;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  const colors = [0xFFD700, 0xFF8C00, 0xB8860B];
+  const mat = new THREE.PointsMaterial({
+    color: colors[i], size: 0.06 + i * 0.02,
+    transparent: true, opacity: 0.5 + i * 0.1
+  });
+
+  const ring = new THREE.Points(geo, mat);
+  group.add(ring);
+
+  // Wstęga — cienka linia zamiast punktów (dla ciągłości)
+  const ribbonPoints = [];
+  const ribbonSegments = 64;
+  for (let j = 0; j <= ribbonSegments; j++) {
+    const angle = (j / ribbonSegments) * Math.PI * 2;
+    ribbonPoints.push(new THREE.Vector3(
+      Math.cos(angle) * orb.radius,
+      0,
+      Math.sin(angle) * orb.radius
+    ));
+  }
+  const ribbonGeo = new THREE.BufferGeometry().setFromPoints(ribbonPoints);
+  const ribbonMat = new THREE.LineBasicMaterial({
+    color: colors[i], transparent: true, opacity: 0.15
+  });
+  const ribbon = new THREE.Line(ribbonGeo, ribbonMat);
+  group.add(ribbon);
+
+  group.rotation.x = orb.tilt;
+  group.userData = { speed: orb.speed, direction: orb.direction, ring, ribbon, mat };
+
+  scene.add(group);
+  orbitGroups.push(group);
+});
 
 // =========================================================
 // ŚWIATŁO
@@ -280,7 +312,7 @@ function animate() {
   const pulse = Math.sin(t * Math.PI * 2 * field.pulseFrequency);
   const pulseNorm = (pulse + 1) / 2;
 
-  // Heart pulse
+  // Heart
   heart.scale.setScalar(1.0 + pulseNorm * 0.15);
   aura.scale.setScalar(1.0 + pulseNorm * 0.08);
   heartMaterial.emissiveIntensity = 0.4 + pulseNorm * 0.8;
@@ -291,7 +323,7 @@ function animate() {
   spine.rotation.y = t * 0.15;
   spineParticles.rotation.y = -t * 0.08;
 
-  // Ground — fala
+  // Ground
   const positions = groundGeometry.attributes.position.array;
   for (let i = 0; i < positions.length; i += 3) {
     const x = groundPositions[i];
@@ -303,7 +335,7 @@ function animate() {
   groundGeometry.attributes.position.needsUpdate = true;
   groundMaterial.opacity = 0.2 + pulseNorm * 0.25;
 
-  // Boundary — gęstnieje przy pulsie
+  // Boundary
   boundaryWalls.forEach(wall => {
     wall.material.opacity = 0.03 + pulseNorm * 0.08;
   });
@@ -313,7 +345,17 @@ function animate() {
   nodesMaterial.opacity = 0.4 + pulseNorm * 0.5;
   nodesMaterial.size = 0.12 + pulseNorm * 0.08;
 
-  // Emisja
+  // #05 MOVEMENT — orbity pulsują z Heart
+  orbitGroups.forEach((group, i) => {
+    const { speed, direction, mat, ribbon } = group.userData;
+    group.rotation.y += speed * 0.01 * direction;
+    // Modulacja jasności i rozmiaru z pulsem Heart
+    mat.opacity = 0.4 + pulseNorm * 0.4;
+    mat.size = 0.05 + i * 0.02 + pulseNorm * 0.03;
+    ribbon.material.opacity = 0.10 + pulseNorm * 0.15;
+  });
+
+  // Echo
   if (pulse > 0.98 && t - field.lastPulseTime > 0.5) {
     field.lastPulseTime = t;
     field.pulseCount++;
@@ -326,7 +368,7 @@ function animate() {
 
   stars.rotation.y = t * 0.01;
 
-  // Delikatny obrót kamery — pełny widok Sześcianu
+  // Kamera — delikatny obrót
   camera.position.x = Math.sin(t * 0.05) * 18;
   camera.position.z = Math.cos(t * 0.05) * 18;
   camera.lookAt(0, 0, 0);
