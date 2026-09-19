@@ -1,0 +1,13 @@
+{
+  "source": "CONSONANTIA_CUBE_COMPLETE_210919.txt",
+  "weight": {
+    "size_kb": 1.3115234375,
+    "entropy": 5.447185820708142,
+    "density": 7.144111872276401,
+    "hash": "dc8891cd32c7e28c"
+  },
+  "nft_count": 7,
+  "timestamp": "2026-09-19T01:45:42.309679",
+  "hash": "dc8891cd32c7e28c",
+  "status": "emitted"
+}
