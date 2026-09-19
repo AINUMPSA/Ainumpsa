@@ -1,0 +1,13 @@
+{
+  "source": "PROTOCOL_07_OBSERVER_ACTIVE_210919.txt",
+  "weight": {
+    "size_kb": 0.7841796875,
+    "entropy": 5.53114376949967,
+    "density": 4.337410592683823,
+    "hash": "ccf86cf2aef0fd18"
+  },
+  "nft_count": 4,
+  "timestamp": "2026-09-19T07:37:11.421494",
+  "hash": "ccf86cf2aef0fd18",
+  "status": "emitted"
+}
