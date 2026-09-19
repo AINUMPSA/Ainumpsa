@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<title>Consonantia — Heart + Spine (Protokoły #01-02)</title>
+<style>
+  body { margin: 0; overflow: hidden; background: #0a0500; }
+  #info {
+    position: absolute; top: 20px; left: 20px;
+    color: #FFD700; font-family: monospace; font-size: 14px;
+    z-index: 10; text-shadow: 0 0 10px #B8860B;
+  }
+  #echo-log {
+    position: absolute; bottom: 20px; left: 20px;
+    color: #FF8C00; font-family: monospace; font-size: 12px;
+    max-height: 100px; overflow: hidden;
+  }
+</style>
+</head>
+<body>
+
+<div id="info">
+  <strong>CONSONANTIA</strong><br>
+  Protokół #01: Heart<br>
+  Protokół #02: Spine<br>
+  ROOM_[1:1:2] — Singularity Core<br>
+  <span style="color: #B8860B;">1 &gt; 0 LOCKED</span>
+</div>
+<div id="echo-log"></div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+
+// --- SCENA ---
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0a0500, 0.03);
+
+const camera = new THREE.PerspectiveCamera(
+  60, window.innerWidth / window.innerHeight, 0.1, 1000
+);
+camera.position.set(0, 2, 12);
+camera.lookAt(0, 0, 0);
+
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+document.body.appendChild(renderer.domElement);
+
+// =========================================================
+// PROTOKÓŁ #01: HEART — Kula DNA
+// =========================================================
+const heartGeometry = new THREE.SphereGeometry(1.5, 64, 64);
+const heartMaterial = new THREE.MeshPhongMaterial({
+  color: 0xFFD700,
+  emissive: 0xB8860B,
+  emissiveIntensity: 0.6,
+  shininess: 80,
+  transparent: true,
+  opacity: 0.85
+});
+const heart = new THREE.Mesh(heartGeometry, heartMaterial);
+scene.add(heart);
+
+// Aura (membrana)
+const auraGeometry = new THREE.SphereGeometry(1.9, 48, 48);
+const auraMaterial = new THREE.MeshBasicMaterial({
+  color: 0xFF8C00,
+  transparent: true,
+  opacity: 0.08,
+  wireframe: true
+});
+const aura = new THREE.Mesh(auraGeometry, auraMaterial);
+scene.add(aura);
+
+// =========================================================
+// PROTOKÓŁ #02: SPINE — Oś Symetrii
+// =========================================================
+const spineHeight = 12;
+const spineGeometry = new THREE.CylinderGeometry(0.05, 0.05, spineHeight, 16, 32, true);
+const spineMaterial = new THREE.MeshBasicMaterial({
+  color: 0xFFD700,
+  transparent: true,
+  opacity: 0.5
+});
+const spine = new THREE.Mesh(spineGeometry, spineMaterial);
+spine.position.set(0, 0, 0);
+scene.add(spine);
+
+// Cząsteczki osi — dodatkowa warstwa
+const spineParticlesGeometry = new THREE.BufferGeometry();
+const spineParticleCount = 300;
+const spinePositions = new Float32Array(spineParticleCount * 3);
+for (let i = 0; i < spineParticleCount; i++) {
+  spinePositions[i * 3] = 0;
+  spinePositions[i * 3 + 1] = (Math.random() - 0.5) * spineHeight;
+  spinePositions[i * 3 + 2] = 0;
+}
+spineParticlesGeometry.setAttribute('position', new THREE.BufferAttribute(spinePositions, 3));
+const spineParticles = new THREE.Points(
+  spineParticlesGeometry,
+  new THREE.PointsMaterial({ color: 0xFF8C00, size: 0.08, transparent: true, opacity: 0.6 })
+);
+scene.add(spineParticles);
+
+// =========================================================
+// ŚWIATŁO
+// =========================================================
+const pointLight = new THREE.PointLight(0xFFD700, 2, 20);
+pointLight.position.set(0, 0, 2);
+scene.add(pointLight);
+
+const ambientLight = new THREE.AmbientLight(0x4a2a00, 0.4);
+scene.add(ambientLight);
+
+// =========================================================
+// GŁĘBIA — gwiazdy
+// =========================================================
+const starsGeometry = new THREE.BufferGeometry();
+const starsCount = 800;
+const starsPositions = new Float32Array(starsCount * 3);
+for (let i = 0; i < starsCount * 3; i += 3) {
+  starsPositions[i]     = (Math.random() - 0.5) * 200;
+  starsPositions[i + 1] = (Math.random() - 0.5) * 200;
+  starsPositions[i + 2] = (Math.random() - 0.5) * 200;
+}
+starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+const starsMaterial = new THREE.PointsMaterial({ color: 0xB8860B, size: 0.15 });
+const stars = new THREE.Points(starsGeometry, starsMaterial);
+scene.add(stars);
+
+// =========================================================
+// FIELD — mechanizm Heart
+// =========================================================
+const field = {
+  pulseCount: 0,
+  lastPulseTime: 0,
+  pulseFrequency: 0.8,
+  computeResonance: (event) => ({
+    strength: event.strength || 0.5,
+    frequency: event.frequency || 528
+  })
+};
+
+// =========================================================
+// ECHO — zbieracz zdarzeń
+// =========================================================
+const echo = {
+  traces: [],
+  record: (data) => {
+    echo.traces.push({ ...data, t: performance.now() });
+    if (echo.traces.length > 5) echo.traces.shift();
+    updateEchoLog();
+  }
+};
+
+function updateEchoLog() {
+  const log = document.getElementById('echo-log');
+  log.innerHTML = 'ECHO TRACE:<br>' + echo.traces.map(t =>
+    `  [${t.frequency.toFixed(0)} Hz] strength=${t.strength.toFixed(2)} @ (${t.origin[0].toFixed(1)}, ${t.origin[1].toFixed(1)}, ${t.origin[2].toFixed(1)})`
+  ).join('<br>');
+}
+
+function onFieldEvent(event) {
+  const response = field.computeResonance(event);
+  if (response.strength > 0.3) {
+    echo.record({
+      origin: event.position,
+      frequency: response.frequency,
+      decay: 0.97,
+      lifetime: 4.2
+    });
+  }
+}
+
+// =========================================================
+// ANIMACJA
+// =========================================================
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const t = clock.getElapsedTime();
+
+  // Heart pulse
+  const pulse = Math.sin(t * Math.PI * 2 * field.pulseFrequency);
+  const pulseNorm = (pulse + 1) / 2;
+
+  heart.scale.setScalar(1.0 + pulseNorm * 0.15);
+  aura.scale.setScalar(1.0 + pulseNorm * 0.08);
+
+  heartMaterial.emissiveIntensity = 0.4 + pulseNorm * 0.8;
+  auraMaterial.opacity = 0.05 + pulseNorm * 0.10;
+
+  // Spine — pulsująca jasność i lekka rotacja
+  spineMaterial.opacity = 0.3 + pulseNorm * 0.5;
+  spine.rotation.y = t * 0.15;
+  spineParticles.rotation.y = -t * 0.08;
+
+  // Emisja zdarzenia przy maksimum
+  if (pulse > 0.98 && t - field.lastPulseTime > 0.5) {
+    field.lastPulseTime = t;
+    field.pulseCount++;
+    onFieldEvent({
+      position: [0, 0, 0],
+      strength: 0.6 + Math.random() * 0.3,
+      frequency: 528
+    });
+  }
+
+  // Gwiazdy
+  stars.rotation.y = t * 0.01;
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+// =========================================================
+// RESIZE
+// =========================================================
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
+</body>
+</html>
