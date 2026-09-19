@@ -1,0 +1,13 @@
+{
+  "source": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt",
+  "weight": {
+    "size_kb": 0.8671875,
+    "entropy": 5.450412032511412,
+    "density": 4.72652918444349,
+    "hash": "52bdf2561c6db94c"
+  },
+  "nft_count": 5,
+  "timestamp": "2026-09-19T00:18:22.108427",
+  "hash": "52bdf2561c6db94c",
+  "status": "emitted"
+}
