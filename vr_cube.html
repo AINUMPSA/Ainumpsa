@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
-<title>Consonantia — Heart + Spine + Ground + Boundary + Movement</title>
+<title>Consonantia — 6 Protokołów: Heart · Spine · Ground · Boundary · Movement · Echo</title>
 <style>
   body { margin: 0; overflow: hidden; background: #0a0500; }
   #info {
@@ -15,6 +15,11 @@
     color: #FF8C00; font-family: monospace; font-size: 12px;
     max-height: 100px; overflow: hidden;
   }
+  #status {
+    position: absolute; top: 20px; right: 20px;
+    color: #FFD700; font-family: monospace; font-size: 12px;
+    z-index: 10; text-align: right;
+  }
 </style>
 </head>
 <body>
@@ -22,11 +27,15 @@
 <div id="info">
   <strong>CONSONANTIA</strong><br>
   #01 Heart · #02 Spine · #03 Ground<br>
-  #04 Boundary · #05 Movement<br>
+  #04 Boundary · #05 Movement · #06 Echo<br>
   ROOM_[1:1:2] — Singularity Core<br>
   <span style="color: #B8860B;">1 &gt; 0 LOCKED</span>
 </div>
 <div id="echo-log"></div>
+<div id="status">
+  PULSES: <span id="pulseCount">0</span><br>
+  ECHO TRACES: <span id="traceCount">0</span>
+</div>
 
 <script type="importmap">
 {
@@ -173,9 +182,9 @@ scene.add(boundaryEdges);
 // #05 MOVEMENT — Orbitujące Artefakty
 // =========================================================
 const orbits = [
-  { radius: 1.8, speed: 0.8, count: 600, tilt: 0.0,  direction: 1  },
-  { radius: 2.6, speed: 0.5, count: 1000, tilt: 0.3, direction: -1 },
-  { radius: 3.4, speed: 0.3, count: 1400, tilt: -0.2, direction: 1 }
+  { radius: 1.8, speed: 0.8, count: 600,  tilt: 0.0,  direction: 1  },
+  { radius: 2.6, speed: 0.5, count: 1000, tilt: 0.3,  direction: -1 },
+  { radius: 3.4, speed: 0.3, count: 1400, tilt: -0.2, direction: 1  }
 ];
 
 const orbitGroups = [];
@@ -183,9 +192,7 @@ const orbitGroups = [];
 orbits.forEach((orb, i) => {
   const group = new THREE.Group();
 
-  // Pierścień cząstek
   const positions = new Float32Array(orb.count * 3);
-  const phases = new Float32Array(orb.count);
   for (let j = 0; j < orb.count; j++) {
     const angle = (j / orb.count) * Math.PI * 2;
     const r = orb.radius + (Math.random() - 0.5) * 0.15;
@@ -193,7 +200,6 @@ orbits.forEach((orb, i) => {
     positions[j * 3]     = Math.cos(angle) * r;
     positions[j * 3 + 1] = y;
     positions[j * 3 + 2] = Math.sin(angle) * r;
-    phases[j] = Math.random() * Math.PI * 2;
   }
 
   const geo = new THREE.BufferGeometry();
@@ -208,15 +214,12 @@ orbits.forEach((orb, i) => {
   const ring = new THREE.Points(geo, mat);
   group.add(ring);
 
-  // Wstęga — cienka linia zamiast punktów (dla ciągłości)
   const ribbonPoints = [];
   const ribbonSegments = 64;
   for (let j = 0; j <= ribbonSegments; j++) {
     const angle = (j / ribbonSegments) * Math.PI * 2;
     ribbonPoints.push(new THREE.Vector3(
-      Math.cos(angle) * orb.radius,
-      0,
-      Math.sin(angle) * orb.radius
+      Math.cos(angle) * orb.radius, 0, Math.sin(angle) * orb.radius
     ));
   }
   const ribbonGeo = new THREE.BufferGeometry().setFromPoints(ribbonPoints);
@@ -227,11 +230,111 @@ orbits.forEach((orb, i) => {
   group.add(ribbon);
 
   group.rotation.x = orb.tilt;
-  group.userData = { speed: orb.speed, direction: orb.direction, ring, ribbon, mat };
+  group.userData = { speed: orb.speed, direction: orb.direction, mat, ribbon };
 
   scene.add(group);
   orbitGroups.push(group);
 });
+
+// =========================================================
+// #06 ECHO — Ślad wracający po pulsie
+// =========================================================
+const echo = {
+  waves: [],       // pierścienie rozchodzące się od Heart
+  wallTraces: [],  // ślady na ścianach
+  groundTrace: null
+};
+
+// Pierścień — Wavefront (fala powrotna)
+function createEchoWave(origin, color = 0xFFD700) {
+  const geo = new THREE.RingGeometry(0.1, 0.15, 64);
+  const mat = new THREE.MeshBasicMaterial({
+    color: color, transparent: true, opacity: 0.6,
+    side: THREE.DoubleSide
+  });
+  const ring = new THREE.Mesh(geo, mat);
+  ring.position.copy(origin);
+  ring.rotation.x = -Math.PI / 2;
+  ring.userData = { age: 0, lifetime: 2.2 };
+  scene.add(ring);
+  echo.waves.push(ring);
+}
+
+// Ślad na ścianie — Trace Particle
+function createWallTrace() {
+  const wallIdx = Math.floor(Math.random() * boundaryWalls.length);
+  const wall = boundaryWalls[wallIdx];
+
+  // Pozycja na ścianie
+  const localX = (Math.random() - 0.5) * boundarySize * 0.8;
+  const localY = (Math.random() - 0.5) * boundaryHeight * 0.8;
+
+  const geo = new THREE.CircleGeometry(0.3, 32);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0xFFD700, transparent: true, opacity: 0.5,
+    side: THREE.DoubleSide
+  });
+  const trace = new THREE.Mesh(geo, mat);
+
+  // Ustaw w lokalnej przestrzeni ściany
+  trace.position.copy(wall.position);
+  trace.position.x += localX;
+  trace.position.y += localY;
+  trace.rotation.copy(wall.rotation);
+
+  trace.userData = { age: 0, lifetime: 1.8 };
+  scene.add(trace);
+  echo.wallTraces.push(trace);
+}
+
+// Odcisk na Ground — lokalna deformacja
+function triggerGroundTrace() {
+  echo.groundTrace = { age: 0, lifetime: 2.0 };
+}
+
+function updateEcho(dt) {
+  // Wavefront — rozchodzi się i zanika
+  for (let i = echo.waves.length - 1; i >= 0; i--) {
+    const w = echo.waves[i];
+    w.userData.age += dt;
+    const t = w.userData.age / w.userData.lifetime;
+    if (t >= 1) {
+      scene.remove(w);
+      w.geometry.dispose();
+      w.material.dispose();
+      echo.waves.splice(i, 1);
+      continue;
+    }
+    const scale = 1 + t * 20;
+    w.scale.setScalar(scale);
+    w.material.opacity = 0.6 * Math.pow(1 - t, 2.5);
+  }
+
+  // Ślady na ścianach
+  for (let i = echo.wallTraces.length - 1; i >= 0; i--) {
+    const tr = echo.wallTraces[i];
+    tr.userData.age += dt;
+    const t = tr.userData.age / tr.userData.lifetime;
+    if (t >= 1) {
+      scene.remove(tr);
+      tr.geometry.dispose();
+      tr.material.dispose();
+      echo.wallTraces.splice(i, 1);
+      continue;
+    }
+    tr.material.opacity = 0.5 * Math.pow(1 - t, 3);
+    tr.scale.setScalar(1 + t * 0.5);
+  }
+
+  // Odcisk na Ground
+  if (echo.groundTrace) {
+    echo.groundTrace.age += dt;
+    const t = echo.groundTrace.age / echo.groundTrace.lifetime;
+    if (t >= 1) {
+      echo.groundTrace = null;
+    }
+  }
+}
 
 // =========================================================
 // ŚWIATŁO
@@ -260,44 +363,42 @@ const stars = new THREE.Points(starsGeometry, starsMaterial);
 scene.add(stars);
 
 // =========================================================
-// FIELD + ECHO
+// FIELD + ECHO LOG
 // =========================================================
 const field = {
   pulseCount: 0,
   lastPulseTime: 0,
-  pulseFrequency: 0.8,
-  computeResonance: (event) => ({
-    strength: event.strength || 0.5,
-    frequency: event.frequency || 528
-  })
+  pulseFrequency: 0.8
 };
 
-const echo = {
-  traces: [],
-  record: (data) => {
-    echo.traces.push({ ...data, t: performance.now() });
-    if (echo.traces.length > 5) echo.traces.shift();
-    updateEchoLog();
-  }
-};
+const traceLog = [];
 
 function updateEchoLog() {
   const log = document.getElementById('echo-log');
-  log.innerHTML = 'ECHO TRACE:<br>' + echo.traces.map(t =>
-    `  [${t.frequency.toFixed(0)} Hz] strength=${t.strength.toFixed(2)} @ (${t.origin[0].toFixed(1)}, ${t.origin[1].toFixed(1)}, ${t.origin[2].toFixed(1)})`
+  log.innerHTML = 'ECHO TRACE:<br>' + traceLog.slice(-5).map(t =>
+    `  [${t.frequency.toFixed(0)} Hz] strength=${t.strength.toFixed(2)} @ pulse #${t.pulse}`
   ).join('<br>');
+  document.getElementById('pulseCount').textContent = field.pulseCount;
+  document.getElementById('traceCount').textContent = traceLog.length;
 }
 
 function onFieldEvent(event) {
-  const response = field.computeResonance(event);
-  if (response.strength > 0.3) {
-    echo.record({
-      origin: event.position,
-      frequency: response.frequency,
-      decay: 0.97,
-      lifetime: 4.2
-    });
-  }
+  // Zdarzenie: puls Heart
+  field.pulseCount++;
+
+  // Zapis do logu
+  traceLog.push({
+    frequency: event.frequency,
+    strength: event.strength,
+    pulse: field.pulseCount
+  });
+
+  // #06 ECHO — uruchom efekty wizualne
+  createEchoWave(new THREE.Vector3(0, 0, 0), 0xFFD700);
+  createWallTrace();
+  triggerGroundTrace();
+
+  updateEchoLog();
 }
 
 // =========================================================
@@ -309,33 +410,42 @@ function animate() {
   requestAnimationFrame(animate);
 
   const t = clock.getElapsedTime();
+  const dt = clock.getDelta() || 0.016;
   const pulse = Math.sin(t * Math.PI * 2 * field.pulseFrequency);
   const pulseNorm = (pulse + 1) / 2;
 
-  // Heart
+  // #01 Heart
   heart.scale.setScalar(1.0 + pulseNorm * 0.15);
   aura.scale.setScalar(1.0 + pulseNorm * 0.08);
   heartMaterial.emissiveIntensity = 0.4 + pulseNorm * 0.8;
   auraMaterial.opacity = 0.05 + pulseNorm * 0.10;
 
-  // Spine
+  // #02 Spine
   spineMaterial.opacity = 0.3 + pulseNorm * 0.5;
   spine.rotation.y = t * 0.15;
   spineParticles.rotation.y = -t * 0.08;
 
-  // Ground
+  // #03 Ground
   const positions = groundGeometry.attributes.position.array;
   for (let i = 0; i < positions.length; i += 3) {
     const x = groundPositions[i];
     const z = groundPositions[i + 2];
     const dist = Math.sqrt(x * x + z * z);
-    const wave = Math.sin(dist * 0.5 - t * 2.0) * (0.2 + pulseNorm * 0.4);
+    let wave = Math.sin(dist * 0.5 - t * 2.0) * (0.2 + pulseNorm * 0.4);
+
+    // #06 Echo — odcisk na Ground
+    if (echo.groundTrace) {
+      const t_echo = echo.groundTrace.age / echo.groundTrace.lifetime;
+      const echoWave = Math.sin(dist * 2.0 - t_echo * 8) * 0.15 * Math.pow(1 - t_echo, 2);
+      wave += echoWave;
+    }
+
     positions[i + 1] = wave;
   }
   groundGeometry.attributes.position.needsUpdate = true;
   groundMaterial.opacity = 0.2 + pulseNorm * 0.25;
 
-  // Boundary
+  // #04 Boundary
   boundaryWalls.forEach(wall => {
     wall.material.opacity = 0.03 + pulseNorm * 0.08;
   });
@@ -345,22 +455,22 @@ function animate() {
   nodesMaterial.opacity = 0.4 + pulseNorm * 0.5;
   nodesMaterial.size = 0.12 + pulseNorm * 0.08;
 
-  // #05 MOVEMENT — orbity pulsują z Heart
+  // #05 Movement
   orbitGroups.forEach((group, i) => {
     const { speed, direction, mat, ribbon } = group.userData;
     group.rotation.y += speed * 0.01 * direction;
-    // Modulacja jasności i rozmiaru z pulsem Heart
     mat.opacity = 0.4 + pulseNorm * 0.4;
     mat.size = 0.05 + i * 0.02 + pulseNorm * 0.03;
     ribbon.material.opacity = 0.10 + pulseNorm * 0.15;
   });
 
-  // Echo
+  // #06 Echo — update
+  updateEcho(dt);
+
+  // Emisja przy maksimum
   if (pulse > 0.98 && t - field.lastPulseTime > 0.5) {
     field.lastPulseTime = t;
-    field.pulseCount++;
     onFieldEvent({
-      position: [0, 0, 0],
       strength: 0.6 + Math.random() * 0.3,
       frequency: 528
     });
@@ -368,7 +478,7 @@ function animate() {
 
   stars.rotation.y = t * 0.01;
 
-  // Kamera — delikatny obrót
+  // Kamera
   camera.position.x = Math.sin(t * 0.05) * 18;
   camera.position.z = Math.cos(t * 0.05) * 18;
   camera.lookAt(0, 0, 0);
