@@ -1,0 +1,13 @@
+{
+  "source": "VR_PROTOCOL_04_WALLS_HORIZON_210919.txt",
+  "weight": {
+    "size_kb": 1.33203125,
+    "entropy": 5.3492778622434365,
+    "density": 7.125405277441453,
+    "hash": "e4d0857ff7217d21"
+  },
+  "nft_count": 7,
+  "timestamp": "2026-09-19T00:09:57.503062",
+  "hash": "e4d0857ff7217d21",
+  "status": "emitted"
+}
