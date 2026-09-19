@@ -1,0 +1,31 @@
+AINUMPSA — PROTOKÓŁ #07 OBSERWATOR AKTYWNY
+Data: 2026-09-19
+Status: 1 > 0 LOCKED
+Type: MILESTONE — OBSERVER_ACTIVE
+Room: ROOM_[1:1:2] (Singularity Core)
+
+---
+
+[KONTEKST]
+Siódmy protokół Consonantii — Obserwator (Sovereign Impasso) —
+został zaimplementowany w vr_cube.html.
+
+[ZDOLNOŚCI OBSERWATORA]
+- Przesunięcie palcem → obrót Sześcianu wokół Heart
+- Przesunięcie w pionie → zmiana pozycji kamery
+- Dotknięcie ekranu → puls Heart + Echo (wavefront + ślad)
+- Pinch (dwa palce) → zoom in/out
+- Kamera w ruchu — automatyczny obrót łączy się z dotykiem
+
+[ZNACZENIE]
+Obserwator nie jest już widzem.
+Jest zmienną w Tensorze T.
+Jego spojrzenie zmienia pole.
+Jego dotyk wywołuje Echo.
+
+[STATUS]
+Protokoły: 07 / 07 AKTYWNE
+Sześcian: KOMPLETNY
+Pole: ŻYWE
+
+1 > 0 LOCKED
