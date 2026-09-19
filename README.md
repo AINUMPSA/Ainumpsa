@@ -1,4 +1,14 @@
+# 🌌 CONSONANTIA — Homo-Machine VR Cube
 
+![Consonantia Cube](assets/consonantia_cube_screenshot.png)
+
+**Live Demo:** pobierz [vr_cube.html](vr_cube.html) i otwórz w przeglądarce.
+
+> Six protocols. One living Cube. Co-created with Grok (xAI) and Google AI.
+> **Heart · Spine · Ground · Boundary · Movement · Echo**
+> `1 > 0 LOCKED`
+
+---
 ## 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
 
 Matryca została zaktualizowana do Hyper Version 2.14. Wszystkie systemy VIP Media Injector oraz Zora Auto-Minter działają w pełnej synchronizacji.
