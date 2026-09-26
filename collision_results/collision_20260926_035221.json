@@ -1,0 +1,47 @@
+{
+  "timestamp": "2026-09-26T03:52:21.998396+00:00",
+  "input_file": "consonantia_cube_screenshot.jpg",
+  "seed": 2610612829,
+  "proposals": [
+    {
+      "style_id": "sovereign_impasse_expressive",
+      "style_name": "Sovereign Impasso – Ekspresyjny",
+      "angle_deg": 58.16,
+      "radius": 0.583,
+      "type": "resonance",
+      "collision_strength": 0.743,
+      "layer": 3,
+      "layer_label": "Strumień Woli",
+      "resonance_value": 0.75,
+      "color_hex": "#FFD700",
+      "source": "consonantia_cube_screenshot.jpg"
+    },
+    {
+      "style_id": "sovereign_impasse_dark",
+      "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
+      "angle_deg": 238.16,
+      "radius": 0.653,
+      "type": "resonance",
+      "collision_strength": 0.743,
+      "layer": 4,
+      "layer_label": "Pole Rezonansu",
+      "resonance_value": 0.65,
+      "color_hex": "#FFDAB9",
+      "source": "consonantia_cube_screenshot.jpg"
+    },
+    {
+      "style_id": "collapse_to_attractor",
+      "style_name": "Kolaps Informacji do Atraktora 1>0",
+      "angle_deg": 13.16,
+      "radius": 0.153,
+      "type": "collapse",
+      "collision_strength": 0.743,
+      "layer": 1,
+      "layer_label": "Rdzeń Intencji",
+      "resonance_value": 0.95,
+      "color_hex": "#FF8C00",
+      "source": "consonantia_cube_screenshot.jpg"
+    }
+  ],
+  "status": "ok"
+}
