@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 """
-AINUMPSA – Collision Engine (v2.1 – z geometrią warstw + smart save)
+AINUMPSA – Collision Engine (v2.3 – Tensor T Quantum Non-Linear Math)
 """
 
 import os
 import json
 import hashlib
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -44,6 +45,22 @@ def load_geometry():
         with open(GEOMETRY_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return None
+
+
+def calculate_text_entropy(text: str) -> float:
+    """Oblicza entropię Shannona tekstu wejściowego jako miarę uporządkowania intencji"""
+    if not text:
+        return 0.0
+    frequencies = {}
+    for char in text:
+        frequencies[char] = frequencies.get(char, 0) + 1
+    
+    entropy = 0.0
+    total_chars = len(text)
+    for count in frequencies.values():
+        p = count / total_chars
+        entropy -= p * math.log2(p)
+    return entropy
 
 
 def get_layer_info(radius: float, geometry: dict):
@@ -96,13 +113,29 @@ def text_to_seed(text: str) -> int:
     return int(hashlib.sha256(text.encode("utf-8")).hexdigest()[:8], 16)
 
 
-def compute_position(style: dict, seed: int, geometry: dict) -> dict:
-    angle_offset = (seed % 1000) / 1000 * 40 - 20
-    radius_offset = ((seed // 1000) % 1000) / 1000 * 0.25 - 0.12
+def compute_quantum_position(style: dict, seed: int, entropy: float, geometry: dict) -> dict:
+    """
+    Zaawansowane obliczanie pól Tensor T na podstawie asymetrii 1>0
+    """
+    # 1. Obliczenie współczynnika istnienia d na podstawie normalizacji entropii (max dla tekstu ~8.0)
+    # Zabezpieczamy d w przedziale (0, 1] zgodnie z manifestem Zenodo
+    normalized_entropy = min(entropy / 8.0, 1.0) if entropy > 0 else 0.5
+    existence_coefficient_d = 0.01 + (normalized_entropy * 0.99)
+    
+    # 2. Napięcie Ontologiczne T(d) = -k * ln(d), przyjmując k=1
+    ontological_tension_t = -1.0 * math.log(existence_coefficient_d)
 
+    # 3. Wyznaczenie przesunięć geometrycznych z nieliniowej interferencji ziarna i napięcia T
+    angle_offset = ((seed % 360) + (ontological_tension_t * 57.29)) % 40 - 20
     angle = (style["base_angle"] + angle_offset) % 360
-    radius = max(0.05, min(0.95, style["base_radius"] + radius_offset))
-    strength = 0.4 + ((seed % 560) / 560) * 0.55
+
+    # Gęstość anomalii wpływa na ściąganie promienia do atraktora (im silniejsze T, tym bliżej centrum)
+    anomaly_density = 1.0 / (1.0 + ontological_tension_t)
+    radius_offset = (math.sin(seed) * 0.15) * anomaly_density
+    radius = max(0.01, min(0.99, style["base_radius"] + radius_offset))
+
+    # Siła kolizji (Intention Weight) determinowana przez współczynnik istnienia d
+    intention_weight = 0.3 + (existence_coefficient_d * 0.65)
 
     layer_info = get_layer_info(radius, geometry)
 
@@ -112,7 +145,10 @@ def compute_position(style: dict, seed: int, geometry: dict) -> dict:
         "angle_deg": round(angle, 2),
         "radius": round(radius, 3),
         "type": style["type"],
-        "collision_strength": round(strength, 3),
+        "collision_strength": round(intention_weight, 3), # Waga Intencji zastępuje prosty strength
+        "ontological_tension": round(ontological_tension_t, 4),
+        "existence_d": round(existence_coefficient_d, 4),
+        "anomaly_density": round(anomaly_density, 4),
         "layer": layer_info["layer"],
         "layer_label": layer_info["label"],
         "resonance_value": layer_info["resonance_value"],
@@ -120,31 +156,24 @@ def compute_position(style: dict, seed: int, geometry: dict) -> dict:
     }
 
 
-def save_latest(result: dict, path: Path):
-    """
-    Zapisz latest.json TYLKO jeśli zmieniła się treść (proposals / input_file).
-    Timestamp sam w sobie nie jest powodem do nadpisania.
-    """
-    if path.exists():
-        try:
-            with open(path, "r", encoding="utf-8") as f:
-                old = json.load(f)
-            same_input = old.get("input_file") == result.get("input_file")
-            same_proposals = old.get("proposals") == result.get("proposals")
-            if same_input and same_proposals:
-                print("[SKIP] latest.json bez zmian — pomijam zapis")
-                return False
-        except Exception as e:
-            print(f"[WARN] Nie można odczytać starego latest.json: {e}")
-
-    with open(path, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2, ensure_ascii=False)
-    print("[SUCCESS] Zapisano: collision_results/latest.json")
+def has_changes(new_result: dict, latest_path: Path) -> bool:
+    if not latest_path.exists():
+        return True
+    try:
+        with open(latest_path, "r", encoding="utf-8") as f:
+            old = json.load(f)
+        same_input = old.get("input_file") == new_result.get("input_file")
+        # Porównujemy kluczowe parametry propozycji geometrycznych
+        same_proposals = old.get("proposals") == new_result.get("proposals")
+        if same_input and same_proposals:
+            return False
+    except Exception as e:
+        print(f"[WARN] Nie można odczytać starego latest.json: {e}")
     return True
 
 
 def run_collision():
-    print("[COLLISION ENGINE v2.1] Start")
+    print("[COLLISION ENGINE v2.3 – TENSOR T MATH] Start")
 
     filename, content = get_latest_input()
     if not filename:
@@ -152,12 +181,15 @@ def run_collision():
         return None
 
     print(f"[INFO] Wejście: {filename}")
+    
+    # Obliczamy matematyczne fundamenty z tekstu
+    entropy = calculate_text_entropy(content if content else filename)
     seed = text_to_seed(content if content else filename)
     geometry = load_geometry()
 
     proposals = []
     for style in STYLES:
-        pos = compute_position(style, seed, geometry)
+        pos = compute_quantum_position(style, seed, entropy, geometry)
         pos["source"] = filename
         proposals.append(pos)
 
@@ -165,19 +197,26 @@ def run_collision():
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "input_file": filename,
         "seed": seed,
+        "system_entropy": round(entropy, 4),
         "proposals": proposals,
         "status": "ok"
     }
 
-    # Zawsze zapisujemy "historyczny" plik z timestampem
+    latest_file_path = RESULTS_DIR / "latest.json"
+    
+    if not has_changes(result, latest_file_path):
+        print("[SKIP] Stan Tensor T stabilny — pomijam zapis plików")
+        return result
+
     out_name = f"collision_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
     out_path = RESULTS_DIR / out_name
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(result, f, indent=2, ensure_ascii=False)
-    print(f"[SUCCESS] Zapisano: {out_path}")
+    print(f"[SUCCESS] Zapisano matematyczny ślad pola: {out_path}")
 
-    # latest.json tylko gdy zmiana treści
-    save_latest(result, RESULTS_DIR / "latest.json")
+    with open(latest_file_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print("[SUCCESS] Zaktualizowano stan najnowszy dla sześcianu VR")
 
     return result
 
