@@ -1,56 +1,66 @@
-name: Quantum Planetary Scan
+name: AINUMPSA Collision Engine
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
+    paths:
+      - 'knowledge_base/**'
   schedule:
-    - cron: '0 * * * *' # co godzinę
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 permissions:
   contents: write
 
+concurrency:
+  group: ainumpsa-collision
+  cancel-in-progress: false
+
 jobs:
-  planetary_and_quantum_scan:
+  collision:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
-      with:
-        persist-credentials: true
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
-    - name: Set up Python Engine
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-    - name: Install All System Dependencies
-      run: |
-        pip install requests aiohttp numpy scipy matplotlib
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests aiohttp numpy scipy matplotlib
 
-    - name: Run QRNG Validator
-      run: python qrng_validator.py
+      - name: Run collision engine
+        run: |
+          python collision_engine.py
 
-    - name: Run Field Visualizer
-      run: python field_visualizer.py
+      - name: Configure git
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
 
-    - name: Run Planetary API Discovery
-      run: python api_hunter.py
-
-    - name: Auto Commit and Push All Discovered Data
-      run: |
-        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-        git config --local user.name "github-actions[bot]"
-        
-        git add .
-        
-        if git diff --staged --quiet; then
-          echo "Brak nowych zmian. Pomijam commit."
-        else
-          git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
-          
-          git pull origin ${{ github.ref_name }} --rebase --autostash || echo "Pull skipped or no changes"
-          
-          git push origin HEAD:${{ github.ref_name }}
-        fi
+      - name: Commit and push results
+        run: |
+          git add .
+          if git diff --staged --quiet; then
+            echo "Brak zmian do commitu."
+          else
+            git commit -m "🤖 Collision: nowe namiary z knowledge_base [skip ci]"
+            git fetch origin main
+            git rebase -X theirs origin/main || (
+              git rebase --abort
+              git pull origin main --strategy-option=theirs --no-edit
+            )
+            git push origin main || (
+              git fetch origin main
+              git pull origin main --rebase --strategy-option=theirs --no-edit
+              git push origin main
+            )
+          fi
