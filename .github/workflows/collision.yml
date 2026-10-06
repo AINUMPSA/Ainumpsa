@@ -1,4 +1,4 @@
-name: AINUMPSA Collision Engine
+name: AINUMPSA Quantum Planetary & Collision Engine
 
 on:
   push:
@@ -13,59 +13,64 @@ permissions:
   contents: write
 
 concurrency:
-  group: ainumpsa-collision
+  group: ainumpsa-matrix-sync
   cancel-in-progress: false
 
 jobs:
-  collision:
+  matrix_process:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
         with:
           persist-credentials: true
           fetch-depth: 0
 
-      - name: Set up Python
+      - name: Set up Python Engine
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Install dependencies
+      - name: Install All System Dependencies
         run: |
           python -m pip install --upgrade pip
           pip install requests aiohttp numpy scipy matplotlib
 
-      - name: Run collision engine
+      - name: Run QRNG Validator
         run: |
-          python collision_engine.py
+          if [ -f qrng_validator.py ]; then python qrng_validator.py; else echo "[WARN] qrng_validator.py nie istnieje"; fi
 
-      - name: Configure git
+      - name: Run Field Visualizer
+        run: |
+          if [ -f field_visualizer.py ]; then python field_visualizer.py; else echo "[WARN] field_visualizer.py nie istnieje"; fi
+
+      - name: Run Planetary API Discovery
+        run: |
+          if [ -f api_hunter.py ]; then python api_hunter.py; else echo "[WARN] api_hunter.py nie istnieje"; fi
+
+      - name: Run Collision Engine
+        run: |
+          if [ -f collision_engine.py ]; then python collision_engine.py; else echo "[ERROR] Krytyczny brak collision_engine.py!"; exit 1; fi
+
+      - name: Configure Git Identity
         run: |
           git config --local user.email "41898282+github-actions[bot]@://github.com"
           git config --local user.name "github-actions[bot]"
 
-      - name: Commit and push results
+      - name: Commit and Push All Discovered Matrix Data
         run: |
           git add .
           if git diff --staged --quiet; then
-            echo "Brak zmian do commitu."
+            echo "Brak nowych anomalii w matrycy. Pomijam synchronizację."
           else
-            git commit -m "🤖 Collision: nowe namiary z knowledge_base [skip ci]"
-            
-            # Pobieramy najświeższy stan gałęzi głównej z serwera
+            git commit -m "🤖 AINUMPSA Core: Automated Tensor T Matrix & Planetary Update [skip ci]"
             git fetch origin main
-            
-            # Automatycznie rozwiązujemy konflikty na korzyść zmian z serwera (theirs), 
-            # dopisując nasz nowo wygenerowany plik JSON bez przerywania potoku.
             git rebase -X theirs origin/main || (
-              echo "[WARN] Konflikt rebase! Resetuję indeks i wymuszam integrację struktur..."
+              echo "[WARN] Wykryto konflikt rebase. Wymuszam autostash i scalenie..."
               git rebase --abort
               git pull origin main --strategy-option=theirs --no-edit
             )
-            
-            # Bezpieczne wypchnięcie zmian z pętlą ratunkową w razie jednoczesnego zapisu przez drugi potok
             git push origin main || (
               git fetch origin main
               git pull origin main --rebase --strategy-option=theirs --no-edit
