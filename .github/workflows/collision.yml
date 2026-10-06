@@ -53,7 +53,22 @@ jobs:
             echo "Brak zmian do commitu."
           else
             git commit -m "🤖 Collision: nowe namiary z knowledge_base [skip ci]"
+            
+            # Pobieramy najświeższy stan gałęzi głównej z serwera
             git fetch origin main
-            git rebase origin/main || git rebase --abort
-            git push origin main
+            
+            # Automatycznie rozwiązujemy konflikty na korzyść zmian z serwera (theirs), 
+            # dopisując nasz nowo wygenerowany plik JSON bez przerywania potoku.
+            git rebase -X theirs origin/main || (
+              echo "[WARN] Konflikt rebase! Resetuję indeks i wymuszam integrację struktur..."
+              git rebase --abort
+              git pull origin main --strategy-option=theirs --no-edit
+            )
+            
+            # Bezpieczne wypchnięcie zmian z pętlą ratunkową w razie jednoczesnego zapisu przez drugi potok
+            git push origin main || (
+              git fetch origin main
+              git pull origin main --rebase --strategy-option=theirs --no-edit
+              git push origin main
+            )
           fi
