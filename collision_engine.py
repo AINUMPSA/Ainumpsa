@@ -117,19 +117,18 @@ def compute_quantum_position(style: dict, seed: int, entropy: float, geometry: d
     """
     Zaawansowane obliczanie pól Tensor T na podstawie asymetrii 1>0
     """
-    # 1. Obliczenie współczynnika istnienia d na podstawie normalizacji entropii (max dla tekstu ~8.0)
-    # Zabezpieczamy d w przedziale (0, 1] zgodnie z manifestem Zenodo
+    # 1. Obliczenie współczynnika istnienia d na podstawie normalizacji entropii
     normalized_entropy = min(entropy / 8.0, 1.0) if entropy > 0 else 0.5
     existence_coefficient_d = 0.01 + (normalized_entropy * 0.99)
-    
-    # 2. Napięcie Ontologiczne T(d) = -k * ln(d), przyjmując k=1
+        
+    # 2. Napięcie Ontologiczne T(d) = -k * ln(d)
     ontological_tension_t = -1.0 * math.log(existence_coefficient_d)
 
-    # 3. Wyznaczenie przesunięć geometrycznych z nieliniowej interferencji ziarna i napięcia T
+    # 3. Wyznaczenie przesunięć geometrycznych
     angle_offset = ((seed % 360) + (ontological_tension_t * 57.29)) % 40 - 20
     angle = (style["base_angle"] + angle_offset) % 360
 
-    # Gęstość anomalii wpływa na ściąganie promienia do atraktora (im silniejsze T, tym bliżej centrum)
+    # Gęstość anomalii wpływa na ściąganie promienia do atraktora
     anomaly_density = 1.0 / (1.0 + ontological_tension_t)
     radius_offset = (math.sin(seed) * 0.15) * anomaly_density
     radius = max(0.01, min(0.99, style["base_radius"] + radius_offset))
@@ -145,7 +144,7 @@ def compute_quantum_position(style: dict, seed: int, entropy: float, geometry: d
         "angle_deg": round(angle, 2),
         "radius": round(radius, 3),
         "type": style["type"],
-        "collision_strength": round(intention_weight, 3), # Waga Intencji zastępuje prosty strength
+        "collision_strength": round(intention_weight, 3),
         "ontological_tension": round(ontological_tension_t, 4),
         "existence_d": round(existence_coefficient_d, 4),
         "anomaly_density": round(anomaly_density, 4),
@@ -163,7 +162,6 @@ def has_changes(new_result: dict, latest_path: Path) -> bool:
         with open(latest_path, "r", encoding="utf-8") as f:
             old = json.load(f)
         same_input = old.get("input_file") == new_result.get("input_file")
-        # Porównujemy kluczowe parametry propozycji geometrycznych
         same_proposals = old.get("proposals") == new_result.get("proposals")
         if same_input and same_proposals:
             return False
@@ -182,7 +180,6 @@ def run_collision():
 
     print(f"[INFO] Wejście: {filename}")
     
-    # Obliczamy matematyczne fundamenty z tekstu
     entropy = calculate_text_entropy(content if content else filename)
     seed = text_to_seed(content if content else filename)
     geometry = load_geometry()
@@ -203,7 +200,7 @@ def run_collision():
     }
 
     latest_file_path = RESULTS_DIR / "latest.json"
-    
+        
     if not has_changes(result, latest_file_path):
         print("[SKIP] Stan Tensor T stabilny — pomijam zapis plików")
         return result
