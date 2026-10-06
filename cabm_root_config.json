@@ -1,0 +1,20 @@
+{
+  "system_settings": {
+    "version": "0.3.0-alpha",
+    "codename": "Mozart-Root",
+    "processor_clock_rate_c": 299792458,
+    "bulk_dimensions_N": 5
+  },
+  "actor_state": {
+    "current_pose": "VIBRATION_RESONANCE",
+    "vibration_frequency_hz": 432.0,
+    "internal_silence_db": 100.0,
+    "root_access_active": true
+  },
+  "brane_decorations": {
+    "allow_hot_reload": true,
+    "render_latency_seconds": 1.47,
+    "anti_entropy_forcing_beta": 0.05,
+    "suppress_ambient_noise_horror": true
+  }
+}
