@@ -1,188 +1,59 @@
-#!/usr/bin/env python3
-"""
-AINUMPSA – Collision Engine (v2.2 – z geometrią warstw + smart history save)
-"""
+name: AINUMPSA Collision Engine
 
-import os
-import json
-import hashlib
-from datetime import datetime, timezone
-from pathlib import Path
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'knowledge_base/**'
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
 
-KNOWLEDGE_DIR = Path("knowledge_base")
-RESULTS_DIR = Path("collision_results")
-GEOMETRY_FILE = Path("tensor_t_field_geometry.json")
-RESULTS_DIR.mkdir(exist_ok=True)
+permissions:
+  contents: write
 
-STYLES = [
-    {
-        "id": "sovereign_impasse_expressive",
-        "name": "Sovereign Impasso – Ekspresyjny",
-        "base_angle": 45.0,
-        "base_radius": 0.55,
-        "type": "resonance"
-    },
-    {
-        "id": "sovereign_impasse_dark",
-        "name": "Sovereign Impasso – Ciemny / Dualistyczny",
-        "base_angle": 225.0,
-        "base_radius": 0.62,
-        "type": "resonance"
-    },
-    {
-        "id": "collapse_to_attractor",
-        "name": "Kolaps Informacji do Atraktora 1>0",
-        "base_angle": 0.0,
-        "base_radius": 0.12,
-        "type": "collapse"
-    }
-]
+concurrency:
+  group: ainumpsa-collision
+  cancel-in-progress: false
 
+jobs:
+  collision:
+    runs-on: ubuntu-latest
 
-def load_geometry():
-    if GEOMETRY_FILE.exists():
-        with open(GEOMETRY_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return None
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+          fetch-depth: 0
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
 
-def get_layer_info(radius: float, geometry: dict):
-    """Dopasuj warstwę na podstawie promienia"""
-    if not geometry or "layers" not in geometry:
-        return {
-            "layer": 2,
-            "label": "Nieznana",
-            "resonance_value": 0.5,
-            "color_hex": "#888888"
-        }
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install requests aiohttp numpy scipy matplotlib
 
-    layers = sorted(geometry["layers"], key=lambda x: x["radius"])
-    chosen = layers[-1]
+      - name: Run collision engine
+        run: |
+          python collision_engine.py
 
-    for layer in layers:
-        if radius <= layer["radius"]:
-            chosen = layer
-            break
+      - name: Configure git
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@://github.com"
+          git config --local user.name "github-actions[bot]"
 
-    return {
-        "layer": chosen["layer"],
-        "label": chosen.get("label", ""),
-        "resonance_value": chosen.get("resonance_value", 0.5),
-        "color_hex": chosen.get("color_hex", "#888888")
-    }
-
-
-def get_latest_input():
-    if not KNOWLEDGE_DIR.exists():
-        return None, None
-
-    files = sorted(
-        [f for f in KNOWLEDGE_DIR.iterdir() if f.is_file()],
-        key=lambda x: x.stat().st_mtime,
-        reverse=True
-    )
-    if not files:
-        return None, None
-
-    latest = files[0]
-    try:
-        content = latest.read_text(encoding="utf-8", errors="ignore")
-    except Exception:
-        content = latest.name
-    return latest.name, content
-
-
-def text_to_seed(text: str) -> int:
-    return int(hashlib.sha256(text.encode("utf-8")).hexdigest()[:8], 16)
-
-
-def compute_position(style: dict, seed: int, geometry: dict) -> dict:
-    angle_offset = (seed % 1000) / 1000 * 40 - 20
-    radius_offset = ((seed // 1000) % 1000) / 1000 * 0.25 - 0.12
-
-    angle = (style["base_angle"] + angle_offset) % 360
-    radius = max(0.05, min(0.95, style["base_radius"] + radius_offset))
-    strength = 0.4 + ((seed % 560) / 560) * 0.55
-
-    layer_info = get_layer_info(radius, geometry)
-
-    return {
-        "style_id": style["id"],
-        "style_name": style["name"],
-        "angle_deg": round(angle, 2),
-        "radius": round(radius, 3),
-        "type": style["type"],
-        "collision_strength": round(strength, 3),
-        "layer": layer_info["layer"],
-        "layer_label": layer_info["label"],
-        "resonance_value": layer_info["resonance_value"],
-        "color_hex": layer_info["color_hex"]
-    }
-
-
-def has_changes(new_result: dict, latest_path: Path) -> bool:
-    """Sprawdza, czy nowe proposals różnią się od zapisanego stanu w latest.json"""
-    if not latest_path.exists():
-        return True
-    try:
-        with open(latest_path, "r", encoding="utf-8") as f:
-            old = json.load(f)
-        same_input = old.get("input_file") == new_result.get("input_file")
-        same_proposals = old.get("proposals") == new_result.get("proposals")
-        if same_input and same_proposals:
-            return False
-    except Exception as e:
-        print(f"[WARN] Nie można odczytać starego latest.json: {e}")
-    return True
-
-
-def run_collision():
-    print("[COLLISION ENGINE v2.2] Start")
-
-    filename, content = get_latest_input()
-    if not filename:
-        print("[ERROR] Brak plików w knowledge_base/")
-        return None
-
-    print(f"[INFO] Wejście: {filename}")
-    seed = text_to_seed(content if content else filename)
-    geometry = load_geometry()
-
-    proposals = []
-    for style in STYLES:
-        pos = compute_position(style, seed, geometry)
-        pos["source"] = filename
-        proposals.append(pos)
-
-    result = {
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "input_file": filename,
-        "seed": seed,
-        "proposals": proposals,
-        "status": "ok"
-    }
-
-    latest_file_path = RESULTS_DIR / "latest.json"
-    
-    # Decyzja o zapisie podejmowana jest dla obydwu plików jednocześnie
-    if not has_changes(result, latest_file_path):
-        print("[SKIP] Brak nowych anomalii — pomijam generowanie plików JSON")
-        return result
-
-    # Zapis pliku historycznego z unikalnym timestampem
-    out_name = f"collision_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}.json"
-    out_path = RESULTS_DIR / out_name
-    with open(out_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2, ensure_ascii=False)
-    print(f"[SUCCESS] Zapisano plik historii: {out_path}")
-
-    # Zapis pliku zbiorczego dla sześcianu VR
-    with open(latest_file_path, "w", encoding="utf-8") as f:
-        json.dump(result, f, indent=2, ensure_ascii=False)
-    print("[SUCCESS] Zapisano zbiorczy: collision_results/latest.json")
-
-    return result
-
-
-if __name__ == "__main__":
-    run_collision()
+      - name: Commit and push results
+        run: |
+          git add .
+          if git diff --staged --quiet; then
+            echo "Brak zmian do commitu."
+          else
+            git commit -m "🤖 Collision: nowe namiary z knowledge_base [skip ci]"
+            git fetch origin main
+            git rebase origin/main || git rebase --abort
+            git push origin main
+          fi
