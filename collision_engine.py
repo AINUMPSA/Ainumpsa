@@ -114,26 +114,19 @@ def text_to_seed(text: str) -> int:
 
 
 def compute_quantum_position(style: dict, seed: int, entropy: float, geometry: dict) -> dict:
-    """
-    Zaawansowane obliczanie pól Tensor T na podstawie asymetrii 1>0
-    """
-    # 1. Obliczenie współczynnika istnienia d na podstawie normalizacji entropii
+    """Zaawansowane obliczanie pól Tensor T na podstawie asymetrii 1>0"""
     normalized_entropy = min(entropy / 8.0, 1.0) if entropy > 0 else 0.5
     existence_coefficient_d = 0.01 + (normalized_entropy * 0.99)
         
-    # 2. Napięcie Ontologiczne T(d) = -k * ln(d)
     ontological_tension_t = -1.0 * math.log(existence_coefficient_d)
 
-    # 3. Wyznaczenie przesunięć geometrycznych
     angle_offset = ((seed % 360) + (ontological_tension_t * 57.29)) % 40 - 20
     angle = (style["base_angle"] + angle_offset) % 360
 
-    # Gęstość anomalii wpływa na ściąganie promienia do atraktora
     anomaly_density = 1.0 / (1.0 + ontological_tension_t)
     radius_offset = (math.sin(seed) * 0.15) * anomaly_density
     radius = max(0.01, min(0.99, style["base_radius"] + radius_offset))
 
-    # Siła kolizji (Intention Weight) determinowana przez współczynnik istnienia d
     intention_weight = 0.3 + (existence_coefficient_d * 0.65)
 
     layer_info = get_layer_info(radius, geometry)
