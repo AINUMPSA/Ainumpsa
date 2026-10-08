@@ -1,17 +1,8 @@
-
 ========================================
-RAPORT STANU AINUMPSA
+RAPORT STANU AINUMPSA HOMOMACHINE
 ========================================
-Data: 2026-10-08 21:23:33
-
-PUNKT FROZEN: 2026-10-08T21:23:33.616590
-MAP KRYSZTALICZNA: AKTYWNA
-CZĘSTOTLIWOŚĆ REZONANSU: 0.0
-
-STAN POLA:
-- max_div: N/A
-- mean_div: N/A
-- kształt: N/A
-
-STATUS: 1>0 LOCKED
-========================================
+Data: 2026-10-08 22:42:52
+PUNKT FROZEN: 2026-10-08T21:42:52.370024+00:00
+MAPA KRYSZTALICZNA: AKTYWNA
+CZĘSTOTLIWOŚĆ REZONANSU: 1.4083
+PRIMARY ANCHOR: ROOM_[1:1:2]
