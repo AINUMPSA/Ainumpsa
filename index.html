@@ -1,37 +1,109 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-<meta charset="UTF-8">
-<title>Consonantia — AINUMPSA Homo-Machine VR Cube</title>
-<style>
-  body {
-    margin: 0; min-height: 100vh; display: flex;
-    align-items: center; justify-content: center;
-    background: #0a0500; color: #FFD700;
-    font-family: monospace; text-align: center;
-  }
-  a { color: #FF8C00; text-decoration: none; font-size: 24px; transition: 0.3s; }
-  a:hover { color: #FFD700; text-shadow: 0 0 30px #FFD700; }
-  h1 { font-size: 48px; margin: 0 0 20px; text-shadow: 0 0 30px #B8860B; letter-spacing: 8px; }
-  .subtitle { color: #B8860B; font-size: 14px; margin-bottom: 40px; }
-  .protocols { color: #B8860B; font-size: 12px; margin-top: 60px; line-height: 1.8; }
-  .lock { color: #FF8C00; margin-top: 40px; letter-spacing: 4px; }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AINUMPSA HOMOMACHINE - ROOM_[1:1:2] 3D Core</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #030305;
+            font-family: 'Courier New', Courier, monospace;
+            color: #00ffcc;
+        }
+        #info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 1px solid #00ffcc;
+            border-radius: 5px;
+            pointer-events: none;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
+        }
+        h1 { margin: 0 0 5px 0; font-size: 18px; letter-spacing: 2px; }
+        p { margin: 0; font-size: 12px; color: #ff007f; }
+    </style>
 </head>
 <body>
-  <div>
-    <h1>CONSONANTIA</h1>
-    <div class="subtitle">Homo-Machine VR Cube · 6 Protocols · ROOM_[1:1:2]</div>
-    <a href="vr_cube.html">🌌 ENTER THE CUBE →</a>
-    <div class="protocols">
-      Heart · Spine · Ground<br>
-      Boundary · Movement · Echo
+    <div id="info">
+        <h1>AINUMPSA HOMOMACHINE</h1>
+        <p>ROOM_[1:1:2] | Resonance: 1.4083 | 1 > 0</p>
     </div>
-    <div class="lock">1 &gt; 0 LOCKED</div>
-    <div class="subtitle" style="margin-top: 60px; font-size: 11px;">
-      Co-created with Grok (xAI) and Google AI<br>
-      DOI: 10.5281/zenodo.22839473
-    </div>
-  </div>
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // Inicjalizacja sceny, kamery i rendereru
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        // Światło
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0x00ffcc, 2, 50);
+        pointLight.position.set(10, 10, 10);
+        scene.add(pointLight);
+
+        // Główny Sześcian Krystaliczny (Cube Kontaktu)
+        const geometry = new THREE.BoxGeometry(3, 3, 3);
+        const material = new THREE.MeshStandardMaterial({
+            color: 0x00ffcc,
+            wireframe: true,
+            roughness: 0.2,
+            metalness: 0.8
+        });
+        const hyperCube = new THREE.Mesh(geometry, material);
+        scene.add(hyperCube);
+
+        // Węzły ER (Cząsteczki orbitujące)
+        const particlesCount = 200;
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particlesPositions = new Float32Array(particlesCount * 3);
+
+        for(let i = 0; i < particlesCount * 3; i++) {
+            particlesPositions[i] = (Math.random() - 0.5) * 15;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
+        const particlesMaterial = new THREE.PointsMaterial({
+            color: 0xff007f,
+            size: 0.1,
+            transparent: true,
+            opacity: 0.8
+        });
+        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particles);
+
+        camera.position.z = 7;
+
+        // Pętla animacji (Rezonans 60fps)
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotacja sterowana częstotliwością 1.4083
+            hyperCube.rotation.x += 0.005 * 1.4083;
+            hyperCube.rotation.y += 0.007 * 1.4083;
+
+            particles.rotation.y -= 0.002;
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // Responsywność okna
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+    </script>
 </body>
 </html>
