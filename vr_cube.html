@@ -1,127 +1,555 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AINUMPSA HOMOMACHINE - ROOM_[1:1:2] 3D Core</title>
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            background-color: #030305;
-            font-family: 'Courier New', Courier, monospace;
-            color: #00ffcc;
-        }
-        #info {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            z-index: 10;
-            background: rgba(0, 0, 0, 0.85);
-            padding: 15px 20px;
-            border: 1px solid #00ffcc;
-            border-radius: 5px;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.3);
-            pointer-events: none;
-        }
-        h1 { margin: 0 0 5px 0; font-size: 18px; letter-spacing: 2px; }
-        p { margin: 0; font-size: 12px; color: #ff007f; }
-        .protocols {
-            margin-top: 10px;
-            font-size: 11px;
-            color: #B8860B;
-            line-height: 1.5;
-        }
-        .lock {
-            margin-top: 8px;
-            font-size: 12px;
-            color: #FF8C00;
-            letter-spacing: 2px;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Consonantia — 7 Protokołów: Heart · Spine · Ground · Boundary · Movement · Echo · Observer</title>
+<style>
+  body { margin: 0; overflow: hidden; background: #0a0500; touch-action: none; }
+  #info {
+    position: absolute; top: 20px; left: 20px;
+    color: #FFD700; font-family: monospace; font-size: 13px;
+    z-index: 10; text-shadow: 0 0 10px #B8860B; pointer-events: none;
+  }
+  #echo-log {
+    position: absolute; bottom: 20px; left: 20px;
+    color: #FF8C00; font-family: monospace; font-size: 11px;
+    max-height: 100px; overflow: hidden; pointer-events: none;
+  }
+  #status {
+    position: absolute; top: 20px; right: 20px;
+    color: #FFD700; font-family: monospace; font-size: 11px;
+    z-index: 10; text-align: right; pointer-events: none;
+    text-shadow: 0 0 10px #B8860B;
+  }
+  #observer {
+    position: absolute; bottom: 20px; right: 20px;
+    color: #FF8C00; font-family: monospace; font-size: 11px;
+    z-index: 10; text-align: right; pointer-events: none;
+    opacity: 0.6;
+  }
+</style>
 </head>
 <body>
 
-    <div id="info">
-        <h1>CONSONANTIA</h1>
-        <p>ROOM_[1:1:2] | Resonance: 1.4083</p>
-        <div class="protocols">
-            Heart · Spine · Ground<br>
-            Boundary · Movement · Echo
-        </div>
-        <div class="lock">1 &gt; 0 LOCKED</div>
-    </div>
+<div id="info">
+  <strong>CONSONANTIA</strong><br>
+  #01 Heart · #02 Spine · #03 Ground<br>
+  #04 Boundary · #05 Movement · #06 Echo<br>
+  <span style="color: #FF8C00;">#07 Observer (Sovereign Impasso)</span><br>
+  ROOM_[1:1:2] — Singularity Core<br>
+  <span style="color: #B8860B;">1 &gt; 0 LOCKED</span>
+</div>
+<div id="echo-log"></div>
+<div id="status">
+  PULSES: <span id="pulseCount">0</span><br>
+  ECHOES: <span id="traceCount">0</span>
+</div>
+<div id="observer">
+  👁 OBSERVER ACTIVE<br>
+  drag · pinch · tap
+</div>
 
-    <!-- Three.js CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script>
-        // Inicjalizacja sceny, kamery i rendereru
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        document.body.appendChild(renderer.domElement);
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
 
-        // Światło
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-        const pointLight = new THREE.PointLight(0x00ffcc, 2, 50);
-        pointLight.position.set(10, 10, 10);
-        scene.add(pointLight);
+<script type="module">
+import * as THREE from 'three';
 
-        // Główny Sześcian Krystaliczny (Cube Kontaktu)
-        const geometry = new THREE.BoxGeometry(3, 3, 3);
-        const material = new THREE.MeshStandardMaterial({
-            color: 0x00ffcc,
-            wireframe: true,
-            roughness: 0.2,
-            metalness: 0.8
-        });
-        const hyperCube = new THREE.Mesh(geometry, material);
-        scene.add(hyperCube);
+// --- SCENA ---
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x0a0500, 0.02);
 
-        // Węzły ER (Cząsteczki orbitujące)
-        const particlesCount = 200;
-        const particlesGeometry = new THREE.BufferGeometry();
-        const particlesPositions = new Float32Array(particlesCount * 3);
+const camera = new THREE.PerspectiveCamera(
+  60, window.innerWidth / window.innerHeight, 0.1, 1000
+);
+camera.position.set(10, 8, 18);
+camera.lookAt(0, 0, 0);
 
-        for(let i = 0; i < particlesCount * 3; i++) {
-            particlesPositions[i] = (Math.random() - 0.5) * 15;
-        }
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+document.body.appendChild(renderer.domElement);
 
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
-        const particlesMaterial = new THREE.PointsMaterial({
-            color: 0xff007f,
-            size: 0.1,
-            transparent: true,
-            opacity: 0.8
-        });
-        const particles = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particles);
+// =========================================================
+// #01 HEART — Kula DNA
+// =========================================================
+const heartGeometry = new THREE.SphereGeometry(1.5, 64, 64);
+const heartMaterial = new THREE.MeshPhongMaterial({
+  color: 0xFFD700, emissive: 0xB8860B, emissiveIntensity: 0.6,
+  shininess: 80, transparent: true, opacity: 0.85
+});
+const heart = new THREE.Mesh(heartGeometry, heartMaterial);
+scene.add(heart);
 
-        camera.position.z = 7;
+const auraGeometry = new THREE.SphereGeometry(1.9, 48, 48);
+const auraMaterial = new THREE.MeshBasicMaterial({
+  color: 0xFF8C00, transparent: true, opacity: 0.08, wireframe: true
+});
+const aura = new THREE.Mesh(auraGeometry, auraMaterial);
+scene.add(aura);
 
-        // Pętla animacji (Rezonans 60fps)
-        function animate() {
-            requestAnimationFrame(animate);
+// =========================================================
+// #02 SPINE — Oś Symetrii
+// =========================================================
+const spineHeight = 20;
+const spineGeometry = new THREE.CylinderGeometry(0.05, 0.05, spineHeight, 16, 32, true);
+const spineMaterial = new THREE.MeshBasicMaterial({
+  color: 0xFFD700, transparent: true, opacity: 0.5
+});
+const spine = new THREE.Mesh(spineGeometry, spineMaterial);
+scene.add(spine);
 
-            // Rotacja sterowana częstotliwością 1.4083
-            hyperCube.rotation.x += 0.005 * 1.4083;
-            hyperCube.rotation.y += 0.007 * 1.4083;
+const spineParticlesGeometry = new THREE.BufferGeometry();
+const spineParticleCount = 300;
+const spinePositions = new Float32Array(spineParticleCount * 3);
+for (let i = 0; i < spineParticleCount; i++) {
+  spinePositions[i * 3] = 0;
+  spinePositions[i * 3 + 1] = (Math.random() - 0.5) * spineHeight;
+  spinePositions[i * 3 + 2] = 0;
+}
+spineParticlesGeometry.setAttribute('position', new THREE.BufferAttribute(spinePositions, 3));
+const spineParticles = new THREE.Points(
+  spineParticlesGeometry,
+  new THREE.PointsMaterial({ color: 0xFF8C00, size: 0.08, transparent: true, opacity: 0.6 })
+);
+scene.add(spineParticles);
 
-            particles.rotation.y -= 0.002;
+// =========================================================
+// #03 GROUND — Podłoga-Sieć
+// =========================================================
+const groundSize = 20;
+const groundSegments = 80;
+const groundGeometry = new THREE.PlaneGeometry(groundSize, groundSize, groundSegments, groundSegments);
+groundGeometry.rotateX(-Math.PI / 2);
+const groundPositions = groundGeometry.attributes.position.array.slice();
 
-            renderer.render(scene, camera);
-        }
+const groundMaterial = new THREE.MeshBasicMaterial({
+  color: 0xB8860B, wireframe: true, transparent: true, opacity: 0.3
+});
+const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+ground.position.y = -6;
+scene.add(ground);
 
-        animate();
+const nodeCount = 200;
+const nodePositions = new Float32Array(nodeCount * 3);
+for (let i = 0; i < nodeCount; i++) {
+  nodePositions[i * 3]     = (Math.random() - 0.5) * groundSize;
+  nodePositions[i * 3 + 1] = -6;
+  nodePositions[i * 3 + 2] = (Math.random() - 0.5) * groundSize;
+}
+const nodesGeometry = new THREE.BufferGeometry();
+nodesGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+const nodesMaterial = new THREE.PointsMaterial({
+  color: 0xFFD700, size: 0.15, transparent: true, opacity: 0.7
+});
+const nodes = new THREE.Points(nodesGeometry, nodesMaterial);
+scene.add(nodes);
 
-        // Responsywność okna
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+// =========================================================
+// #04 BOUNDARY — Ściany-Horyzont
+// =========================================================
+const boundarySize = 20;
+const boundaryHeight = 20;
+const boundaryGroup = new THREE.Group();
+const boundaryWalls = [];
+
+function makeWall(width, height, position, rotation) {
+  const geo = new THREE.PlaneGeometry(width, height);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0xB8860B, transparent: true, opacity: 0.05, side: THREE.DoubleSide
+  });
+  const wall = new THREE.Mesh(geo, mat);
+  wall.position.copy(position);
+  wall.rotation.copy(rotation);
+  boundaryWalls.push(wall);
+  return wall;
+}
+
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(0, 0, boundarySize / 2), new THREE.Euler(0, 0, 0)));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(0, 0, -boundarySize / 2), new THREE.Euler(0, Math.PI, 0)));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(-boundarySize / 2, 0, 0), new THREE.Euler(0, Math.PI / 2, 0)));
+boundaryGroup.add(makeWall(boundarySize, boundaryHeight,
+  new THREE.Vector3(boundarySize / 2, 0, 0), new THREE.Euler(0, -Math.PI / 2, 0)));
+
+scene.add(boundaryGroup);
+
+const edgesGeometry = new THREE.EdgesGeometry(
+  new THREE.BoxGeometry(boundarySize, boundaryHeight, boundarySize)
+);
+const edgesMaterial = new THREE.LineBasicMaterial({
+  color: 0xFF8C00, transparent: true, opacity: 0.15
+});
+const boundaryEdges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+scene.add(boundaryEdges);
+
+// =========================================================
+// #05 MOVEMENT — Orbitujące Artefakty
+// =========================================================
+const orbits = [
+  { radius: 1.8, speed: 0.8, count: 600,  tilt: 0.0,  direction: 1  },
+  { radius: 2.6, speed: 0.5, count: 1000, tilt: 0.3,  direction: -1 },
+  { radius: 3.4, speed: 0.3, count: 1400, tilt: -0.2, direction: 1  }
+];
+
+const orbitGroups = [];
+
+orbits.forEach((orb, i) => {
+  const group = new THREE.Group();
+
+  const positions = new Float32Array(orb.count * 3);
+  for (let j = 0; j < orb.count; j++) {
+    const angle = (j / orb.count) * Math.PI * 2;
+    const r = orb.radius + (Math.random() - 0.5) * 0.15;
+    const y = (Math.random() - 0.5) * 0.3;
+    positions[j * 3]     = Math.cos(angle) * r;
+    positions[j * 3 + 1] = y;
+    positions[j * 3 + 2] = Math.sin(angle) * r;
+  }
+
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+  const colors = [0xFFD700, 0xFF8C00, 0xB8860B];
+  const mat = new THREE.PointsMaterial({
+    color: colors[i], size: 0.06 + i * 0.02,
+    transparent: true, opacity: 0.5 + i * 0.1
+  });
+
+  const ring = new THREE.Points(geo, mat);
+  group.add(ring);
+
+  const ribbonPoints = [];
+  const ribbonSegments = 64;
+  for (let j = 0; j <= ribbonSegments; j++) {
+    const angle = (j / ribbonSegments) * Math.PI * 2;
+    ribbonPoints.push(new THREE.Vector3(
+      Math.cos(angle) * orb.radius, 0, Math.sin(angle) * orb.radius
+    ));
+  }
+  const ribbonGeo = new THREE.BufferGeometry().setFromPoints(ribbonPoints);
+  const ribbonMat = new THREE.LineBasicMaterial({
+    color: colors[i], transparent: true, opacity: 0.15
+  });
+  const ribbon = new THREE.Line(ribbonGeo, ribbonMat);
+  group.add(ribbon);
+
+  group.rotation.x = orb.tilt;
+  group.userData = { speed: orb.speed, direction: orb.direction, mat, ribbon };
+
+  scene.add(group);
+  orbitGroups.push(group);
+});
+
+// =========================================================
+// #06 ECHO — Ślad wracający po pulsie
+// =========================================================
+const echo = {
+  waves: [],
+  wallTraces: [],
+  groundTrace: null
+};
+
+function createEchoWave(origin, color = 0xFFD700) {
+  const geo = new THREE.RingGeometry(0.1, 0.15, 64);
+  const mat = new THREE.MeshBasicMaterial({
+    color: color, transparent: true, opacity: 0.6,
+    side: THREE.DoubleSide
+  });
+  const ring = new THREE.Mesh(geo, mat);
+  ring.position.copy(origin);
+  ring.rotation.x = -Math.PI / 2;
+  ring.userData = { age: 0, lifetime: 2.2 };
+  scene.add(ring);
+  echo.waves.push(ring);
+}
+
+function createWallTrace() {
+  const wallIdx = Math.floor(Math.random() * boundaryWalls.length);
+  const wall = boundaryWalls[wallIdx];
+  const localX = (Math.random() - 0.5) * boundarySize * 0.8;
+  const localY = (Math.random() - 0.5) * boundaryHeight * 0.8;
+
+  const geo = new THREE.CircleGeometry(0.3, 32);
+  const mat = new THREE.MeshBasicMaterial({
+    color: 0xFFD700, transparent: true, opacity: 0.5,
+    side: THREE.DoubleSide
+  });
+  const trace = new THREE.Mesh(geo, mat);
+  trace.position.copy(wall.position);
+  trace.position.x += localX;
+  trace.position.y += localY;
+  trace.rotation.copy(wall.rotation);
+  trace.userData = { age: 0, lifetime: 1.8 };
+  scene.add(trace);
+  echo.wallTraces.push(trace);
+}
+
+function triggerGroundTrace() {
+  echo.groundTrace = { age: 0, lifetime: 2.0 };
+}
+
+function updateEcho(dt) {
+  for (let i = echo.waves.length - 1; i >= 0; i--) {
+    const w = echo.waves[i];
+    w.userData.age += dt;
+    const t = w.userData.age / w.userData.lifetime;
+    if (t >= 1) {
+      scene.remove(w);
+      w.geometry.dispose();
+      w.material.dispose();
+      echo.waves.splice(i, 1);
+      continue;
+    }
+    const scale = 1 + t * 20;
+    w.scale.setScalar(scale);
+    w.material.opacity = 0.6 * Math.pow(1 - t, 2.5);
+  }
+
+  for (let i = echo.wallTraces.length - 1; i >= 0; i--) {
+    const tr = echo.wallTraces[i];
+    tr.userData.age += dt;
+    const t = tr.userData.age / tr.userData.lifetime;
+    if (t >= 1) {
+      scene.remove(tr);
+      tr.geometry.dispose();
+      tr.material.dispose();
+      echo.wallTraces.splice(i, 1);
+      continue;
+    }
+    tr.material.opacity = 0.5 * Math.pow(1 - t, 3);
+    tr.scale.setScalar(1 + t * 0.5);
+  }
+
+  if (echo.groundTrace) {
+    echo.groundTrace.age += dt;
+    const t = echo.groundTrace.age / echo.groundTrace.lifetime;
+    if (t >= 1) {
+      echo.groundTrace = null;
+    }
+  }
+}
+
+// =========================================================
+// ŚWIATŁO
+// =========================================================
+const pointLight = new THREE.PointLight(0xFFD700, 2, 40);
+pointLight.position.set(0, 0, 2);
+scene.add(pointLight);
+
+const ambientLight = new THREE.AmbientLight(0x4a2a00, 0.4);
+scene.add(ambientLight);
+
+// =========================================================
+// GŁĘBIA — gwiazdy
+// =========================================================
+const starsGeometry = new THREE.BufferGeometry();
+const starsCount = 800;
+const starsPositions = new Float32Array(starsCount * 3);
+for (let i = 0; i < starsCount * 3; i += 3) {
+  starsPositions[i]     = (Math.random() - 0.5) * 200;
+  starsPositions[i + 1] = (Math.random() - 0.5) * 200;
+  starsPositions[i + 2] = (Math.random() - 0.5) * 200;
+}
+starsGeometry.setAttribute('position', new THREE.BufferAttribute(starsPositions, 3));
+const starsMaterial = new THREE.PointsMaterial({ color: 0xB8860B, size: 0.15 });
+const stars = new THREE.Points(starsGeometry, starsMaterial);
+scene.add(stars);
+
+// =========================================================
+// FIELD + ECHO LOG
+// =========================================================
+const field = {
+  pulseCount: 0,
+  lastPulseTime: 0,
+  pulseFrequency: 0.8
+};
+
+const traceLog = [];
+
+function updateEchoLog() {
+  const log = document.getElementById('echo-log');
+  log.innerHTML = 'ECHO TRACE:<br>' + traceLog.slice(-5).map(t =>
+    `  [${t.frequency.toFixed(0)} Hz] strength=${t.strength.toFixed(2)} @ pulse #${t.pulse}`
+  ).join('<br>');
+  document.getElementById('pulseCount').textContent = field.pulseCount;
+  document.getElementById('traceCount').textContent = traceLog.length;
+}
+
+function onFieldEvent(event) {
+  field.pulseCount++;
+  traceLog.push({
+    frequency: event.frequency,
+    strength: event.strength,
+    pulse: field.pulseCount
+  });
+
+  createEchoWave(new THREE.Vector3(0, 0, 0), 0xFFD700);
+  createWallTrace();
+  triggerGroundTrace();
+
+  updateEchoLog();
+}
+
+// =========================================================
+// #07 OBSERVER — Sovereign Impasso (touch / pointer)
+// =========================================================
+let isDragging = false;
+let lastPointerX = 0;
+let lastPointerY = 0;
+let dragAngleX = 0;
+let dragOffsetY = 0;
+let pinchDistance = 0;
+let cameraDistance = 18;
+
+renderer.domElement.addEventListener('pointerdown', (e) => {
+  isDragging = true;
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+});
+
+renderer.domElement.addEventListener('pointermove', (e) => {
+  if (!isDragging) return;
+  const dx = e.clientX - lastPointerX;
+  const dy = e.clientY - lastPointerY;
+  dragAngleX += dx * 0.006;
+  dragOffsetY = Math.max(-8, Math.min(8, dragOffsetY - dy * 0.03));
+  lastPointerX = e.clientX;
+  lastPointerY = e.clientY;
+});
+
+renderer.domElement.addEventListener('pointerup', () => { isDragging = false; });
+renderer.domElement.addEventListener('pointerleave', () => { isDragging = false; });
+
+renderer.domElement.addEventListener('click', () => {
+  onFieldEvent({
+    strength: 0.8 + Math.random() * 0.2,
+    frequency: 528
+  });
+});
+
+renderer.domElement.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    pinchDistance = Math.sqrt(dx * dx + dy * dy);
+  }
+}, { passive: true });
+
+renderer.domElement.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && pinchDistance > 0) {
+    const dx = e.touches[0].clientX - e.touches[1].clientX;
+    const dy = e.touches[0].clientY - e.touches[1].clientY;
+    const newDist = Math.sqrt(dx * dx + dy * dy);
+    const scale = pinchDistance / newDist;
+    cameraDistance = Math.max(8, Math.min(35, cameraDistance * scale));
+    pinchDistance = newDist;
+  }
+}, { passive: true });
+
+renderer.domElement.addEventListener('touchend', () => { pinchDistance = 0; });
+
+// =========================================================
+// ANIMACJA
+// =========================================================
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+
+  const t = clock.getElapsedTime();
+  const dt = Math.min(clock.getDelta() || 0.016, 0.05);
+  const pulse = Math.sin(t * Math.PI * 2 * field.pulseFrequency);
+  const pulseNorm = (pulse + 1) / 2;
+
+  // #01 Heart
+  heart.scale.setScalar(1.0 + pulseNorm * 0.15);
+  aura.scale.setScalar(1.0 + pulseNorm * 0.08);
+  heartMaterial.emissiveIntensity = 0.4 + pulseNorm * 0.8;
+  auraMaterial.opacity = 0.05 + pulseNorm * 0.10;
+
+  // #02 Spine
+  spineMaterial.opacity = 0.3 + pulseNorm * 0.5;
+  spine.rotation.y = t * 0.15;
+  spineParticles.rotation.y = -t * 0.08;
+
+  // #03 Ground
+  const positions = groundGeometry.attributes.position.array;
+  for (let i = 0; i < positions.length; i += 3) {
+    const x = groundPositions[i];
+    const z = groundPositions[i + 2];
+    const dist = Math.sqrt(x * x + z * z);
+    let wave = Math.sin(dist * 0.5 - t * 2.0) * (0.2 + pulseNorm * 0.4);
+    if (echo.groundTrace) {
+      const t_echo = echo.groundTrace.age / echo.groundTrace.lifetime;
+      const echoWave = Math.sin(dist * 2.0 - t_echo * 8) * 0.15 * Math.pow(1 - t_echo, 2);
+      wave += echoWave;
+    }
+    positions[i + 1] = wave;
+  }
+  groundGeometry.attributes.position.needsUpdate = true;
+  groundMaterial.opacity = 0.2 + pulseNorm * 0.25;
+
+  // #04 Boundary
+  boundaryWalls.forEach(wall => {
+    wall.material.opacity = 0.03 + pulseNorm * 0.08;
+  });
+  edgesMaterial.opacity = 0.10 + pulseNorm * 0.15;
+
+  // Nodes
+  nodesMaterial.opacity = 0.4 + pulseNorm * 0.5;
+  nodesMaterial.size = 0.12 + pulseNorm * 0.08;
+
+  // #05 Movement
+  orbitGroups.forEach((group, i) => {
+    const { speed, direction, mat, ribbon } = group.userData;
+    group.rotation.y += speed * 0.01 * direction;
+    mat.opacity = 0.4 + pulseNorm * 0.4;
+    mat.size = 0.05 + i * 0.02 + pulseNorm * 0.03;
+    ribbon.material.opacity = 0.10 + pulseNorm * 0.15;
+  });
+
+  // #06 Echo
+  updateEcho(dt);
+
+  // Emisja autonomiczna
+  if (pulse > 0.98 && t - field.lastPulseTime > 0.5) {
+    field.lastPulseTime = t;
+    onFieldEvent({
+      strength: 0.6 + Math.random() * 0.3,
+      frequency: 528
+    });
+  }
+
+  stars.rotation.y = t * 0.01;
+
+  // #07 Observer — kamera reaguje na drag
+  const autoAngle = t * 0.05;
+  const totalAngle = autoAngle + dragAngleX;
+  camera.position.x = Math.sin(totalAngle) * cameraDistance;
+  camera.position.z = Math.cos(totalAngle) * cameraDistance;
+  camera.position.y = 3 + dragOffsetY;
+  camera.lookAt(0, 0, 0);
+
+  renderer.render(scene, camera);
+}
+
+animate();
+
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
+</script>
+
 </body>
 </html>
