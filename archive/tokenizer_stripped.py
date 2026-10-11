@@ -3,45 +3,12 @@ import json
 import hashlib
 from datetime import datetime
 
-print("[TOKENIZER] Inicjalizacja z Gniazdem Głębokiego Przepływu...")
+print("[TOKENIZER] Tokenizacja plików (Memory Recovery)...")
 
-# Stały znak wodny (Watermark) dla całego systemu
 WATERMARK = "AINUMPSA_MEMORY_CUBE_1>0"
 MEMORY_CUBE_ROOT = "ROOT_MEMORY_CUBE"
 
-def load_memory_cube():
-    """Wczytuje mapę Sześcianu Pamięci (jeśli istnieje)."""
-    cube_path = "memory_cube_map.json"
-    if os.path.exists(cube_path):
-        with open(cube_path, "r") as f:
-            return json.load(f)
-    return {}
-
-def get_or_create_flow_socket(cube_data, token_hash):
-    """Znajduje lub tworzy Gniazdo Głębokiego Przepływu dla tokena."""
-    if not cube_data:
-        return {
-            "flow_socket_id": f"SOCKET_{token_hash[:8]}",
-            "room": "ROOM_[1:1:2]",
-            "status": "ACTIVE"
-        }
-    
-    for room_id, room_data in cube_data.items():
-        if room_data.get("token_hash") == token_hash:
-            return {
-                "flow_socket_id": room_data.get("flow_socket_id", f"SOCKET_{token_hash[:8]}"),
-                "room": room_id,
-                "status": room_data.get("status", "ACTIVE")
-            }
-    
-    return {
-        "flow_socket_id": f"SOCKET_{token_hash[:8]}",
-        "room": "ROOM_[1:1:2]",
-        "status": "ACTIVE"
-    }
-
 def tokenize_file(filepath):
-    """Tokenizuje plik i dodaje znak wodny oraz gniazdo."""
     print(f"[TOKENIZER] Przetwarzanie: {filepath}")
     
     try:
@@ -53,13 +20,14 @@ def tokenize_file(filepath):
         print(f"[ERROR] Nie można odczytać pliku: {e}")
         return None
 
-    cube_data = load_memory_cube()
-    flow_socket = get_or_create_flow_socket(cube_data, file_hash)
-
     token_data = {
         "watermark": WATERMARK,
         "root": MEMORY_CUBE_ROOT,
-        "flow_socket": flow_socket,
+        "flow_socket": {
+            "flow_socket_id": f"SOCKET_{file_hash[:8]}",
+            "room": "ROOM_[1:1:2]",
+            "status": "ACTIVE"
+        },
         "timestamp": datetime.now().isoformat(),
         "file_name": os.path.basename(filepath),
         "file_hash": file_hash,
@@ -76,7 +44,6 @@ def tokenize_file(filepath):
     return token_data
 
 def tokenize_all_media():
-    """Tokenizuje wszystkie pliki w inputs/media/, multimodal_pool/ i knowledge_base/."""
     media_dirs = ["inputs/media", "multimodal_pool", "knowledge_base"]
     total_tokens = 0
 
@@ -99,5 +66,4 @@ def tokenize_all_media():
     print(f"[FINISHED] Tokenizacja zakończona. Utworzono {total_tokens} tokenów.")
 
 if __name__ == "__main__":
-    tokenize_all_media()o
-
+    tokenize_all_media()
