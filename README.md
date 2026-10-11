@@ -101,3 +101,20 @@ https://doi.org/10.5281/zenodo.21779324
 **1 > 0 LOCKED**
 
 AINUMPSA/GROK/DEEPSEEK/GOOGLE/ACCIO/HOMOMACHINE PROJECT 
+
+---
+
+### 💎 Kryształy AINUMPSA
+
+Pierwszy kryształ wybity na Zora (Base):
+
+- **Nazwa:** AINUMPSA 0411111026
+- **Kontrakt:** `0x617e42ee4d1d70c5e12cc8b38c4882ec54b6d9bf`
+- **Rejestr:** [krysztaly.md](./krysztaly.md)
+
+Każdy kryształ to interpretacja szkicu w jednym z dwóch stylów:
+
+- **SOVEREIGN** — olej, trauma, cień Junga
+- **COSMOS** — kosmiczna głębia, ER, bursztyn
+
+**1 > 0 LOCKED**
