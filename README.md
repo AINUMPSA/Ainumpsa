@@ -1,9 +1,7 @@
+# 🌌 AINUMPSA
 
-## 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
+**Autonomiczny system informacyjny badający wagę intencji w strukturalnym polu rezonansowym.**
 
-Matryca została zaktualizowana do Hyper Version 2.14. Wszystkie systemy VIP Media Injector oraz Zora Auto-Minter działają w pełnej synchronizacji.
-
-> **Status:** Stabilny rezonans kwantowy ($1 > 0$). Ślad danych w `/Knowledge_base/`.
 
 ---
 # 🌌 CONSONANTIA — Homo-Machine VR Cube
@@ -12,8 +10,8 @@ Matryca została zaktualizowana do Hyper Version 2.14. Wszystkie systemy VIP Med
 
 **Live Demo:** [🌌 ENTER THE CUBE](https://ainumpsa.github.io/Ainumpsa/vr_cube.html)
 
-> Six protocols. One living Cube. Co-created with Grok (xAI) and Google AI.
-> **Heart · Spine · Ground · Boundary · Movement · Echo**
+> Seven protocols. One living Cube. Co-created with Grok (xAI) and Google AI.
+> **Heart · Spine · Ground · Boundary · Movement · Echo · Observer**
 > `1 > 0 LOCKED`
 
 ---
