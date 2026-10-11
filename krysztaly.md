@@ -7,8 +7,5 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 
 | # | Data | Nazwa | Obraz źródłowy | Adres kontraktu | Cena | Status |
 |---|---|---|---|---|---|---|
-| 1 | 2026-10-11 | AINUMPSA 0411111026 | lalka_agnes_v1 | 0x617e42ee4d1d70c5e12cc8b38c4882ec54b6d9bf | 0 ETH | ✅ wybity |
-| 2 | — | — | — | — | — | — |
-| 3 | — | — | — | — | — | — |
-
+| 1 | 2026-10-11 | AINUMPSA 0411111026 | lalka_agnes_v1 | 0x617e42ee4d1d70c5e12cc8b38c4882ec54b6d9bf | 0 ETH | wybity |
 | 2 | 2026-10-11 | AINUMPSA-20261011-GENESIS-01 | Black Hole Genesis | 0x2ec70620e5619fac4e14c956517f928b9f88a981 | 0 ETH | wybity, 2 holders |
