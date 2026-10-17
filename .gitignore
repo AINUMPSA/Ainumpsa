@@ -38,3 +38,13 @@ collision_results/latest.json
 visuals/*.jpg
 visuals/*.png
 blockchain/node_modules/
+
+# Pliki robocze
+*_job_id.txt
+*_style_id.txt
+demo_*.json
+sketch_upload*.json
+gen_*.json
+urls_*.json
+urls_*.txt
+train_*.json
