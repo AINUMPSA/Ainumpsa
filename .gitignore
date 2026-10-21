@@ -48,3 +48,11 @@ gen_*.json
 urls_*.json
 urls_*.txt
 train_*.json
+
+# Szkice i treningi
+sketch_demo*.jpg
+sketch_demo*.png
+training_*/
+first_sovereign_*.txt
+demo_pair_02.md
+README_backup_*.md
