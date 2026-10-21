@@ -5,7 +5,11 @@
   "total_nfts": 11568,
   "total_nft_files": 129,
   "primary_singularity_anchor": "ROOM_[1:1:2]",
+<<<<<<< HEAD
   "generated_at": "2026-10-21T00:42:13.514740+00:00",
+=======
+  "generated_at": "2026-10-21T00:49:11.320400+00:00",
+>>>>>>> e4706d90 (fix: remove duplicate generated_at key [skip ci])
   "rooms": {
     "ROOM_[0:0:0]": {
       "coordinates": {
