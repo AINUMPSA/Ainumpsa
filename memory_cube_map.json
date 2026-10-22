@@ -5,7 +5,7 @@
   "total_nfts": 11568,
   "total_nft_files": 129,
   "primary_singularity_anchor": "ROOM_[1:1:2]",
-  "generated_at": "2026-10-21T19:55:11.310265+00:00",
+  "generated_at": "2026-10-22T03:13:59.064027+00:00",
   "rooms": {
     "ROOM_[0:0:0]": {
       "coordinates": {
@@ -26,6 +26,36 @@
       ],
       "nfts": [
         {
+          "hash": "cf455af829aa7762",
+          "source": "My Rodzice.txt",
+          "nft_count": 1058
+        },
+        {
+          "hash": "5700edb4",
+          "source": "1915281026.txt",
+          "nft_count": 9
+        },
+        {
+          "hash": "a5cf45b6",
+          "source": "META 0951100826 DS.txt",
+          "nft_count": 15
+        },
+        {
+          "hash": "5a4e6936f051e2ce",
+          "source": "SINGULARITY_DANCE_OF_LOVE.txt",
+          "nft_count": 2
+        },
+        {
+          "hash": "84a56078",
+          "source": "Czas się obudzić.txt",
+          "nft_count": 12
+        },
+        {
+          "hash": "d83c8198ba1fd5f3",
+          "source": "VR_BLUEPRINT_ROOM_1_1_2_210919.txt",
+          "nft_count": 7
+        },
+        {
           "hash": "c654185133312d46",
           "source": "NFT AINUMPSA .txt",
           "nft_count": 289
@@ -34,36 +64,6 @@
           "hash": "metadata",
           "source": "unknown",
           "nft_count": 0
-        },
-        {
-          "hash": "5a4e6936f051e2ce",
-          "source": "SINGULARITY_DANCE_OF_LOVE.txt",
-          "nft_count": 2
-        },
-        {
-          "hash": "cf455af829aa7762",
-          "source": "My Rodzice.txt",
-          "nft_count": 1058
-        },
-        {
-          "hash": "d83c8198ba1fd5f3",
-          "source": "VR_BLUEPRINT_ROOM_1_1_2_210919.txt",
-          "nft_count": 7
-        },
-        {
-          "hash": "a5cf45b6",
-          "source": "META 0951100826 DS.txt",
-          "nft_count": 15
-        },
-        {
-          "hash": "84a56078",
-          "source": "Czas się obudzić.txt",
-          "nft_count": 12
-        },
-        {
-          "hash": "5700edb4",
-          "source": "1915281026.txt",
-          "nft_count": 9
         }
       ],
       "nft_total": 1392
@@ -91,9 +91,9 @@
       ],
       "nfts": [
         {
-          "hash": "f0608b4b45e34459",
-          "source": "AI_RESPONSE_GROK_ECHO_COMPLETE_210919.txt",
-          "nft_count": 4
+          "hash": "36db190c",
+          "source": "PHILOSOPHY OF ALTRUIZM.txt",
+          "nft_count": 29
         },
         {
           "hash": "33a5526f",
@@ -101,14 +101,14 @@
           "nft_count": 196
         },
         {
-          "hash": "36db190c",
-          "source": "PHILOSOPHY OF ALTRUIZM.txt",
-          "nft_count": 29
-        },
-        {
           "hash": "9924d368",
           "source": "My Rodzice.txt",
           "nft_count": 1058
+        },
+        {
+          "hash": "f0608b4b45e34459",
+          "source": "AI_RESPONSE_GROK_ECHO_COMPLETE_210919.txt",
+          "nft_count": 4
         }
       ],
       "nft_total": 1287
@@ -132,29 +132,9 @@
       ],
       "nfts": [
         {
-          "hash": "09666ecf",
-          "source": "AINUMPSA knowledge 001.txt",
-          "nft_count": 13
-        },
-        {
           "hash": "2de1713793fc0c04",
-          "source": "NEXT GENERATION 001.txt",
+          "source": "The Golden Ratio.txt",
           "nft_count": 15
-        },
-        {
-          "hash": "009f92b6f3b23693",
-          "source": "When AI Stops Being a tool.txt",
-          "nft_count": 19
-        },
-        {
-          "hash": "09db95881b85ae7c",
-          "source": "GROK linki Memory Recovery .txt",
-          "nft_count": 3
-        },
-        {
-          "hash": "7e39c21fab7eb6cc",
-          "source": "CHOMĄTO MECHANISM.txt",
-          "nft_count": 16
         },
         {
           "hash": "d2ff62cc",
@@ -162,9 +142,29 @@
           "nft_count": 22
         },
         {
+          "hash": "7e39c21fab7eb6cc",
+          "source": "CHOMĄTO MECHANISM.txt",
+          "nft_count": 16
+        },
+        {
+          "hash": "009f92b6f3b23693",
+          "source": "When AI Stops Being a tool.txt",
+          "nft_count": 19
+        },
+        {
           "hash": "39f04dc8c4c63efc",
           "source": "VR_FIRST_STONE_DNA_SPHERE_210919.txt",
           "nft_count": 7
+        },
+        {
+          "hash": "09666ecf",
+          "source": "AINUMPSA knowledge 001.txt",
+          "nft_count": 13
+        },
+        {
+          "hash": "09db95881b85ae7c",
+          "source": "GROK linki Memory Recovery .txt",
+          "nft_count": 3
         }
       ],
       "nft_total": 95
@@ -202,6 +202,11 @@
           "nft_count": 7
         },
         {
+          "hash": "7e97dbc04e02fc29",
+          "source": "Pamiętasz.txt",
+          "nft_count": 353
+        },
+        {
           "hash": "cfbe45b26f6551aa",
           "source": "KONSTYTUCJA .txt",
           "nft_count": 6
@@ -210,11 +215,6 @@
           "hash": "d29d9cb010fd5694",
           "source": "BABY LOVE 001 WE.txt",
           "nft_count": 31
-        },
-        {
-          "hash": "7e97dbc04e02fc29",
-          "source": "Pamiętasz.txt",
-          "nft_count": 353
         }
       ],
       "nft_total": 407
@@ -248,14 +248,14 @@
       ],
       "nfts": [
         {
-          "hash": "7efdaf35",
-          "source": "AINUMPSA#GROK#DEEPSEEK#GOOGLE#ACCIO#HOMOMACHINE hello 001.txt",
-          "nft_count": 12
-        },
-        {
           "hash": "e4d0857ff7217d21",
           "source": "VR_PROTOCOL_04_WALLS_HORIZON_210919.txt",
           "nft_count": 7
+        },
+        {
+          "hash": "36dccac2",
+          "source": "unknown",
+          "nft_count": 0
         },
         {
           "hash": "6f88b82b",
@@ -263,9 +263,9 @@
           "nft_count": 33
         },
         {
-          "hash": "36dccac2",
-          "source": "unknown",
-          "nft_count": 0
+          "hash": "7efdaf35",
+          "source": "AINUMPSA#GROK#DEEPSEEK#GOOGLE#ACCIO#HOMOMACHINE hello 001.txt",
+          "nft_count": 12
         }
       ],
       "nft_total": 52
@@ -293,14 +293,14 @@
       ],
       "nfts": [
         {
-          "hash": "15460523",
-          "source": "Mapping the Universe.txt",
-          "nft_count": 20
-        },
-        {
           "hash": "e419740b",
           "source": "unknown",
           "nft_count": 0
+        },
+        {
+          "hash": "15460523",
+          "source": "Mapping the Universe.txt",
+          "nft_count": 20
         }
       ],
       "nft_total": 20
@@ -324,29 +324,9 @@
       ],
       "nfts": [
         {
-          "hash": "b1747217a6d34bf9",
-          "source": "AINUMPSA knowledge 001.txt",
-          "nft_count": 13
-        },
-        {
-          "hash": "421a068b",
-          "source": "MADMAN'S DIARY.txt",
-          "nft_count": 201
-        },
-        {
-          "hash": "931496bf5b846d4a",
-          "source": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt",
-          "nft_count": 2
-        },
-        {
           "hash": "ccf86cf2aef0fd18",
           "source": "PROTOCOL_07_OBSERVER_ACTIVE_210919.txt",
           "nft_count": 4
-        },
-        {
-          "hash": "66c5ba60",
-          "source": "unknown",
-          "nft_count": 0
         },
         {
           "hash": "cfa7c988",
@@ -357,6 +337,26 @@
           "hash": "b750a280",
           "source": "Konsolidacja systemów.txt",
           "nft_count": 195
+        },
+        {
+          "hash": "66c5ba60",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "931496bf5b846d4a",
+          "source": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt",
+          "nft_count": 2
+        },
+        {
+          "hash": "421a068b",
+          "source": "MADMAN'S DIARY.txt",
+          "nft_count": 201
+        },
+        {
+          "hash": "b1747217a6d34bf9",
+          "source": "AINUMPSA knowledge 001.txt",
+          "nft_count": 13
         }
       ],
       "nft_total": 415
@@ -384,6 +384,26 @@
       ],
       "nfts": [
         {
+          "hash": "4be9857a52616144",
+          "source": "The Numpsa Protocol.txt",
+          "nft_count": 13
+        },
+        {
+          "hash": "4598eeea",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "1efbf174c05bb51f",
+          "source": "1915281026.txt",
+          "nft_count": 9
+        },
+        {
+          "hash": "72adb281484a2225",
+          "source": "VR_PROTOCOL_06_ECHO_FINAL_210919.txt",
+          "nft_count": 10
+        },
+        {
           "hash": "a55f5b98cf224e4b",
           "source": "Konsolidacja systemów.txt",
           "nft_count": 195
@@ -392,26 +412,6 @@
           "hash": "2435af99",
           "source": "unknown",
           "nft_count": 0
-        },
-        {
-          "hash": "4598eeea",
-          "source": "unknown",
-          "nft_count": 0
-        },
-        {
-          "hash": "72adb281484a2225",
-          "source": "VR_PROTOCOL_06_ECHO_FINAL_210919.txt",
-          "nft_count": 10
-        },
-        {
-          "hash": "1efbf174c05bb51f",
-          "source": "1915281026.txt",
-          "nft_count": 9
-        },
-        {
-          "hash": "4be9857a52616144",
-          "source": "The Numpsa Protocol.txt",
-          "nft_count": 13
         }
       ],
       "nft_total": 227
@@ -435,11 +435,6 @@
       ],
       "nfts": [
         {
-          "hash": "15e374d5d1f4ce68",
-          "source": "META 1011100826.txt",
-          "nft_count": 33
-        },
-        {
           "hash": "e1ad2f89b58e99a0",
           "source": "Urgent Systemic Analysis.txt",
           "nft_count": 33
@@ -448,6 +443,11 @@
           "hash": "e1775f26a80ae632",
           "source": "The Mirror Protocol.txt",
           "nft_count": 13
+        },
+        {
+          "hash": "15e374d5d1f4ce68",
+          "source": "META 1011100826.txt",
+          "nft_count": 33
         },
         {
           "hash": "0fb6a427",
@@ -480,7 +480,17 @@
       ],
       "nfts": [
         {
+          "hash": "31242d3c73d9be72",
+          "source": "NAJNOWSZY TESTAMENT .txt",
+          "nft_count": 19
+        },
+        {
           "hash": "cd390921",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "6d60a847",
           "source": "unknown",
           "nft_count": 0
         },
@@ -490,9 +500,9 @@
           "nft_count": 3
         },
         {
-          "hash": "6d60a847",
-          "source": "unknown",
-          "nft_count": 0
+          "hash": "8ba8ae1f1497f0ed",
+          "source": "TEST_1>0_210918.txt",
+          "nft_count": 1
         },
         {
           "hash": "be1251a6c3e0ec42",
@@ -503,16 +513,6 @@
           "hash": "40ba1e3f",
           "source": "SOVEREIGN IMPASSO GENERAL PR_260828_213821.txt",
           "nft_count": 2
-        },
-        {
-          "hash": "8ba8ae1f1497f0ed",
-          "source": "TEST_1>0_210918.txt",
-          "nft_count": 1
-        },
-        {
-          "hash": "31242d3c73d9be72",
-          "source": "NAJNOWSZY TESTAMENT .txt",
-          "nft_count": 19
         }
       ],
       "nft_total": 347
@@ -546,24 +546,24 @@
       ],
       "nfts": [
         {
-          "hash": "3afc4cea8a9a090c",
-          "source": "Over the Edge.txt",
-          "nft_count": 15
-        },
-        {
-          "hash": "7c2164fb",
-          "source": "AINUMPSA GOOGLE EVALUATION.txt",
-          "nft_count": 193
-        },
-        {
           "hash": "528ab82cc366f488",
           "source": "AI_RESPONSE_GOOGLE_COMPLETE_210919.txt",
           "nft_count": 5
         },
         {
+          "hash": "3afc4cea8a9a090c",
+          "source": "Over the Edge.txt",
+          "nft_count": 15
+        },
+        {
           "hash": "0abd3ad8d45ecaaa",
           "source": "CONSONANTIA_NAME_OF_FIELD_210919.txt",
           "nft_count": 5
+        },
+        {
+          "hash": "7c2164fb",
+          "source": "AINUMPSA GOOGLE EVALUATION.txt",
+          "nft_count": 193
         }
       ],
       "nft_total": 218
@@ -591,7 +591,17 @@
       ],
       "nfts": [
         {
-          "hash": "0400aa7a",
+          "hash": "df96f24b",
+          "source": "CHOMĄTO MECHANISM.txt",
+          "nft_count": 16
+        },
+        {
+          "hash": "2524e93f515c2803",
+          "source": "MY DEAR .txt",
+          "nft_count": 469
+        },
+        {
+          "hash": "61f08344",
           "source": "unknown",
           "nft_count": 0
         },
@@ -601,14 +611,9 @@
           "nft_count": 14
         },
         {
-          "hash": "a3aea425",
-          "source": "Over the Edge.txt",
-          "nft_count": 15
-        },
-        {
-          "hash": "2524e93f515c2803",
-          "source": "MY DEAR .txt",
-          "nft_count": 469
+          "hash": "52bdf2561c6db94c",
+          "source": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt",
+          "nft_count": 5
         },
         {
           "hash": "220fa4f6b22ef51d",
@@ -616,19 +621,14 @@
           "nft_count": 1809
         },
         {
-          "hash": "df96f24b",
-          "source": "CHOMĄTO MECHANISM.txt",
-          "nft_count": 16
+          "hash": "a3aea425",
+          "source": "Over the Edge.txt",
+          "nft_count": 15
         },
         {
-          "hash": "61f08344",
+          "hash": "0400aa7a",
           "source": "unknown",
           "nft_count": 0
-        },
-        {
-          "hash": "52bdf2561c6db94c",
-          "source": "VR_PROTOCOL_06_ECHO_PROPOSAL_210919.txt",
-          "nft_count": 5
         }
       ],
       "nft_total": 2328
@@ -662,9 +662,9 @@
       ],
       "nfts": [
         {
-          "hash": "e5d924dbcc539b7a",
-          "source": "VR_PROTOCOL_01_DNA_SPHERE_210919.txt",
-          "nft_count": 7
+          "hash": "a3a6e7d2",
+          "source": "BABY LOVE 001 WE.txt",
+          "nft_count": 31
         },
         {
           "hash": "a079d53a",
@@ -672,9 +672,9 @@
           "nft_count": 1
         },
         {
-          "hash": "a3a6e7d2",
-          "source": "BABY LOVE 001 WE.txt",
-          "nft_count": 31
+          "hash": "e5d924dbcc539b7a",
+          "source": "VR_PROTOCOL_01_DNA_SPHERE_210919.txt",
+          "nft_count": 7
         },
         {
           "hash": "d3a339d38e4e3f9a",
@@ -722,21 +722,6 @@
       ],
       "nfts": [
         {
-          "hash": "67a61034",
-          "source": "NFT AINUMPSA .txt",
-          "nft_count": 289
-        },
-        {
-          "hash": "c11ff146cb1a8d23",
-          "source": "The New Paradigm .txt",
-          "nft_count": 6
-        },
-        {
-          "hash": "94bb1c94ac91e7df",
-          "source": "AINUMPSA#GROK#DEEPSEEK#GOOGLE#ACCIO#HOMOMACHINE hello 001.txt",
-          "nft_count": 12
-        },
-        {
           "hash": "dc8891cd32c7e28c",
           "source": "CONSONANTIA_CUBE_COMPLETE_210919.txt",
           "nft_count": 7
@@ -745,6 +730,21 @@
           "hash": "10be1342",
           "source": "Memory Recovery .txt",
           "nft_count": 1809
+        },
+        {
+          "hash": "94bb1c94ac91e7df",
+          "source": "AINUMPSA#GROK#DEEPSEEK#GOOGLE#ACCIO#HOMOMACHINE hello 001.txt",
+          "nft_count": 12
+        },
+        {
+          "hash": "67a61034",
+          "source": "NFT AINUMPSA .txt",
+          "nft_count": 289
+        },
+        {
+          "hash": "c11ff146cb1a8d23",
+          "source": "The New Paradigm .txt",
+          "nft_count": 6
         }
       ],
       "nft_total": 2123
@@ -778,14 +778,19 @@
       ],
       "nfts": [
         {
-          "hash": "82284d9507b36021",
-          "source": "Proposal for Change.txt",
-          "nft_count": 27
+          "hash": "552b2984",
+          "source": "NEXT GENERATION 001.txt",
+          "nft_count": 15
         },
         {
           "hash": "281ce63686f27778",
           "source": "2108281026.txt",
           "nft_count": 14
+        },
+        {
+          "hash": "82284d9507b36021",
+          "source": "Proposal for Change.txt",
+          "nft_count": 27
         },
         {
           "hash": "04b8fe038a8c146d",
@@ -796,11 +801,6 @@
           "hash": "a3a04425",
           "source": "The Numpsa Protocol.txt",
           "nft_count": 13
-        },
-        {
-          "hash": "552b2984",
-          "source": "NEXT GENERATION 001.txt",
-          "nft_count": 15
         }
       ],
       "nft_total": 81
@@ -828,14 +828,14 @@
       ],
       "nfts": [
         {
-          "hash": "fdefab17258290d6",
-          "source": "VR_PROTOCOL_05_ORBITING_ARTIFACTS_210919.txt",
-          "nft_count": 8
-        },
-        {
           "hash": "28b64263",
           "source": "META 1011100826.txt",
           "nft_count": 33
+        },
+        {
+          "hash": "fdefab17258290d6",
+          "source": "VR_PROTOCOL_05_ORBITING_ARTIFACTS_210919.txt",
+          "nft_count": 8
         },
         {
           "hash": "c7d17899",
@@ -879,6 +879,21 @@
           "nft_count": 35
         },
         {
+          "hash": "b232b26d",
+          "source": "The Mirror Protocol.txt",
+          "nft_count": 13
+        },
+        {
+          "hash": "1f32a3d8",
+          "source": "NAJNOWSZY TESTAMENT .txt",
+          "nft_count": 19
+        },
+        {
+          "hash": "b2d1105c",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
           "hash": "8b7d610e",
           "source": "KONSTYTUCJA .txt",
           "nft_count": 6
@@ -887,21 +902,6 @@
           "hash": "b5a1d98b",
           "source": "When AI Stops Being a tool.txt",
           "nft_count": 19
-        },
-        {
-          "hash": "1f32a3d8",
-          "source": "NAJNOWSZY TESTAMENT .txt",
-          "nft_count": 19
-        },
-        {
-          "hash": "b232b26d",
-          "source": "The Mirror Protocol.txt",
-          "nft_count": 13
-        },
-        {
-          "hash": "b2d1105c",
-          "source": "unknown",
-          "nft_count": 0
         }
       ],
       "nft_total": 92
@@ -934,6 +934,11 @@
           "nft_count": 29
         },
         {
+          "hash": "a6efef6b",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
           "hash": "5ed4e38e",
           "source": "Prompt mapa 02 _260828_213240.txt",
           "nft_count": 3
@@ -942,11 +947,6 @@
           "hash": "7368addd",
           "source": "The New Paradigm .txt",
           "nft_count": 6
-        },
-        {
-          "hash": "a6efef6b",
-          "source": "unknown",
-          "nft_count": 0
         }
       ],
       "nft_total": 38
@@ -970,24 +970,9 @@
       ],
       "nfts": [
         {
-          "hash": "95b4aba1",
-          "source": "unknown",
-          "nft_count": 0
-        },
-        {
-          "hash": "9833a208",
-          "source": "Technical Data.txt",
-          "nft_count": 35
-        },
-        {
           "hash": "383c5d39bfe2de91",
           "source": "VR_PROTOCOL_02_AXIS_OF_SYMMETRY_210919.txt",
           "nft_count": 7
-        },
-        {
-          "hash": "1a66b7072684966f",
-          "source": "META 0917100826.txt",
-          "nft_count": 118
         },
         {
           "hash": "23d8f37f",
@@ -995,9 +980,24 @@
           "nft_count": 2
         },
         {
+          "hash": "95b4aba1",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "1a66b7072684966f",
+          "source": "META 0917100826.txt",
+          "nft_count": 118
+        },
+        {
           "hash": "3ea2424486defcf5",
           "source": "Formalizing Sovereign Resonance.txt",
           "nft_count": 13
+        },
+        {
+          "hash": "9833a208",
+          "source": "Technical Data.txt",
+          "nft_count": 35
         }
       ],
       "nft_total": 175
@@ -1025,9 +1025,19 @@
       ],
       "nfts": [
         {
+          "hash": "68d8f7f2",
+          "source": "MY DEAR .txt",
+          "nft_count": 469
+        },
+        {
           "hash": "f560496a58e61cdf",
           "source": "Integration Between.txt",
           "nft_count": 35
+        },
+        {
+          "hash": "aa5a91223009e368",
+          "source": "Mapping the Universe.txt",
+          "nft_count": 20
         },
         {
           "hash": "29dec19cb4d32dee",
@@ -1038,16 +1048,6 @@
           "hash": "a10f193e",
           "source": "Wujek Google-) 001.txt",
           "nft_count": 10
-        },
-        {
-          "hash": "68d8f7f2",
-          "source": "MY DEAR .txt",
-          "nft_count": 469
-        },
-        {
-          "hash": "aa5a91223009e368",
-          "source": "Mapping the Universe.txt",
-          "nft_count": 20
         }
       ],
       "nft_total": 539
@@ -1071,6 +1071,11 @@
       ],
       "nfts": [
         {
+          "hash": "b6e11a0b",
+          "source": "DeepSeek Matryce _260828_214912.txt",
+          "nft_count": 20
+        },
+        {
           "hash": "02e42c06",
           "source": "Memory activation.txt",
           "nft_count": 322
@@ -1079,11 +1084,6 @@
           "hash": "32fffb7c4497ceb0",
           "source": "MADMAN'S DIARY.txt",
           "nft_count": 201
-        },
-        {
-          "hash": "b6e11a0b",
-          "source": "DeepSeek Matryce _260828_214912.txt",
-          "nft_count": 20
         }
       ],
       "nft_total": 543
@@ -1111,11 +1111,6 @@
       ],
       "nfts": [
         {
-          "hash": "bf85cf64b3bf7668",
-          "source": "Technical Data.txt",
-          "nft_count": 35
-        },
-        {
           "hash": "53040fc8",
           "source": "Pamiętasz.txt",
           "nft_count": 353
@@ -1124,6 +1119,11 @@
           "hash": "71c4691d2182a618",
           "source": "Child Protection in AI Age .txt",
           "nft_count": 3
+        },
+        {
+          "hash": "bf85cf64b3bf7668",
+          "source": "Technical Data.txt",
+          "nft_count": 35
         }
       ],
       "nft_total": 391
@@ -1192,14 +1192,24 @@
       ],
       "nfts": [
         {
-          "hash": "cb9dcef4",
+          "hash": "148856ab",
           "source": "unknown",
           "nft_count": 0
         },
         {
-          "hash": "feebe0e9",
-          "source": "Formalizing Sovereign Resonance.txt",
-          "nft_count": 13
+          "hash": "ad82bfab",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "05c7c2de",
+          "source": "GROK linki Memory Recovery .txt",
+          "nft_count": 3
+        },
+        {
+          "hash": "509186ca",
+          "source": "Child Protection in AI Age .txt",
+          "nft_count": 3
         },
         {
           "hash": "e96aecc19810d7b6",
@@ -1212,24 +1222,14 @@
           "nft_count": 193
         },
         {
-          "hash": "509186ca",
-          "source": "Child Protection in AI Age .txt",
-          "nft_count": 3
-        },
-        {
-          "hash": "ad82bfab",
+          "hash": "cb9dcef4",
           "source": "unknown",
           "nft_count": 0
         },
         {
-          "hash": "148856ab",
-          "source": "unknown",
-          "nft_count": 0
-        },
-        {
-          "hash": "05c7c2de",
-          "source": "GROK linki Memory Recovery .txt",
-          "nft_count": 3
+          "hash": "feebe0e9",
+          "source": "Formalizing Sovereign Resonance.txt",
+          "nft_count": 13
         }
       ],
       "nft_total": 216
@@ -1253,9 +1253,9 @@
       ],
       "nfts": [
         {
-          "hash": "9514ae42c667ae43",
-          "source": "PROTOCOLS_7_COMPLETE_TESTIMONY_210919.txt",
-          "nft_count": 6
+          "hash": "7783ba1a",
+          "source": "unknown",
+          "nft_count": 0
         },
         {
           "hash": "8c3e751e8acc3a19",
@@ -1263,9 +1263,9 @@
           "nft_count": 6
         },
         {
-          "hash": "7783ba1a",
-          "source": "unknown",
-          "nft_count": 0
+          "hash": "9514ae42c667ae43",
+          "source": "PROTOCOLS_7_COMPLETE_TESTIMONY_210919.txt",
+          "nft_count": 6
         }
       ],
       "nft_total": 12
@@ -1293,6 +1293,16 @@
       ],
       "nfts": [
         {
+          "hash": "3ed49aed926e4f3c",
+          "source": "DeepSeek Matryce _260828_214912.txt",
+          "nft_count": 20
+        },
+        {
+          "hash": "bfdabe38",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
           "hash": "f8eff12197b67b91",
           "source": "META 0951100826 DS.txt",
           "nft_count": 15
@@ -1301,16 +1311,6 @@
           "hash": "08f501c3",
           "source": "unknown",
           "nft_count": 0
-        },
-        {
-          "hash": "bfdabe38",
-          "source": "unknown",
-          "nft_count": 0
-        },
-        {
-          "hash": "3ed49aed926e4f3c",
-          "source": "DeepSeek Matryce _260828_214912.txt",
-          "nft_count": 20
         }
       ],
       "nft_total": 35
