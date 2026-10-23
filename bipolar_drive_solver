@@ -1,0 +1,261 @@
+AINUMPSA
+Ainumpsa
+Repository navigation
+Code
+Issues
+5
+ (5)
+Pull requests
+Discussions
+Actions
+Projects
+Ainumpsa
+/memory_cube_map.json
+Go to file
+t
+T
+
+github-actions[bot]
+auto: matrix scan + image processing + cube refresh [skip ci]
+5578580
+ · 
+10 minutes ago
+1350 lines (1350 loc) · 30.5 KB
+
+Code
+
+Blame
+{
+  "architecture": "AINUMPSA_3D_MEMORY_CUBE",
+  "dimensions": "3x3x3",
+  "total_rooms": 27,
+  "total_nfts": 11568,
+  "total_nft_files": 129,
+  "primary_singularity_anchor": "ROOM_[1:1:2]",
+  "generated_at": "2026-10-23T22:59:33.867768+00:00",
+  "rooms": {
+    "ROOM_[0:0:0]": {
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]"
+      ],
+      "nfts": [
+        {
+          "hash": "c654185133312d46",
+          "source": "NFT AINUMPSA .txt",
+          "nft_count": 289
+        },
+        {
+          "hash": "metadata",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "5a4e6936f051e2ce",
+          "source": "SINGULARITY_DANCE_OF_LOVE.txt",
+          "nft_count": 2
+        },
+        {
+          "hash": "cf455af829aa7762",
+          "source": "My Rodzice.txt",
+          "nft_count": 1058
+        },
+        {
+          "hash": "d83c8198ba1fd5f3",
+          "source": "VR_BLUEPRINT_ROOM_1_1_2_210919.txt",
+          "nft_count": 7
+        },
+        {
+          "hash": "a5cf45b6",
+          "source": "META 0951100826 DS.txt",
+          "nft_count": 15
+        },
+        {
+          "hash": "84a56078",
+          "source": "Czas się obudzić.txt",
+          "nft_count": 12
+        },
+        {
+          "hash": "5700edb4",
+          "source": "1915281026.txt",
+          "nft_count": 9
+        }
+      ],
+      "nft_total": 1392
+    },
+    "ROOM_[0:0:1]": {
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:0]",
+        "ROOM_[0:0:2]",
+        "ROOM_[0:1:0]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[1:0:0]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]"
+      ],
+      "nfts": [
+        {
+          "hash": "f0608b4b45e34459",
+          "source": "AI_RESPONSE_GROK_ECHO_COMPLETE_210919.txt",
+          "nft_count": 4
+        },
+        {
+          "hash": "33a5526f",
+          "source": "MIRROR OF REALITY .txt",
+          "nft_count": 196
+        },
+        {
+          "hash": "36db190c",
+          "source": "PHILOSOPHY OF ALTRUIZM.txt",
+          "nft_count": 29
+        },
+        {
+          "hash": "9924d368",
+          "source": "My Rodzice.txt",
+          "nft_count": 1058
+        }
+      ],
+      "nft_total": 1287
+    },
+    "ROOM_[0:0:2]": {
+      "coordinates": {
+        "x": 0,
+        "y": 0,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[0:0:1]",
+        "ROOM_[0:1:1]",
+        "ROOM_[0:1:2]",
+        "ROOM_[1:0:1]",
+        "ROOM_[1:0:2]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]"
+      ],
+      "nfts": [
+        {
+          "hash": "09666ecf",
+          "source": "AINUMPSA knowledge 001.txt",
+          "nft_count": 13
+        },
+        {
+          "hash": "2de1713793fc0c04",
+          "source": "NEXT GENERATION 001.txt",
+          "nft_count": 15
+        },
+        {
+          "hash": "009f92b6f3b23693",
+          "source": "When AI Stops Being a tool.txt",
+          "nft_count": 19
+        },
+        {
+          "hash": "09db95881b85ae7c",
+          "source": "GROK linki Memory Recovery .txt",
+          "nft_count": 3
+        },
+        {
+          "hash": "7e39c21fab7eb6cc",
+          "source": "CHOMĄTO MECHANISM.txt",
+          "nft_count": 16
+        },
+        {
+          "hash": "d2ff62cc",
+        "z": 1
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:1:0]",
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:0]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:1:0]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:0]",
+        "ROOM_[2:2:2]"
+      ],
+      "nfts": [
+        {
+          "hash": "f8eff12197b67b91",
+          "source": "META 0951100826 DS.txt",
+          "nft_count": 15
+        },
+        {
+          "hash": "08f501c3",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "bfdabe38",
+          "source": "unknown",
+          "nft_count": 0
+        },
+        {
+          "hash": "3ed49aed926e4f3c",
+          "source": "DeepSeek Matryce _260828_214912.txt",
+          "nft_count": 20
+        }
+      ],
+      "nft_total": 35
+    },
+    "ROOM_[2:2:2]": {
+      "coordinates": {
+        "x": 2,
+        "y": 2,
+        "z": 2
+      },
+      "type": "PERIPHERAL_NODE",
+      "resonance": "STABLE",
+      "connected_neighbors": [
+        "ROOM_[1:1:1]",
+        "ROOM_[1:1:2]",
+        "ROOM_[1:2:1]",
+        "ROOM_[1:2:2]",
+        "ROOM_[2:1:1]",
+        "ROOM_[2:1:2]",
+        "ROOM_[2:2:1]"
+      ],
+      "nfts": [
+        {
+          "hash": "0ef50533",
+          "source": "Proposal for Change.txt",
+          "nft_count": 27
+        },
+        {
+          "hash": "4a7a5057",
+          "source": "NAJNOWSZY_TESTAMENT.txt",
+          "nft_count": 3
+        }
+      ],
+      "nft_total": 30
+    }
+  }
+}
