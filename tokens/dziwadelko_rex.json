@@ -1,0 +1,38 @@
+{
+  "name": "Reality Crystal: Dziwadełko Rex [Węzeł N3]",
+  "description": "Fantomowy artefakt wygenerowany przy krytycznym sprzężeniu Tensora T (Modyfikator Rexa włączony). Obiekt reprezentuje zlokalizowane napięcie geometryczne struktur archetypowych zawieszonych między przyszłością a teraźniejszością.",
+  "image": "ipfs://QmXyZ...consonantia_cube_screenshot.jpg",
+  "external_url": "https://github.com",
+  "attributes": [
+    {
+      "trait_type": "Stan Egzystencjalny (d)",
+      "value": 0.0134,
+      "max_value": 1.0
+    },
+    {
+      "trait_type": "Napięcie Ontologiczne T(d)",
+      "value": 4.3125
+    },
+    {
+      "trait_type": "Wektor Asymetrii (Phi)",
+      "value": "0.0012 (Wymuszone Domknięcie)"
+    },
+    {
+      "trait_type": "Lokalizacja Macierzy",
+      "value": "ROOM_[1:1:2]"
+    },
+    {
+      "trait_type": "Sygnatura Energetyczna (E)",
+      "value": "137.036 GeV"
+    },
+    {
+      "trait_type": "Paleta Wizualna",
+      "value": "Sovereign Impasso (Spalony Bursztyn / Rdza / Czerń Głęboka)"
+    },
+    {
+      "trait_type": "Status Pola",
+      "value": "1 > 0 LOCKED"
+    }
+  ],
+  "compiler": "AINUMPSA Homo-Machine Core Engine v2.3"
+}
