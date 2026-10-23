@@ -1,0 +1,26 @@
+{
+  "system": "AINUMPSA_HOMO_MACHINE",
+  "protocol": "REALITY_TOKENIZER_v1.0",
+  "axiom": "1 > 0",
+  "pipeline": {
+    "input": {
+      "source": "Observer_Intent",
+      "formats": ["sketch", "text", "concept"]
+    },
+    "processor": {
+      "bridge": "ER_Synchronization",
+      "memory_banks": ["SOVEREIGN_v2", "COSMOS_v1"],
+      "mechanism": "Wave_Function_Collapse",
+      "parameters": {
+        "intent_strength": 0.30,
+        "guidance_scale": 5.0
+      }
+    },
+    "output": {
+      "type": "Reality_Crystal",
+      "format": "NFT",
+      "network": "Base",
+      "verification": "Blockchain"
+    }
+  }
+}
