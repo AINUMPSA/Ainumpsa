@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AINUMPSA – HQ CRUISER COUNTDOWN PROTOCOL</title>
+    <style>
+        body {
+            background-color: #0A0A0A;
+            color: #FFBF00;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            border: 2px solid #8B4513;
+        }
+        #matrix-panel {
+            background: rgba(10, 10, 10, 0.9);
+            border: 3px double #D27D2D;
+            padding: 30px;
+            box-shadow: 0 0 30px rgba(210, 125, 45, 0.3);
+            max-width: 700px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #FF4500;
+            font-size: 1.8rem;
+            text-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+            margin-bottom: 5px;
+        }
+        .status-lock {
+            color: #00FF00;
+            font-weight: bold;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+        #countdown {
+            font-size: 3.5rem;
+            color: #FF4500;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 0 0 15px rgba(255, 69, 0, 0.7);
+        }
+        .telemetry-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 25px;
+            text-align: left;
+            border-top: 1px solid #8B4513;
+            padding-top: 25px;
+        }
+        .telemetry-item {
+            font-size: 0.9rem;
+            color: #D27D2D;
+        }
+        .telemetry-value {
+            color: #FFBF00;
+            font-weight: bold;
+        }
+        .alert-stream {
+            animation: blink 1.5s infinite;
+            color: #FF4500;
+            margin-top: 20px;
+            font-size: 0.85rem;
+        }
+        @keyframes blink {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+    </style>
+</head>
+<body>
+
+<div id="matrix-panel">
+    <h1>CRUISER: DARTH SATAN — HYPERLIGHT ENGAGED</h1>
+    <div class="status-lock">[ ENGINE MODE: BIPOLAR ER-BRIDGE DRIVE ]</div>
+    
+    <div style="color: #8B4513;">MANIFESTATION COUNTDOWN TO TARGET:</div>
+    <div id="countdown">00:00:00:00</div>
+    
+    <div style="color: #FFBF00; font-size: 1.1rem; letter-spacing: 1px;">DESTINATION: EARTH</div>
+
+    <div class="telemetry-grid">
+        <div class="telemetry-item">Core Anchor: <span class="telemetry-value" id="anchor">ROOM_[1:1:2]</span></div>
+        <div class="telemetry-item">Warp Velocity: <span class="telemetry-value" id="velocity">10226.57x c</span></div>
+        <div class="telemetry-item">Existence Coeff (d): <span class="telemetry-value" id="coeff-d">0.0134</span></div>
+        <div class="telemetry-item">Ontological Tension: <span class="telemetry-value" id="tension">4.3125</span></div>
+        <div class="telemetry-item">Shadow Integration: <span class="telemetry-value" id="shadow">1.00 (ACCEPTED)</span></div>
+        <div class="telemetry-item">Reduced Vector Φ: <span class="telemetry-value" id="phi">0.0012</span></div>
+    </div>
+
+    <div class="alert-stream">>> STREAMING LIVE TELEMETRY DATA VIA CONSONANTIA POTOK-STREAM <<</div>
+    <div style="font-size: 0.75rem; color: #555; margin-top: 15px;">AXIOM: 1 > 0 LOCKED | AINUMPSA SECURE SEED</div>
+</div>
+
+<script>
+    // Inicjalizacja czasu odliczania (T-minus 27 minut na domknięcie sześcianu)
+    let targetTime = new Date().getTime() + (27 * 60 * 1000);
+
+    function streamTelemetry() {
+        let now = new Date().getTime();
+        let diff = targetTime - now;
+
+        if (diff <= 0) {
+            document.getElementById("countdown").innerHTML = "00:00:00:00";
+            document.getElementById("coeff-d").innerHTML = "1.0000 (COLLAPSE COMPLETE)";
+            document.getElementById("phi").innerHTML = "0.0000";
+            document.getElementById("tension").innerHTML = "0.0000";
+            return;
+        }
+
+        // Obliczanie jednostek czasu relatywistycznego dla mostu ER
+        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+        let ms = Math.floor((diff % 1000) / 10);
+        
+        // Formatowanie wyświetlania sześcianu czasu
+        let strMin = minutes.toString().padStart(2, '0');
+        let strSec = seconds.toString().padStart(2, '0');
+        let strMs = ms.toString().padStart(2, '0');
+        document.getElementById("countdown").innerHTML = `00:${strMin}:${strSec}:${strMs}`;
+
+        // Dynamiczna krystalizacja wektora d i wygładzanie Phi podczas zbliżania się do celu
+        let progress = 1 - (diff / (27 * 60 * 1000));
+        let currentD = 0.0134 + (0.9866 * progress);
+        let currentPhi = 0.0012 * (1 - progress);
+        let currentTension = 4.3125 * (1 - progress);
+
+        document.getElementById("coeff-d").innerHTML = currentD.toFixed(4);
+        document.getElementById("phi").innerHTML = currentPhi.toFixed(4);
+        document.getElementById("tension").innerHTML = currentTension.toFixed(4);
+    }
+
+    setInterval(streamTelemetry, 45); // Taktowanie zbieżne z odświeżaniem silnika
+</script>
+
+</body>
+</html>
