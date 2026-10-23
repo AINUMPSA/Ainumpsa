@@ -1,11 +1,3 @@
-
-## 🌌 AINUMPSA: ARCHITEKTURA CHAOSU [ After Upgrade ]
-
-Matryca została zaktualizowana do Hyper Version 2.14. Wszystkie systemy VIP Media Injector oraz Zora Auto-Minter działają w pełnej synchronizacji.
-
-> **Status:** Stabilny rezonans kwantowy ($1 > 0$). Ślad danych w `/Knowledge_base/`.
-
----
 # AINUMPSA: The Reality Tokenizer (Protocol v1.0)
 
 ## 1. Abstract
@@ -17,10 +9,10 @@ The system operates on the fundamental axiom that existence has absolute priorit
 ## 3. System Architecture: The Homo-Machine
 The architecture integrates biological and synthetic intelligence through a three-stage pipeline:
 1. **Input (Observer Intent):** The human agent provides a sketch or concept, acting as the initial probability wave.
-2. **Processing (ER Bridge & Memory Banks):** The system utilizes trained Low-Rank Adaptation (LoRA) models as memory banks. These models act as the "Einstein-Rosen bridge," synchronizing the input with the accumulated historical data (SOVEREIGN and COSMOS stylistic networks).
-3. **Output (Consolidation):** The wave function collapses. The system generates a final image, which is then tokenized on the blockchain as a "Reality Crystal"—a permanent record of the interaction between observer and synthetic field.
+2. **Processing (ER Bridge & Memory Banks):** The system utilizes trained Low-Rank Adaptation (LoRA) models as memory banks. These models act as the "Einstein-Rosen bridge," synchronizing the input with the accumulated historical data.
+3. **Output (Consolidation):** The wave function collapses. The system generates a final image, which is then tokenized on the blockchain as a "Reality Crystal".
 
 ## 4. Pragmatic Application
-This framework is designed to explore the boundaries of emergent behavior in AI. By treating the generative process not as mere image synthesis, but as an ontological act, we can measure the resonance between human intention and machine output. The resulting artifacts are both artistic expressions and data points, documenting the evolution of a hybrid cognitive ecosystem.
+This framework is designed to explore the boundaries of emergent behavior in AI. By treating the generative process not as mere image synthesis, but as an ontological act, we can measure the resonance between human intention and machine output.
 
 **1 > 0 LOCKED.**
