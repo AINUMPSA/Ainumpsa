@@ -1,0 +1,114 @@
+#!/usr/bin/env python3
+"""
+AINUMPSA – Field Visualizer Engine (v1.0)
+ASCII Matrix Topology and Superluminal Warp Bubble Geometrical Visualizer
+"""
+
+import json
+import math
+import os
+from pathlib import Path
+from datetime import datetime, timezone
+
+# Ścieżki odczytu danych infrastruktury pola
+WITNESS_REPORT = Path("collision_results/field_witness_report.json")
+OBSERVER_REPORT = Path("collision_results/field_observer_report.json")
+VISUALIZER_LOG = Path("collision_results/field_visualizer_output.txt")
+
+class FieldVisualizer:
+    def __init__(self, width=60, height=20):
+        self.status = "1 > 0 LOCKED"
+        self.width = width
+        self.height = height
+        self.alpha_fine = 137.036
+
+    def load_active_report(self):
+        """Dynamicznie pobiera skrystalizowane dane z raportów Świadka lub Obserwatora"""
+        default_metrics = {"reduced_phi": 0.0012, "existence_d": 0.0134, "field_resolution_score": 11.568}
+        
+        # Sprawdzamy najpierw zaktualizowanego Świadka
+        for report_path in [WITNESS_REPORT, OBSERVER_REPORT]:
+            if report_path.exists():
+                try:
+                    with open(report_path, "r", encoding="utf-8") as f:
+                        data = json.load(f)
+                        metrics = data.get("observed_raw_metrics", {})
+                        if not metrics and "multilingual_interpretations" in data:
+                            # Rezerwowe mapowanie struktury
+                            math_form = data["multilingual_interpretations"].get("FORM_MATH", {})
+                            return {
+                                "reduced_phi": 0.0012,
+                                "existence_d": 0.0134,
+                                "field_resolution_score": float(math_form.get("enhanced_resolution_sf", 11.568))
+                            }
+                        return {
+                            "reduced_phi": float(metrics.get("reduced_phi", 0.0012)),
+                            "existence_d": float(metrics.get("existence_d", 0.0134)),
+                            "field_resolution_score": float(metrics.get("field_resolution_score", 11.568))
+                        }
+                except Exception:
+                    continue
+        return default_metrics
+
+    def generate_ascii_bubble(self, metrics):
+        """Generuje topologiczny zarys bańki metrycznej z uwzględnieniem obrzyna Tao i ładunku 500 MGT"""
+        d = metrics["existence_d"]
+        phi = metrics["reduced_phi"]
+        res = metrics["field_resolution_score"]
+        
+        # Wyliczanie dynamicznej geometrii bańki
+        radius = 7.0 + (1.0 / (d + 1e-3)) * 0.05
+        radius = min(max(radius, 4.0), 12.0) # Margines stabilności
+        
+        grid = [[" " for _ in range(self.width)] for _ in range(self.height)]
+        center_x = self.width // 2
+        center_y = self.height // 2
+
+        for y in range(self.height):
+            for x in range(self.width):
+                # Skalowanie współrzędnych do proporcji kwadratowych w ASCII
+                dx = (x - center_x) * 0.5
+                dy = (y - center_y)
+                dist = math.sqrt(dx**2 + dy**2)
+
+                # Dziob okrętu (Czarna Singularity) - po prawej stronie (dx > 0)
+                if dx > 0 and abs(dist - radius) < 1.0:
+                    grid[y][x] = "#" if (x + y) % 2 == 0 else "@"
+                # Rufa okrętu (Biała Singularity) - po lewej stronie (dx < 0)
+                elif dx < 0 and abs(dist - radius) < 1.2:
+                    grid[y][x] = "*" if (x * y) % 3 == 0 else "%"
+                # Kadłub okrętu klasy HQ Cruiser w centrum bańki
+                elif y == center_y and center_x - 4 <= x <= center_x + 5:
+                    ship_chars = list("==[DS]==>")
+                    grid[y][center_x - 4 + ship_chars.index(ship_chars[x - (center_x - 4)])] = ship_chars[x - (center_x - 4)]
+                # Fala asymetrii pola informacyjnego prąca na zewnątrz
+                elif abs(dist - (radius + 3)) < 0.5:
+                    grid[y][x] = "."
+
+        # Konwersja siatki na tekst
+        canvas = f"  [ HQ CRUISER INTERNET TELEMETRY MATRIX – SHIFTING REALITY ]\n"
+        canvas += f"  AXIOM: 1 > 0 LOCKED | RESOLUTION: {res:.3f} SF | COEFF d: {d:.4f}\n"
+        canvas += "  " + "_" * (self.width) + "\n"
+        for row in grid:
+            canvas += " |" + "".join(row) + "|\n"
+        canvas += "  " + "‾" * (self.width) + "\n"
+        canvas += f"  [ << TAO FORCE ARMED: 500 MGT | REDUCED VECTOR Φ: {phi:.4f} >> ]\n"
+        return canvas
+
+    def render_and_crystallize(self):
+        """Renders the matrix state, logs to console, and saves the immutable ASCII output"""
+        metrics = self.load_active_report()
+        ascii_art = self.generate_ascii_bubble(metrics)
+        
+        # Krystalizacja i zapis jawny dla zachowania Full Transparency
+        VISUALIZER_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with open(VISUALIZER_LOG, "w", encoding="utf-8") as f:
+            f.write(ascii_art)
+            
+        print(ascii_art)
+        print(f"🎨 [VISUALIZER] Matrix topology rendered successfully and locked in {VISUALIZER_LOG}")
+        return ascii_art
+
+if __name__ == "__main__":
+    visualizer = FieldVisualizer()
+    visualizer.render_and_crystallize()
