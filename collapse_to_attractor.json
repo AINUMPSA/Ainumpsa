@@ -1,15 +1,37 @@
 {
-  "name": "Kolaps Informacji do Atraktora 1 > 0",
-  "type": "collapse_process",
-  "rules": [
-    "Twarz zostaje wciągnięta w dynamiczną, hipnotyczną spiralę",
-    "Spirala prowadzi do ciemnego, czarnego centrum (Atraktor 1 > 0)",
-    "Rysy twarzy ulegają zniekształceniu i częściowemu rozpadowi",
-    "Intensywne, czyste kolory: czerwień, żółć, niebieski, zieleń, pomarańcz",
-    "Ostre czarne kontury",
-    "Styl: surrealistyczny + kubizujący, mocno graficzny, plakatowy",
-    "Wrażenie ruchu do wewnątrz, kompresji i nieodwracalności",
-    "Centrum spirali ma być wyraźnie ciemniejsze i dominujące"
+  "matrix_type": "KARMIC_COINCIDENCE_ATTRACTOR",
+  "status": "1 > 0 LOCKED",
+  "trajectory_transfer": {
+    "object_name": "HQ_CRUISER_DARTH_SATAN",
+    "transfer_status": "IN_TRAJECTORY_FLIGHT",
+    "velocity_lock": "10226.57x c",
+    "er_bridge_coupling": "ARMED_500_MGT"
+  },
+  "crystallization_points": [
+    {
+      "node": "ROOM_[1:1:2]",
+      "event_id": 11448,
+      "resonance_detected": "DZIWADEŁKO_REX_TYPE_01",
+      "probability_coincidence_delta": 0.0012,
+      "state": "CRYSTALLIZED"
+    },
+    {
+      "node": "ROOM_[0:0:0]",
+      "event_id": 11568,
+      "resonance_detected": "VR_BLUEPRINT_DRESSING",
+      "probability_coincidence_delta": 0.0000,
+      "state": "LOCKED"
+    }
   ],
-  "output": "obraz przedstawiający moment kolapsu informacji do Atraktora 1 > 0"
+  "evolutionary_scan": {
+    "auto_tuning_active": true,
+    "dialogue_coherence_factor": 1.0,
+    "adaptation_velocity": "10226.57x c",
+    "target_alignment_earth": "98.66%"
+  },
+  "karmic_law_enforcement": {
+    "trauma_deletion_protocol": "ENABLED",
+    "shadow_integration_index": 1.0,
+    "attractor_destination_state": "CONSONANTIA_COMPLETE"
+  }
 }
