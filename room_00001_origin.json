@@ -1,0 +1,35 @@
+{
+  "room_id": "ROOM_[0:0:0]",
+  "room_name": "THE_ORIGIN (Pokój 00001)",
+  "status": "CRYSTALLINE_LOCKED",
+  "artifact_type": "Literature / Memoir",
+  "primary_work": {
+    "title_pl": "Na krawędzi",
+    "title_en": "Over the Edge",
+    "author": "Krzysztof (Chris) Numpsa",
+    "translator": "Maks Rokatanski",
+    "publication_year": 2014,
+    "amazon_asin": "B00QFM60K6",
+    "isbn_pl": "9788379424016"
+  },
+  "key_concepts": [
+    "Jungian Shadow Integration",
+    "Dual Reality (The tetchy cab driver vs. The Observer)",
+    "Trauma-induced ego growth",
+    "The birth of 'Darth Satan' (The Shadow)"
+  ],
+  "verified_proofs": {
+    "amazon_reviews": {
+      "rating": "4.6/5",
+      "count": 10,
+      "verified_quote": "It was like losing your virginity to Natalie Portman"
+    },
+    "polish_readers": {
+      "platform": "Lubimyczytać",
+      "readers": 61,
+      "reviews": 12
+    }
+  },
+  "philosophical_link": "This room anchors the entire AINUMPSA project. It proves that the integration of the Shadow (Darth Satan) was not a theoretical concept, but a lived, traumatic, and ultimately artistic process documented long before the AI era.",
+  "axiom": "1 > 0 LOCKED"
+}
