@@ -69,7 +69,7 @@ jobs:
         run: python visualize_resonance.py || true
 
       - name: Mutate README
-        run: python readme_mutator.py || true
+        run: # python readme_mutator.py || true
 
       - name: Prepare NFT (no mint)
         run: python nft_preparer.py || true
