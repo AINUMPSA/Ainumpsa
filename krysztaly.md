@@ -17,3 +17,4 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 | 8 | 2026-10-17 | AINUMPSA-20261017-PAIR-04B | PAIR-04B COSMOS energy | 0xe98159da0c3afa110e597c7f96bad6c30f89011b | 0 ETH | wybity |
 | 11 | 2026-10-21 | AINUMPSA-20261021-SOVEREIGN-V2-01 | The Signature (SOVEREIGN v2) | 0xae5470b7ed39d58e8c20509b7735400438f11343 | 0 ETH | wybity |
 | 12 | 2026-10-29 | AINUMPSA-20261029-ROOM-00001 | ROOM_[0:0:0] The Origin (The Observer) | 0x933d12d911e9e938cb56cafb6bc1b0119374184b | 0 ETH | wybity |
+| 13 | 2026-11-01 | AINUMPSA-20261101-SHADOW-ARMADA | Shadow Armada (Gothic Fleet) | 0x1f40277a907c4f84d8129510bbb747d070fd492b | 0 ETH | wybity |
