@@ -1,8 +1,15 @@
 {
-  "name": "AINUMPSA-LEVEL-03-MANIFESTO",
-  "description": "The Global Manifesto (UN & Superpowers). Encapsulated reality.",
+  "source": "LEVEL_03_MANIFESTO.txt",
+  "weight": {
+    "size_kb": 1.0,
+    "entropy": 1.0,
+    "density": 1.0,
+    "hash": "level03manifesto"
+  },
+  "nft_count": 1,
+  "hash": "level03manifesto",
+  "status": "emitted",
   "contract": "0xae41749b8b225633fa5eb1d33996642c0af9529d",
   "network": "Base",
-  "status": "Crystalline_Locked",
   "axiom": "1 > 0"
 }
