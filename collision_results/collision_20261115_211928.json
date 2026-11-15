@@ -1,0 +1,57 @@
+{
+  "timestamp": "2026-11-15T21:19:28.444800+00:00",
+  "input_file": "consonantia_cube_screenshot.jpg",
+  "seed": 2610612829,
+  "system_entropy": 7.4868,
+  "proposals": [
+    {
+      "style_id": "sovereign_impasse_expressive",
+      "style_name": "Sovereign Impasso – Ekspresyjny",
+      "angle_deg": 57.76,
+      "radius": 0.69,
+      "type": "resonance",
+      "collision_strength": 0.909,
+      "ontological_tension": 0.0656,
+      "existence_d": 0.9365,
+      "anomaly_density": 0.9384,
+      "layer": 4,
+      "layer_label": "Pole Rezonansu",
+      "resonance_value": 0.65,
+      "color_hex": "#FFDAB9",
+      "source": "consonantia_cube_screenshot.jpg"
+    },
+    {
+      "style_id": "sovereign_impasse_dark",
+      "style_name": "Sovereign Impasso – Ciemny / Dualistyczny",
+      "angle_deg": 237.76,
+      "radius": 0.76,
+      "type": "resonance",
+      "collision_strength": 0.909,
+      "ontological_tension": 0.0656,
+      "existence_d": 0.9365,
+      "anomaly_density": 0.9384,
+      "layer": 5,
+      "layer_label": "Granica Zdarzeń",
+      "resonance_value": 0.5,
+      "color_hex": "#E6E6FA",
+      "source": "consonantia_cube_screenshot.jpg"
+    },
+    {
+      "style_id": "collapse_to_attractor",
+      "style_name": "Kolaps Informacji do Atraktora 1>0",
+      "angle_deg": 12.76,
+      "radius": 0.26,
+      "type": "collapse",
+      "collision_strength": 0.909,
+      "ontological_tension": 0.0656,
+      "existence_d": 0.9365,
+      "anomaly_density": 0.9384,
+      "layer": 1,
+      "layer_label": "Rdzeń Intencji",
+      "resonance_value": 0.95,
+      "color_hex": "#FF8C00",
+      "source": "consonantia_cube_screenshot.jpg"
+    }
+  ],
+  "status": "ok"
+}
