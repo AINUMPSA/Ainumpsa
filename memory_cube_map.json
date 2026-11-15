@@ -3,9 +3,9 @@
   "dimensions": "3x3x3",
   "total_rooms": 27,
   "total_nfts": 11568,
-  "total_nft_files": 129,
+  "total_nft_files": 130,
   "primary_singularity_anchor": "ROOM_[1:1:2]",
-  "generated_at": "2026-11-15T21:02:34.995530+00:00",
+  "generated_at": "2026-11-15T21:50:16.905196+00:00",
   "rooms": {
     "ROOM_[0:0:0]": {
       "coordinates": {
@@ -64,6 +64,11 @@
           "hash": "d83c8198ba1fd5f3",
           "source": "VR_BLUEPRINT_ROOM_1_1_2_210919.txt",
           "nft_count": 7
+        },
+        {
+          "hash": "level_03_manifes",
+          "source": "unknown",
+          "nft_count": 0
         }
       ],
       "nft_total": 1392
