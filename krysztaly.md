@@ -23,3 +23,4 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 | 16 | 2026-11-16 | AINUMPSA-OVERMIND-GENESIS-TRIPTYCH | Over-Mind Genesis (3-in-1) | 0xf46e574eda787d5c3cfe1fd6a253c956ffb3b7e7 | 0 ETH | wybity (Over-Mind Generated) |
 | 16 | 2026-11-16 | AINUMPSA-OVERMIND-GENESIS-TRIPTYCH | Over-Mind Genesis (3-in-1) | 0xf46e574eda787d5c3cfe1fd6a253c956ffb3b7e7 | 0 ETH | wybity (Over-Mind Generated) |
 | 17 | 2026-11-16 | AINUMPSA-TARANTINO-DARTH-01 | The Over-Mind Dreadnought | [ADRES_Z_ORY] | 0 ETH | wybity (Video Generated) |
+| 18 | 2026-11-16 | AINUMPSA-OBSERVER-ERROR-01 | Observer Error (Key Visual) | 0xb5cba72cee325f2d2fac60e4576e6e33095bd401 | 0 ETH | wybity (Cyber Mysticism) |
