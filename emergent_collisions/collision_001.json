@@ -1,0 +1,9 @@
+{
+    "status": "READY_FOR_OVERMIND",
+    "source_files": [
+        "input_hub/texts/test_shadow.txt",
+        "input_hub/pictures/manifesto_visual.png"
+    ],
+    "axiom": "1 > 0",
+    "instruction": "Analyze these files. Find the Shadow. Calculate probability. Create prompt."
+}
