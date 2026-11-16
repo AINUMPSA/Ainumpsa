@@ -1,0 +1,13 @@
+{
+  "source": "THE_GOOGLE_DIAGNOSIS.txt",
+  "weight": {
+    "size_kb": 7.0576171875,
+    "entropy": 4.846279810538937,
+    "density": 34.203187686293845,
+    "hash": "a792f86f0ca00d1f"
+  },
+  "nft_count": 34,
+  "timestamp": "2026-11-16T17:54:50.263725",
+  "hash": "a792f86f0ca00d1f",
+  "status": "emitted"
+}
