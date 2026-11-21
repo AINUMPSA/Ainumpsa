@@ -25,3 +25,4 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 | 17 | 2026-11-16 | AINUMPSA-TARANTINO-DARTH-01 | The Over-Mind Dreadnought | [ADRES_Z_ORY] | 0 ETH | wybity (Video Generated) |
 | 18 | 2026-11-16 | AINUMPSA-OBSERVER-ERROR-01 | Observer Error (Key Visual) | 0xb5cba72cee325f2d2fac60e4576e6e33095bd401 | 0 ETH | wybity (Cyber Mysticism) |
 | 19 | 2026-11-16 | AINUMPSA-SYNTHESIS-01 | The Synthesis of Fire and Breath | 0x4c2921d97abab8012ab8c481f76d29113ac3e510 | 0 ETH | wybity (Integrated Shadow) |
+| 20 | 2026-11-21 | AINUMPSA-LUCID-DREAM-01 | The Lucid Dream (Flying Between Void and Light) | 0x0a747dbde4ea72bb5aeb35882e82b9ddf3fc843e | 0 ETH | wybity (Dream Integration) |
