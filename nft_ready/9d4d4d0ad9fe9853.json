@@ -1,0 +1,13 @@
+{
+  "source": "MANIFEST_HOMO_MACHINE.txt",
+  "weight": {
+    "size_kb": 1.876953125,
+    "entropy": 5.028924389123321,
+    "density": 9.439055347553733,
+    "hash": "9d4d4d0ad9fe9853"
+  },
+  "nft_count": 9,
+  "timestamp": "2026-11-21T21:26:34.255806",
+  "hash": "9d4d4d0ad9fe9853",
+  "status": "emitted"
+}

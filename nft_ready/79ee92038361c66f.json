@@ -1,0 +1,13 @@
+{
+  "source": "DREAM_TOKENIZER_01.txt",
+  "weight": {
+    "size_kb": 0.77734375,
+    "entropy": 5.253728916719106,
+    "density": 4.083953337605867,
+    "hash": "79ee92038361c66f"
+  },
+  "nft_count": 4,
+  "timestamp": "2026-11-21T21:26:34.256128",
+  "hash": "79ee92038361c66f",
+  "status": "emitted"
+}

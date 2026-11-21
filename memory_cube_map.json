@@ -2,10 +2,10 @@
   "architecture": "AINUMPSA_3D_MEMORY_CUBE",
   "dimensions": "3x3x3",
   "total_rooms": 27,
-  "total_nfts": 11606,
-  "total_nft_files": 134,
+  "total_nfts": 11619,
+  "total_nft_files": 136,
   "primary_singularity_anchor": "ROOM_[1:1:2]",
-  "generated_at": "2026-11-21T15:54:14.166266+00:00",
+  "generated_at": "2026-11-21T21:26:40.252573+00:00",
   "rooms": {
     "ROOM_[0:0:0]": {
       "coordinates": {
@@ -67,7 +67,7 @@
         },
         {
           "hash": "84a56078",
-          "source": "Czas si\u0119 obudzi\u0107.txt",
+          "source": "Czas się obudzić.txt",
           "nft_count": 12
         },
         {
@@ -168,7 +168,7 @@
         },
         {
           "hash": "7e39c21fab7eb6cc",
-          "source": "CHOM\u0104TO MECHANISM.txt",
+          "source": "CHOMĄTO MECHANISM.txt",
           "nft_count": 16
         },
         {
@@ -213,7 +213,7 @@
       "nfts": [
         {
           "hash": "7e97dbc04e02fc29",
-          "source": "Pami\u0119tasz.txt",
+          "source": "Pamiętasz.txt",
           "nft_count": 353
         },
         {
@@ -355,7 +355,7 @@
         },
         {
           "hash": "b750a280",
-          "source": "Konsolidacja system\u00f3w.txt",
+          "source": "Konsolidacja systemów.txt",
           "nft_count": 195
         },
         {
@@ -425,7 +425,7 @@
         },
         {
           "hash": "a55f5b98cf224e4b",
-          "source": "Konsolidacja system\u00f3w.txt",
+          "source": "Konsolidacja systemów.txt",
           "nft_count": 195
         },
         {
@@ -632,7 +632,7 @@
         },
         {
           "hash": "df96f24b",
-          "source": "CHOM\u0104TO MECHANISM.txt",
+          "source": "CHOMĄTO MECHANISM.txt",
           "nft_count": 16
         },
         {
@@ -804,7 +804,7 @@
         },
         {
           "hash": "04b8fe038a8c146d",
-          "source": "Czas si\u0119 obudzi\u0107.txt",
+          "source": "Czas się obudzić.txt",
           "nft_count": 12
         },
         {
@@ -818,12 +818,17 @@
           "nft_count": 15
         },
         {
+          "hash": "79ee92038361c66f",
+          "source": "DREAM_TOKENIZER_01.txt",
+          "nft_count": 4
+        },
+        {
           "hash": "281ce63686f27778",
           "source": "2108281026.txt",
           "nft_count": 14
         }
       ],
-      "nft_total": 81
+      "nft_total": 85
     },
     "ROOM_[1:2:0]": {
       "coordinates": {
@@ -967,9 +972,14 @@
           "hash": "b811bf236d8fc82e",
           "source": "PHILOSOPHY OF ALTRUIZM.txt",
           "nft_count": 29
+        },
+        {
+          "hash": "9d4d4d0ad9fe9853",
+          "source": "MANIFEST_HOMO_MACHINE.txt",
+          "nft_count": 9
         }
       ],
-      "nft_total": 38
+      "nft_total": 47
     },
     "ROOM_[2:0:0]": {
       "coordinates": {
@@ -1142,7 +1152,7 @@
         },
         {
           "hash": "53040fc8",
-          "source": "Pami\u0119tasz.txt",
+          "source": "Pamiętasz.txt",
           "nft_count": 353
         }
       ],
