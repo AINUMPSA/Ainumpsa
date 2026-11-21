@@ -92,6 +92,140 @@
         import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
         import { VRButton } from 'three/addons/webxr/VRButton.js';
 
+        const scene = new THREE.Scene();
+        scene.fog = new THREE.FogExp2(0x050208, 0.035);
+
+        const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 1.6, 4.5);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        renderer.xr.enabled = true;
+        document.body.appendChild(renderer.domElement);
+        document.body.appendChild(VRButton.createButton(renderer));
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.target.set(0, 1.5, 0);
+        controls.enableDamping = true;
+
+        let audioCtx;
+        function playPulseSound(freq = 110) {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(35, audioCtx.currentTime + 1.5);
+
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 1.5);
+        }
+
+        const coreGroup = new THREE.Group();
+        coreGroup.position.set(0, 1.5, 0);
+        scene.add(coreGroup);
+
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONSONANTIA — Singularity Core [DRAFT]</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #030205;
+            font-family: 'Courier New', Courier, monospace;
+            color: #ffaa44;
+            user-select: none;
+        }
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            pointer-events: none;
+            text-shadow: 0 0 8px rgba(255, 140, 0, 0.7);
+            z-index: 10;
+        }
+        h1 {
+            margin: 0 0 5px 0;
+            font-size: 1.4rem;
+            letter-spacing: 4px;
+            color: #ff4422;
+        }
+        .protocols {
+            font-size: 0.85rem;
+            color: #ffcc88;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .protocol-active {
+            color: #ffffff;
+            font-weight: bold;
+            text-shadow: 0 0 10px #ffaa00;
+        }
+        .stats {
+            font-size: 0.9rem;
+            border-left: 2px solid #ff4422;
+            padding-left: 10px;
+        }
+        #footer-hint {
+            position: absolute;
+            bottom: 80px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: rgba(255, 200, 130, 0.7);
+            pointer-events: none;
+        }
+    </style>
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com",
+                "three/addons/": "https://unpkg.com"
+            }
+        }
+    </script>
+</head>
+<body>
+
+    <div id="hud">
+        <h1>CONSONANTIA</h1>
+        <div class="protocols" id="protocol-list">
+            <span id="p1" class="protocol-active">#01 Heart</span> · 
+            <span id="p2">#02 Spine</span> · 
+            <span id="p3">#03 Ground</span><br>
+            <span id="p4">#04 Boundary</span> · 
+            <span id="p5">#05 Movement</span> · 
+            <span id="p6">#06 Echo</span><br>
+            <span id="p7">#07 Observer (Sovereign Impasso)</span>
+        </div>
+        <div class="stats">
+            <div>ROOM_[1:1:2] — Singularity Core</div>
+            <div id="lock-status" style="color: #ff4422;">1 > 0 LOCKED</div>
+            <div>PULSES: <span id="pulses-count">0</span></div>
+            <div>ECHOES: <span id="echoes-count">0</span></div>
+            <div style="margin-top: 8px; color: #88ffaa;">👁 OBSERVER ACTIVE</div>
+        </div>
+    </div>
+
+    <div id="footer-hint">drag · pinch · tap (click core to emit chrono-acoustic pulse)</div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { VRButton } from 'three/addons/webxr/VRButton.js';
+
         // --- INICJALIZACJA SCENY ---
         const scene = new THREE.Scene();
         scene.fog = new THREE.FogExp2(0x050208, 0.035);
