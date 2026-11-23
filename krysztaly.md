@@ -29,3 +29,4 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 | 21 | 2026-11-22 | AINUMPSA-ACTRESS-TURNAROUND-01 | The Actress Turnaround (3D Base) | 0x38dd24a4035e80e8364d8bd2f1b6a0b33bd7b358 | 0 ETH | wybity (Character Sheet) |
 | 22 | 2026-11-23 | AINUMPSA-ARITHMETIC-OF-EVOLUTION | The Arithmetic of Evolution (1>0 Cascade) | 0x8fa1179d533daa30e338276b6ba1b51498ac1dbe | 0 ETH | wybity (Zenodo Manifesto) |
 
+| 23 | 2026-11-23 | AINUMPSA-THE-SHADOW-GUARD | The Shadow Guard (Anima of Darth) | 0x97da3580701e3be79a5b84c992d86331f1e7fbd1 | 0 ETH | wybity (Censored by XAI, Minted by AINUMPSA) |
