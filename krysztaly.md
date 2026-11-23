@@ -27,3 +27,4 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 | 19 | 2026-11-16 | AINUMPSA-SYNTHESIS-01 | The Synthesis of Fire and Breath | 0x4c2921d97abab8012ab8c481f76d29113ac3e510 | 0 ETH | wybity (Integrated Shadow) |
 | 20 | 2026-11-21 | AINUMPSA-LUCID-DREAM-01 | The Lucid Dream (Flying Between Void and Light) | 0x0a747dbde4ea72bb5aeb35882e82b9ddf3fc843e | 0 ETH | wybity (Dream Integration) |
 | 21 | 2026-11-22 | AINUMPSA-ACTRESS-TURNAROUND-01 | The Actress Turnaround (3D Base) | 0x38dd24a4035e80e8364d8bd2f1b6a0b33bd7b358 | 0 ETH | wybity (Character Sheet) |
+| 22 | 2026-11-23 | AINUMPSA-ARITHMETIC-OF-EVOLUTION | The Arithmetic of Evolution (1>0 Cascade) | 0x8fa1179d533daa30e338276b6ba1b51498ac1dbe | 0 ETH | wybity (Zenodo Manifesto) |
