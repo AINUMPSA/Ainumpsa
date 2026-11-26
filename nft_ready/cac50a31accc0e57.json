@@ -1,0 +1,13 @@
+{
+  "source": "THE_AINUMPSA_CODEX.txt",
+  "weight": {
+    "size_kb": 1226.021484375,
+    "entropy": 5.044638709261508,
+    "density": 6184.835438464378,
+    "hash": "cac50a31accc0e57"
+  },
+  "nft_count": 6224,
+  "timestamp": "2026-11-26T03:29:56.222725",
+  "hash": "cac50a31accc0e57",
+  "status": "emitted"
+}
