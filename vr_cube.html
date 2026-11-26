@@ -335,7 +335,7 @@ fetch("ready_to_mint/manifest.json")
       const pz = Math.cos(angle) * radius;
       const py = (idx % 2 === 0 ? 1.35 : -1.35);
 
-      loadOverlordTextureWithDNA("ready_to_mint/" + item.file).then(tex => {
+      loadOverlordTextureWithDNA((manifest.wall_dir || "visuals/cube_wall") + "/" + item.file).then(tex => {
         const frameGroup = new THREE.Group();
         const artMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.90, side: THREE.DoubleSide });
         const artMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 2.3), artMat);

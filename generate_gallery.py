@@ -111,8 +111,24 @@ manifest_items = [
     }
     for c in cards if not c["media_rel"].lower().endswith(".mp4")
 ][:24]
+import shutil
+CUBE_WALL_DIR = os.path.join("visuals", "cube_wall")
+os.makedirs(CUBE_WALL_DIR, exist_ok=True)
+active_wall_files = {item["file"] for item in manifest_items[:12]}
+for existing in os.listdir(CUBE_WALL_DIR):
+    if existing not in active_wall_files:
+        try:
+            os.remove(os.path.join(CUBE_WALL_DIR, existing))
+        except OSError:
+            pass
+for item in manifest_items[:12]:
+    src = os.path.join(READY_DIR, item["file"])
+    dst = os.path.join(CUBE_WALL_DIR, item["file"])
+    if os.path.exists(src) and not os.path.exists(dst):
+        shutil.copy2(src, dst)
+
 with open(os.path.join(READY_DIR, "manifest.json"), "w", encoding="utf-8") as mf:
-    json.dump({"axiom": "1 > 0", "count": len(cards), "items": manifest_items}, mf, ensure_ascii=False, indent=2)
+    json.dump({"axiom": "1 > 0", "count": len(cards), "wall_dir": "visuals/cube_wall", "items": manifest_items}, mf, ensure_ascii=False, indent=2)
 
 
 print(f"[GALLERY] Wygenerowano {OUT_HTML} dla {len(cards)} węzłów Overlorda.")

@@ -1,6 +1,7 @@
 {
   "axiom": "1 > 0",
   "count": 98,
+  "wall_dir": "visuals/cube_wall",
   "items": [
     {
       "file": "IMG_1774675190051_0_overlord.png",
