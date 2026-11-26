@@ -3,6 +3,11 @@ name: AINUMPSA Production Cycle
 on:
   push:
     branches: [ main ]
+    paths-ignore:
+      - 'vr_cube.html'
+      - 'README.md'
+      - 'zora_vault/**'
+      - 'zora_vault_manager.py'
   schedule:
     - cron: '0 */8 * * *'
   workflow_dispatch:
