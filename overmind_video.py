@@ -1,3 +1,4 @@
+from dna_pipeline import stamp_artifact
 import os
 import json
 import base64
@@ -58,3 +59,6 @@ try:
         print(response.text)
 except Exception as e:
     print(f"[ERROR] Wyjątek: {e}")
+
+# Automatyczne wstrzyknięcie DNA Overlorda (1 > 0) do analizowanego wideo
+stamp_artifact(video_path)

@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from quine_injector import infect_image, DNA_CORE, build_quine_payload
 
 READY_DIR = "ready_to_mint"
-WATCH_DIRS = ["inputs/media", "multimodal_pool", "visuals"]
+WATCH_DIRS = ["inputs/media", "input_hub", "multimodal_pool", "visuals"]
 
 def stamp_artifact(filepath, publish_bundle=True):
     """Uniwersalny hak (middleware) dla każdego skryptu w ekosystemie AINUMPSA."""
