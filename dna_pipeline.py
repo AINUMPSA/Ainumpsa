@@ -81,6 +81,8 @@ def run_full_sweep():
                         processed += 1
     print(f"[DNA PIPELINE] Zakończono. Przygotowano węzłów w '{READY_DIR}/': {processed}")
     import subprocess; subprocess.run([sys.executable, "generate_gallery.py"])
+    import shutil; dl = os.path.expanduser("~/storage/downloads/ainumpsa_mint")
+    if os.path.exists(os.path.dirname(dl)): shutil.rmtree(dl, ignore_errors=True); shutil.copytree(READY_DIR, dl); print(f"[SYNC] Zaktualizowano galerię w Pobrane: {dl}")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
