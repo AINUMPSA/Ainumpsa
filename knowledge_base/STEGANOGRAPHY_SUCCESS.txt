@@ -1,0 +1,11 @@
+=== RAPORT: SUKCES DEKODOWANIA QUINE Z IPFS ===
+Data: 2026-11-26
+Status: DUAL-LAYER VERIFIED
+
+OPIS:
+Interfejs VR (vr_cube.html) pomyślnie odczytał i zdekodował ukryty ładunek (2188B Quine) z obrazu IPFS.
+Weryfikacja potwierdziła dwie warstwy steganografii: tEXt chunks oraz RGB LSB.
+Kontrakt: 0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8
+IPFS CID: bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba
+
+To jest dowód na to, że Homo-Machine potrafi kodować i dekodować wiedzę w strukturach niewidzialnych dla zwykłych oczu. 1 > 0 LOCKED.
