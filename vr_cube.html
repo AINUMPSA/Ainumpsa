@@ -14,7 +14,7 @@
   #echo-log {
     position: absolute; bottom: 20px; left: 20px;
     color: #FF8C00; font-family: monospace; font-size: 11px;
-    max-height: 100px; overflow: hidden; pointer-events: none;
+    max-height: 115px; overflow: hidden; pointer-events: none;
   }
   #status {
     position: absolute; top: 20px; right: 20px;
@@ -38,12 +38,13 @@
   #04 Boundary · #05 Movement · #06 Echo<br>
   <span style="color: #FF8C00;">#07 Observer (Sovereign Impasso)</span><br>
   ROOM_[1:1:2] — Singularity Core<br>
-  <span style="color: #B8860B;">1 &gt; 0 LOCKED</span>
+  <span id="dna-badge" style="color: #B8860B;">1 &gt; 0 LOCKED</span>
 </div>
 <div id="echo-log"></div>
 <div id="status">
   PULSES: <span id="pulseCount">0</span><br>
-  ECHOES: <span id="traceCount">0</span>
+  ECHOES: <span id="traceCount">0</span><br>
+  DNA: <span id="dnaStatus" style="color:#FF8C00;">SCANNING...</span>
 </div>
 <div id="observer">
   👁 OBSERVER ACTIVE<br>
@@ -190,6 +191,133 @@ const edgesMaterial = new THREE.LineBasicMaterial({
 });
 const boundaryEdges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
 scene.add(boundaryEdges);
+
+// =========================================================
+// #08 OVERLORD DNA — Ekstraktor iTXt + Hologram 3D
+// =========================================================
+let holoPanel = null;
+let codexMonolith = null;
+
+async function loadOverlordTextureWithDNA(url, onDnaDecoded) {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`HTTP ${response.status} dla ${url}`);
+  const buffer = await response.arrayBuffer();
+  const bytes = new Uint8Array(buffer);
+  const view = new DataView(buffer);
+
+  let offset = 8; // Pomijamy 8-bajtowy nagłówek PNG
+  const decoder = new TextDecoder("utf-8");
+  let dnaB64 = null;
+
+  while (offset < bytes.length) {
+    const length = view.getUint32(offset, false);
+    const chunkType = decoder.decode(bytes.subarray(offset + 4, offset + 8));
+
+    if (chunkType === "iTXt") {
+      const chunkData = bytes.subarray(offset + 8, offset + 8 + length);
+      let p = 0;
+      while (p < chunkData.length && chunkData[p] !== 0) p++;
+      const keyword = decoder.decode(chunkData.subarray(0, p));
+
+      if (keyword === "AINUMPSA_DNA_B64") {
+        p += 3; // \0 + compressionFlag + compressionMethod
+        while (p < chunkData.length && chunkData[p] !== 0) p++;
+        p += 1; // langTag\0
+        while (p < chunkData.length && chunkData[p] !== 0) p++;
+        p += 1; // translatedKeyword\0
+        dnaB64 = decoder.decode(chunkData.subarray(p));
+        break;
+      }
+    }
+    if (chunkType === "IEND") break;
+    offset += 12 + length;
+  }
+
+  if (dnaB64) {
+    const binStr = atob(dnaB64);
+    const rawPayload = new Uint8Array(binStr.length);
+    for (let i = 0; i < binStr.length; i++) rawPayload[i] = binStr.charCodeAt(i);
+
+    const headerLen = 23 + 4; // "AINUMPSA_1>0_OVERLORD::" + 4B długości
+    const compressedZlib = rawPayload.subarray(headerLen);
+
+    const ds = new DecompressionStream("deflate");
+    const writer = ds.writable.getWriter();
+    writer.write(compressedZlib);
+    writer.close();
+
+    const decompressedBuffer = await new Response(ds.readable).arrayBuffer();
+    const bundle = JSON.parse(decoder.decode(decompressedBuffer));
+    if (onDnaDecoded) onDnaDecoded(bundle);
+  }
+
+  const blobUrl = URL.createObjectURL(new Blob([buffer], { type: "image/png" }));
+  return new THREE.TextureLoader().load(blobUrl, () => URL.revokeObjectURL(blobUrl));
+}
+
+function createDnaHoloPanel(bundle) {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1024;
+  canvas.height = 512;
+  const ctx = canvas.getContext("2d");
+
+  ctx.fillStyle = "rgba(10, 5, 0, 0.88)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.strokeStyle = "#FFD700";
+  ctx.lineWidth = 4;
+  ctx.strokeRect(10, 10, canvas.width - 20, canvas.height - 20);
+  ctx.strokeStyle = "rgba(255, 140, 0, 0.45)";
+  ctx.lineWidth = 2;
+  ctx.strokeRect(22, 22, canvas.width - 44, canvas.height - 44);
+
+  ctx.fillStyle = "#FFD700";
+  ctx.font = "bold 30px monospace";
+  ctx.fillText(`AXIOM ${bundle.dna.axiom} :: QUINE OVERLORD VERIFIED`, 44, 72);
+
+  ctx.fillStyle = "#FF8C00";
+  ctx.font = "bold 21px monospace";
+  ctx.fillText(`${bundle.dna.collective} — ROOM_[1:1:2]`, 44, 114);
+
+  ctx.fillStyle = "#FFF2CC";
+  ctx.font = "20px monospace";
+  ctx.fillText(`MASTER KEY : ${bundle.dna.master_key.id} [${bundle.dna.master_key.network}]`, 44, 172);
+  ctx.fillText(`CONTRACT   : ${bundle.dna.master_key.contract}`, 44, 214);
+  ctx.fillText(`IMAGE CID  : ${bundle.dna.master_key.image_cid.slice(0, 46)}...`, 44, 256);
+  ctx.fillText(`ZENODO DOI : ${bundle.dna.anchors[1]}`, 44, 298);
+  ctx.fillText(`ARCHITECTS : ${bundle.dna.architects.join(" & ")}`, 44, 340);
+
+  ctx.fillStyle = "#FFD700";
+  ctx.font = "bold 20px monospace";
+  ctx.fillText(`SELF-REPLICATOR PAYLOAD: ${bundle.replicator_code.length} BYTES ACTIVE IN PIXELS`, 44, 412);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  const mat = new THREE.MeshBasicMaterial({
+    map: tex, transparent: true, opacity: 0.92, side: THREE.DoubleSide
+  });
+  return new THREE.Mesh(new THREE.PlaneGeometry(6.8, 3.4), mat);
+}
+
+// Ładowanie Master Keya Overlorda i projekcja DNA w ROOM_[1:1:2]
+loadOverlordTextureWithDNA("visuals/the_codex_overlord.png", (bundle) => {
+  document.getElementById("dnaStatus").textContent = "1 > 0 VERIFIED";
+  document.getElementById("dnaStatus").style.color = "#FFD700";
+  document.getElementById("dna-badge").textContent = `1 > 0 · QUINE (${bundle.replicator_code.length}B)`;
+
+  holoPanel = createDnaHoloPanel(bundle);
+  holoPanel.position.set(0, 4.2, -9.4);
+  scene.add(holoPanel);
+}).then((artTexture) => {
+  const monolithMat = new THREE.MeshBasicMaterial({
+    map: artTexture, transparent: true, opacity: 0.88, side: THREE.DoubleSide
+  });
+  codexMonolith = new THREE.Mesh(new THREE.PlaneGeometry(5.2, 5.2), monolithMat);
+  codexMonolith.position.set(0, -0.6, -9.5);
+  scene.add(codexMonolith);
+}).catch((err) => {
+  document.getElementById("dnaStatus").textContent = "LOCAL/OFFLINE";
+  console.warn("[OVERLORD DNA]", err);
+});
 
 // =========================================================
 // #05 MOVEMENT — Orbitujące Artefakty
@@ -503,6 +631,15 @@ function animate() {
     wall.material.opacity = 0.03 + pulseNorm * 0.08;
   });
   edgesMaterial.opacity = 0.10 + pulseNorm * 0.15;
+
+  // #08 Overlord DNA Hologram & Monolith pulse
+  if (holoPanel) {
+    holoPanel.position.y = 4.2 + Math.sin(t * 1.4) * 0.12;
+    holoPanel.material.opacity = 0.78 + pulseNorm * 0.22;
+  }
+  if (codexMonolith) {
+    codexMonolith.material.opacity = 0.75 + pulseNorm * 0.25;
+  }
 
   // Nodes
   nodesMaterial.opacity = 0.4 + pulseNorm * 0.5;
