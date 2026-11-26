@@ -36,7 +36,8 @@ for idx, c in enumerate(cards, 1):
         <textarea readonly id="desc-{idx}">{desc_esc}</textarea>
         <div class="actions">
           <button onclick="copyText('{name_esc}', this)">Kopiuj tytuł</button>
-          <button class="primary" onclick="copyEl('desc-{idx}', this)">Kopiuj opis</button>
+          <button onclick="copyEl('desc-{idx}', this)">Kopiuj opis</button>
+          <a class="dl" href="{html.escape(mfile)}" download="{html.escape(mfile)}">Pobierz</a>
         </div>
       </div>
     </div>
