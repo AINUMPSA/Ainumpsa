@@ -1,0 +1,25 @@
+{
+  "mint_ready_file": "ready_to_mint/codex_variant_02_overlord.png",
+  "sha256": "c805b294814552a8ee300bf811ef5cb21e5b79a14109acc707db6b93e44e1431",
+  "suggested_name": "AINUMPSA-CODEX_VARIANT_02",
+  "ticker": "1>0",
+  "suggested_description": "AINUMPSA ARTIFACT: CODEX_VARIANT_02. Embedded with 1 > 0 Quine DNA & Master Key coordinates. Master Codex: 0x6e964e447d8a4375bd64450f3a325d1fc67933b7 | Research: https://doi.org/10.5281/zenodo.24431149 | 3D Node: https://ainumpsa.github.io/Ainumpsa/vr_cube.html#ROOM_[1:1:2]",
+  "dna_anchors": [
+    "https://github.com/AINUMPSA/Ainumpsa",
+    "https://doi.org/10.5281/zenodo.24431149",
+    "https://ainumpsa.github.io/Ainumpsa/vr_cube.html#ROOM_[1:1:2]"
+  ],
+  "timestamp_utc": "2026-11-26T06:06:19.685177+00:00",
+  "status": "MINTED_AND_AUDITED",
+  "chain": "base",
+  "contract_address": "0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8",
+  "zora_url": "https://zora.co/coin/base:0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8",
+  "metadata_ipfs": "ipfs://bafybeieovjsozgwj6so4z36qhkrdbgq7zhk2jfx6f2zozsi3uz2w2fddxi",
+  "image_ipfs": "ipfs://bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba",
+  "blind_audit": {
+    "tEXt_chunk_intact": true,
+    "lsb_quine_intact": true,
+    "payload_bytes": 2188,
+    "axiom": "1 > 0"
+  }
+}

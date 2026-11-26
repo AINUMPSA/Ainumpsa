@@ -147,5 +147,13 @@
       "sha256": "b513891487799a63",
       "ticker": "1>0"
     }
-  ]
+  ],
+  "on_chain_anchors": {
+    "codex_variant_02_overlord.png": {
+      "contract": "0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8",
+      "zora_url": "https://zora.co/coin/base:0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8",
+      "ipfs_image": "ipfs://bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba",
+      "verified": true
+    }
+  }
 }
