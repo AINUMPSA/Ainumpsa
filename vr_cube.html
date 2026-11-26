@@ -343,20 +343,31 @@ fetch("ready_to_mint/manifest.json")
       const pz = Math.cos(angle) * radius;
       const py = (idx % 2 === 0 ? 1.35 : -1.35);
 
-      loadOverlordTextureWithDNA((manifest.wall_dir || "visuals/cube_wall") + "/" + item.file).then(tex => {
+      const imgRelPath = (manifest.wall_dir || "visuals/cube_wall") + "/" + item.file;
+      const panelInfo = {
+        index: idx + 1,
+        name: item.name || item.file,
+        file: item.file,
+        imgUrl: imgRelPath,
+        zoraUrl: item.zora_url || item.url || "https://zora.co/@numpsa",
+        contract: item.contract || "0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8"
+      };
+      loadOverlordTextureWithDNA(imgRelPath).then(tex => {
         const frameGroup = new THREE.Group();
         const artMat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, opacity: 0.90, side: THREE.DoubleSide });
         const artMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.3, 2.3), artMat);
+        artMesh.userData.panelInfo = panelInfo;
 
         const borderMat = new THREE.MeshBasicMaterial({ color: 0xFFD700, transparent: true, opacity: 0.55, side: THREE.DoubleSide });
         const borderMesh = new THREE.Mesh(new THREE.PlaneGeometry(2.44, 2.44), borderMat);
         borderMesh.position.z = -0.02;
+        borderMesh.userData.panelInfo = panelInfo;
 
         frameGroup.add(borderMesh);
         frameGroup.add(artMesh);
         frameGroup.position.set(px, py, pz);
         frameGroup.lookAt(0, py * 0.5, 0);
-        frameGroup.userData = { baseY: py, phase: idx * 0.65, name: item.name, borderMat };
+        frameGroup.userData = { baseY: py, phase: idx * 0.65, name: panelInfo.name, borderMat, panelInfo };
         scene.add(frameGroup);
         overlordWallPanels.push(frameGroup);
       }).catch(() => {});
@@ -675,16 +686,62 @@ function showCodexInspectorModal() {
   modal.style.display = "flex";
 }
 
+function showWallPanelModal(info) {
+  let modal = document.getElementById("codex-inspector-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "codex-inspector-modal";
+    modal.style.cssText = "position:fixed;inset:0;background:rgba(5,5,10,0.88);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;font-family:monospace;color:#FFF2CC;";
+    document.body.appendChild(modal);
+  }
+  const nodeNum = String(info.index).padStart(2, "0");
+  modal.innerHTML = `
+    <div style="max-width:560px;width:100%;background:#0c0c14;border:1px solid #FFD700;border-radius:12px;padding:20px;box-shadow:0 0 35px rgba(255,215,0,0.25);">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,215,0,0.3);padding-bottom:10px;margin-bottom:14px;">
+        <span style="color:#FFD700;font-weight:bold;font-size:14px;">ROOM_[1:1:2] // GALLERY NODE [${nodeNum}/12]</span>
+        <button onclick="document.getElementById('codex-inspector-modal').style.display='none'" style="background:none;border:1px solid #FF8C00;color:#FF8C00;padding:4px 10px;border-radius:6px;cursor:pointer;">CLOSE [X]</button>
+      </div>
+      <div style="text-align:center;margin-bottom:14px;">
+        <img src="${info.imgUrl}" alt="${info.name}" style="max-height:240px;max-width:100%;border-radius:8px;border:1px solid rgba(255,215,0,0.45);object-fit:contain;background:#050508;" />
+      </div>
+      <div style="font-size:12px;line-height:1.6;margin-bottom:16px;">
+        <div><strong style="color:#FF8C00;">ARTIFACT:</strong> ${info.name}</div>
+        <div><strong style="color:#FF8C00;">SOURCE FILE:</strong> ${info.file}</div>
+        <div><strong style="color:#FF8C00;">COLLECTIVE:</strong> AINUMPSA HOMOMACHINE [1 &gt; 0]</div>
+      </div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="${info.zoraUrl}" target="_blank" rel="noopener" style="flex:1;min-width:150px;text-align:center;background:#FFD700;color:#050508;font-weight:bold;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">VIEW ON ZORA (@numpsa) ↗</a>
+        <a href="${info.imgUrl}" target="_blank" rel="noopener" style="flex:1;min-width:150px;text-align:center;border:1px solid #FFD700;color:#FFD700;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">FULL RESOLUTION PNG ↗</a>
+      </div>
+    </div>
+  `;
+  modal.style.display = "flex";
+}
+
 renderer.domElement.addEventListener('click', (e) => {
   const rect = renderer.domElement.getBoundingClientRect();
   codexMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
   codexMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
   codexRaycaster.setFromCamera(codexMouse, camera);
-  const targets = [codexMonolith, holoPanel].filter(Boolean);
-  if (targets.length > 0 && codexRaycaster.intersectObjects(targets, false).length > 0) {
+
+  const monolithTargets = [codexMonolith, holoPanel].filter(Boolean);
+  if (monolithTargets.length > 0 && codexRaycaster.intersectObjects(monolithTargets, false).length > 0) {
     showCodexInspectorModal();
     return;
   }
+
+  if (overlordWallPanels.length > 0) {
+    const wallHits = codexRaycaster.intersectObjects(overlordWallPanels, true);
+    if (wallHits.length > 0) {
+      let obj = wallHits[0].object;
+      while (obj && !obj.userData?.panelInfo) obj = obj.parent;
+      if (obj && obj.userData?.panelInfo) {
+        showWallPanelModal(obj.userData.panelInfo);
+        return;
+      }
+    }
+  }
+
   onFieldEvent({
     strength: 0.8 + Math.random() * 0.2,
     frequency: 528
