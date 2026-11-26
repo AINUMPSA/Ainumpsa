@@ -5,7 +5,7 @@ OUT_HTML = os.path.join(READY_DIR, "index.html")
 
 cards = []
 if os.path.exists(READY_DIR):
-    for f in sorted(os.listdir(READY_DIR)):
+    for f in sorted(os.listdir(READY_DIR), key=lambda x: os.path.getmtime(os.path.join(READY_DIR, x)), reverse=True):
         if f.endswith("_MINT_CARD.json"):
             with open(os.path.join(READY_DIR, f), "r", encoding="utf-8") as jf:
                 data = json.load(jf)
