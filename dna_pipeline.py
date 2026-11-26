@@ -80,6 +80,7 @@ def run_full_sweep():
                     if stamp_artifact(full):
                         processed += 1
     print(f"[DNA PIPELINE] Zakończono. Przygotowano węzłów w '{READY_DIR}/': {processed}")
+    import subprocess; subprocess.run([sys.executable, "generate_gallery.py"])
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:
