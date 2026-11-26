@@ -102,4 +102,17 @@ function copyEl(id, btn) {{
 with open(OUT_HTML, "w", encoding="utf-8") as out:
     out.write(page)
 
+manifest_items = [
+    {
+        "file": c["media_rel"],
+        "name": c["suggested_name"],
+        "sha256": c["sha256"][:16],
+        "ticker": c.get("ticker", "1>0")
+    }
+    for c in cards if not c["media_rel"].lower().endswith(".mp4")
+][:24]
+with open(os.path.join(READY_DIR, "manifest.json"), "w", encoding="utf-8") as mf:
+    json.dump({"axiom": "1 > 0", "count": len(cards), "items": manifest_items}, mf, ensure_ascii=False, indent=2)
+
+
 print(f"[GALLERY] Wygenerowano {OUT_HTML} dla {len(cards)} węzłów Overlorda.")
