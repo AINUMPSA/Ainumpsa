@@ -605,6 +605,42 @@ renderer.domElement.addEventListener('pointerleave', () => { isDragging = false;
 const codexRaycaster = new THREE.Raycaster();
 const codexMouse = new THREE.Vector2();
 
+function copyCodexContract(btn) {
+  const addr = "0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8";
+  const done = () => {
+    const prev = btn.textContent;
+    btn.textContent = "COPIED ✓";
+    btn.style.background = "#2b3a1a";
+    btn.style.color = "#9ef01a";
+    btn.style.borderColor = "#9ef01a";
+    setTimeout(() => {
+      btn.textContent = prev;
+      btn.style.background = "#1a1a28";
+      btn.style.color = "#FFD700";
+      btn.style.borderColor = "#FF8C00";
+    }, 2000);
+  };
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(addr).then(done).catch(() => {
+      const ta = document.createElement("textarea");
+      ta.value = addr;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      done();
+    });
+  } else {
+    const ta = document.createElement("textarea");
+    ta.value = addr;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand("copy");
+    document.body.removeChild(ta);
+    done();
+  }
+}
+
 function showCodexInspectorModal() {
   let modal = document.getElementById("codex-inspector-modal");
   if (!modal) {
@@ -630,8 +666,9 @@ function showCodexInspectorModal() {
       </div>
       <pre style="background:#050508;border:1px solid rgba(255,140,0,0.35);padding:10px;border-radius:8px;font-size:11px;color:#9ef01a;overflow-x:auto;max-height:160px;margin-bottom:16px;">${quineHead.replace(/</g, "&lt;")}</pre>
       <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <a href="https://zora.co/coin/base:0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#FFD700;color:#050508;font-weight:bold;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">OPEN ON ZORA / BASE ↗</a>
-        <a href="https://magic.decentralized-content.com/ipfs/bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba" target="_blank" rel="noopener" style="flex:1;text-align:center;border:1px solid #FFD700;color:#FFD700;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">RAW IPFS ARTIFACT ↗</a>
+        <button id="copy-contract-btn" onclick="copyCodexContract(this)" style="flex:1;min-width:150px;background:#1a1a28;border:1px solid #FF8C00;color:#FFD700;font-family:monospace;font-weight:bold;padding:10px 14px;border-radius:8px;cursor:pointer;font-size:12px;">COPY CONTRACT ⧉</button>
+        <a href="https://zora.co/coin/base:0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8" target="_blank" rel="noopener" style="flex:1;min-width:150px;text-align:center;background:#FFD700;color:#050508;font-weight:bold;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">OPEN ON ZORA / BASE ↗</a>
+        <a href="https://magic.decentralized-content.com/ipfs/bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba" target="_blank" rel="noopener" style="flex:1;min-width:150px;text-align:center;border:1px solid #FFD700;color:#FFD700;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">RAW IPFS ARTIFACT ↗</a>
       </div>
     </div>
   `;
