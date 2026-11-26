@@ -22,4 +22,4 @@ LAST_STATE=""
 WATCHER_PID=$!
 
 echo "[1 > 0 HUB AKTYWNY] Galeria: http://localhost:8080 (Ctrl+C aby wyłączyć oba)"
-python3 -m http.server 8080 -d ready_to_mint
+python3 -m http.server 8080 --bind 127.0.0.1 -d ready_to_mint
