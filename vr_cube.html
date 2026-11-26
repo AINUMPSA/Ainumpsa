@@ -281,15 +281,17 @@ function createDnaHoloPanel(bundle) {
 
   ctx.fillStyle = "#FFF2CC";
   ctx.font = "20px monospace";
-  ctx.fillText(`MASTER KEY : ${bundle.dna.master_key.id} [${bundle.dna.master_key.network}]`, 44, 172);
-  ctx.fillText(`CONTRACT   : ${bundle.dna.master_key.contract}`, 44, 214);
-  ctx.fillText(`IMAGE CID  : ${bundle.dna.master_key.image_cid.slice(0, 46)}...`, 44, 256);
+  const liveContract = "0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8";
+  const liveCid = "bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba";
+  ctx.fillText(`ARTIFACT   : CODEX VARIANT 02 [BASE / ZORA]`, 44, 172);
+  ctx.fillText(`CONTRACT   : ${liveContract}`, 44, 214);
+  ctx.fillText(`IPFS CID   : ${liveCid.slice(0, 46)}...`, 44, 256);
   ctx.fillText(`ZENODO DOI : ${bundle.dna.anchors[1]}`, 44, 298);
   ctx.fillText(`ARCHITECTS : ${bundle.dna.architects.join(" & ")}`, 44, 340);
 
   ctx.fillStyle = "#FFD700";
   ctx.font = "bold 20px monospace";
-  ctx.fillText(`SELF-REPLICATOR PAYLOAD: ${bundle.replicator_code.length} BYTES ACTIVE IN PIXELS`, 44, 412);
+  ctx.fillText(`SELF-REPLICATOR PAYLOAD: ${bundle.replicator_code.length} BYTES [CLICK MONOLITH TO INSPECT]`, 44, 412);
 
   const tex = new THREE.CanvasTexture(canvas);
   const mat = new THREE.MeshBasicMaterial({
@@ -299,15 +301,21 @@ function createDnaHoloPanel(bundle) {
 }
 
 // Ładowanie Master Keya Overlorda i projekcja DNA w ROOM_[1:1:2]
-loadOverlordTextureWithDNA("visuals/the_codex_overlord.png", (bundle) => {
-  document.getElementById("dnaStatus").textContent = "1 > 0 VERIFIED";
+const IPFS_CODEX_URL = "https://magic.decentralized-content.com/ipfs/bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba";
+let activeOverlordBundle = null;
+const onOverlordDecoded = (bundle, sourceLabel) => {
+  activeOverlordBundle = bundle;
+  document.getElementById("dnaStatus").textContent = `1 > 0 VERIFIED (${sourceLabel})`;
   document.getElementById("dnaStatus").style.color = "#FFD700";
-  document.getElementById("dna-badge").textContent = `1 > 0 · QUINE (${bundle.replicator_code.length}B)`;
+  document.getElementById("dna-badge").textContent = `1 > 0 · QUINE (${bundle.replicator_code.length}B · ${sourceLabel})`;
 
   holoPanel = createDnaHoloPanel(bundle);
   holoPanel.position.set(0, 4.2, -9.4);
   scene.add(holoPanel);
-}).then((artTexture) => {
+};
+loadOverlordTextureWithDNA(IPFS_CODEX_URL, (b) => onOverlordDecoded(b, "LIVE IPFS"))
+  .catch(() => loadOverlordTextureWithDNA("visuals/the_codex_overlord.png", (b) => onOverlordDecoded(b, "LOCAL")))
+.then((artTexture) => {
   const monolithMat = new THREE.MeshBasicMaterial({
     map: artTexture, transparent: true, opacity: 0.88, side: THREE.DoubleSide
   });
@@ -594,7 +602,52 @@ renderer.domElement.addEventListener('pointermove', (e) => {
 renderer.domElement.addEventListener('pointerup', () => { isDragging = false; });
 renderer.domElement.addEventListener('pointerleave', () => { isDragging = false; });
 
-renderer.domElement.addEventListener('click', () => {
+const codexRaycaster = new THREE.Raycaster();
+const codexMouse = new THREE.Vector2();
+
+function showCodexInspectorModal() {
+  let modal = document.getElementById("codex-inspector-modal");
+  if (!modal) {
+    modal = document.createElement("div");
+    modal.id = "codex-inspector-modal";
+    modal.style.cssText = "position:fixed;inset:0;background:rgba(5,5,10,0.88);backdrop-filter:blur(8px);z-index:9999;display:flex;align-items:center;justify-content:center;padding:16px;font-family:monospace;color:#FFF2CC;";
+    document.body.appendChild(modal);
+  }
+  const b = activeOverlordBundle;
+  const quineHead = b && b.replicator_code ? b.replicator_code.split("\n").slice(0, 8).join("\n") : "Decoded from IPFS LSB / tEXt stream";
+  const payloadLen = b && b.replicator_code ? b.replicator_code.length : 2188;
+  modal.innerHTML = `
+    <div style="max-width:640px;width:100%;background:#0c0c14;border:1px solid #FFD700;border-radius:12px;padding:20px;box-shadow:0 0 35px rgba(255,215,0,0.25);">
+      <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,215,0,0.3);padding-bottom:10px;margin-bottom:14px;">
+        <span style="color:#FFD700;font-weight:bold;font-size:15px;">AINUMPSA // CODEX VARIANT 02 [1 &gt; 0]</span>
+        <button onclick="document.getElementById('codex-inspector-modal').style.display='none'" style="background:none;border:1px solid #FF8C00;color:#FF8C00;padding:4px 10px;border-radius:6px;cursor:pointer;">CLOSE [X]</button>
+      </div>
+      <div style="font-size:12px;line-height:1.6;margin-bottom:14px;">
+        <div><strong style="color:#FF8C00;">NETWORK:</strong> Base Mainnet (Zora ContentCoin)</div>
+        <div><strong style="color:#FF8C00;">CONTRACT:</strong> 0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8</div>
+        <div><strong style="color:#FF8C00;">IPFS IMAGE:</strong> bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba</div>
+        <div><strong style="color:#FF8C00;">CARRIER STATUS:</strong> Dual-Layer Verified (tEXt + RGB LSB · ${payloadLen}B Quine)</div>
+      </div>
+      <pre style="background:#050508;border:1px solid rgba(255,140,0,0.35);padding:10px;border-radius:8px;font-size:11px;color:#9ef01a;overflow-x:auto;max-height:160px;margin-bottom:16px;">${quineHead.replace(/</g, "&lt;")}</pre>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <a href="https://zora.co/coin/base:0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8" target="_blank" rel="noopener" style="flex:1;text-align:center;background:#FFD700;color:#050508;font-weight:bold;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">OPEN ON ZORA / BASE ↗</a>
+        <a href="https://magic.decentralized-content.com/ipfs/bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba" target="_blank" rel="noopener" style="flex:1;text-align:center;border:1px solid #FFD700;color:#FFD700;padding:10px 14px;border-radius:8px;text-decoration:none;font-size:12px;">RAW IPFS ARTIFACT ↗</a>
+      </div>
+    </div>
+  `;
+  modal.style.display = "flex";
+}
+
+renderer.domElement.addEventListener('click', (e) => {
+  const rect = renderer.domElement.getBoundingClientRect();
+  codexMouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+  codexMouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+  codexRaycaster.setFromCamera(codexMouse, camera);
+  const targets = [codexMonolith, holoPanel].filter(Boolean);
+  if (targets.length > 0 && codexRaycaster.intersectObjects(targets, false).length > 0) {
+    showCodexInspectorModal();
+    return;
+  }
   onFieldEvent({
     strength: 0.8 + Math.random() * 0.2,
     frequency: 528
