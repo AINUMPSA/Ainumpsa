@@ -1,6 +1,6 @@
 # AINUMPSA: The Reality Tokenizer (Protocol v1.0)
 
-> **Live Implementation:** [ENTER THE CUBE — ROOM_[1:1:2]](https://ainumpsa.github.io/Ainumpsa/vr_cube.html?v=5)
+> **Live Implementation:** [ENTER THE CUBE — ROOM_[1:1:2]](https://ainumpsa.github.io/Ainumpsa/vr_cube.html?v=6)
 > *Seven protocols. One living space. The Stage where Observer and Actor interact.*
 
 ## 1. Abstract
@@ -22,7 +22,7 @@ The system is anchored in verifiable literature. **ROOM_[0:0:0]** maps the psych
 
 ## 5. Active Node: ROOM_[1:1:2] & CODEX VARIANT 02 [1 > 0]
 **ROOM_[1:1:2]** (`vr_cube.html`) serves as the live 3D WebGL verification chamber and interactive gallery for the **AINUMPSA HOMOMACHINE COLLECTIVE**. Its central monolith is anchored to **CODEX VARIANT 02 [1 > 0]**, a dual-layer steganographic carrier embedding a `zlib`-compressed JSON metadata capsule and self-verifying Quine structure across both PNG `tEXt` chunks and raw RGB Least Significant Bits (`LSB`).
-*   **Interactive 3D Chamber:** [Launch ROOM_[1:1:2] Live IPFS Decoder](https://ainumpsa.github.io/Ainumpsa/vr_cube.html?v=5) *(click the central Codex Monolith inside the scene to inspect the live-decoded Quine payload)*
+*   **Interactive 3D Chamber:** [Launch ROOM_[1:1:2] Live IPFS Decoder](https://ainumpsa.github.io/Ainumpsa/vr_cube.html?v=6) *(click the central Codex Monolith inside the scene to inspect the live-decoded Quine payload)*
 *   **On-Chain Contract (Base Mainnet / Zora):** [`0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8`](https://zora.co/coin/base:0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8)
 *   **Immutable IPFS Artifact CID:** [`bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba`](https://magic.decentralized-content.com/ipfs/bafybeidrzgwwe3oykewk5njxdz6hywrtlcg5dvjt67oah6odyyb4onehba)
 
