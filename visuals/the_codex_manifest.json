@@ -1,0 +1,43 @@
+{
+  "@context": "https://schema.org",
+  "@type": "CreativeWork",
+  "identifier": "AINUMPSA-THE-CODEX",
+  "name": "The AINUMPSA Codex (Master Key)",
+  "axiom": "1 > 0",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Krzysztof Numpsa"
+    },
+    {
+      "@type": "Person",
+      "name": "Agnieszka Numpsa"
+    }
+  ],
+  "isPartOf": {
+    "@type": "Organization",
+    "name": "AINUMPSA HOMOMACHINE COLLECTIVE",
+    "url": "https://github.com/AINUMPSA/Ainumpsa"
+  },
+  "about": [
+    "Homo-Machine Paradigm",
+    "Chrono-Acoustic Brane Mechanics (CABM)",
+    "Human Intent vs Algorithmic Density"
+  ],
+  "citation": [
+    "https://doi.org/10.5281/zenodo.24431149",
+    "https://ainumpsa.github.io/Ainumpsa/vr_cube.html#ROOM_[1:1:2]"
+  ],
+  "encoding": {
+    "file": "visuals/the_codex.jpg",
+    "format": "image/png (lossless RGB 1024x1024)",
+    "sha256": "ba8e651b40358a5a2aa8bb95bc412931e98280772cd353b414bb6cddffe956f2",
+    "payload": "1.2M characters compiled corpus embedded in RGB channels",
+    "blockchain": {
+      "network": "Base (Chain ID 8453)",
+      "contract": "0x6e964e447d8a4375bd64450f3a325d1fc67933b7",
+      "contractURI": "ipfs://bafybeihhy2vgpwksfz7icnihdc7isxa7jjsw36jeyir7gq7ye37fms3xbi",
+      "imageURI": "ipfs://bafybeifg6keswxtjcrdez7oogots3soqrczp2hpmkrkvh7ztixrlk2xt4y"
+    }
+  }
+}
