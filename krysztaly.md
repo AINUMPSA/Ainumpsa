@@ -31,3 +31,4 @@ Rejestr wszystkich NFT wybitych na Zora. Format: `AINUMPSA-RRRRMMDD[sufiks]`
 
 | 23 | 2026-11-23 | AINUMPSA-THE-SHADOW-GUARD | The Shadow Guard (Anima of Darth) | 0x97da3580701e3be79a5b84c992d86331f1e7fbd1 | 0 ETH | wybity (Censored by XAI, Minted by AINUMPSA) |
 | 24 | 2026-11-26 | AINUMPSA-THE-CODEX | The AINUMPSA Codex (Master Key) | 0x6e964e447d8a4375bd64450f3a325d1fc67933b7 | 0 ETH | wybity (1.2M Characters Compilation | IPFS Img: `bafybeifg6keswxtjcrdez7oogots3soqrczp2hpmkrkvh7ztixrlk2xt4y` | Meta: `bafybeihhy2vgpwksfz7icnihdc7isxa7jjsw36jeyir7gq7ye37fms3xbi` | SHA256: `ba8e651b40358a5a...`) |
+| 25 | 2026-11-26 | AINUMPSA-OVERMIND-CODEX | The Over-Mind Codex (Digital 1>0) | 0x5facb8ef9ce24b12217e2ea36ef90894d8dfc2a8 | 0 ETH | wybity (Google AI Collaboration) |
