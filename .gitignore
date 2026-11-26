@@ -62,3 +62,5 @@ sketch_*.jpg
 sketch_*.png
 test_*.json
 sovereign_test_*.json
+ready_to_mint/
+inputs/**/*_overlord.png
