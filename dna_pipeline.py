@@ -82,7 +82,7 @@ def run_full_sweep():
     print(f"[DNA PIPELINE] Zakończono. Przygotowano węzłów w '{READY_DIR}/': {processed}")
     import subprocess; subprocess.run([sys.executable, "generate_gallery.py"])
     import shutil; dl = os.path.expanduser("~/storage/downloads/ainumpsa_mint")
-    if os.path.exists(os.path.dirname(dl)): shutil.rmtree(dl, ignore_errors=True); shutil.copytree(READY_DIR, dl, copy_function=shutil.copyfile); print(f"[SYNC] Zaktualizowano galerię w Pobrane: {dl}")
+    if os.path.exists(os.path.dirname(dl)): os.makedirs(dl, exist_ok=True); [shutil.copyfile(os.path.join(READY_DIR, fn), os.path.join(dl, fn)) for fn in os.listdir(READY_DIR) if os.path.isfile(os.path.join(READY_DIR, fn))]; print(f"[SYNC] Zaktualizowano galerię w Pobrane: {dl}")
 
 if __name__ == "__main__":
     if len(sys.argv) > 1:

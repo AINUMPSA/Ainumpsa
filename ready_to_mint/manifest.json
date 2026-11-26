@@ -1,6 +1,6 @@
 {
   "axiom": "1 > 0",
-  "count": 99,
+  "count": 100,
   "wall_dir": "visuals/cube_wall",
   "items": [
     {
@@ -78,7 +78,13 @@
     {
       "file": "codex_variant_02_overlord.png",
       "name": "AINUMPSA-CODEX_VARIANT_02",
-      "sha256": "1a6b0ceb0421ae28",
+      "sha256": "c805b294814552a8",
+      "ticker": "1>0"
+    },
+    {
+      "file": "AINUMPSA 0522261126_overlord.png",
+      "name": "AINUMPSA-AINUMPSA 0522261126",
+      "sha256": "c805b294814552a8",
       "ticker": "1>0"
     },
     {
@@ -139,12 +145,6 @@
       "file": "AINUMPSA0124211026_overlord.png",
       "name": "AINUMPSA-AINUMPSA0124211026",
       "sha256": "3a9669bb48deb38b",
-      "ticker": "1>0"
-    },
-    {
-      "file": "AINUMPSA0123211026_overlord.png",
-      "name": "AINUMPSA-AINUMPSA0123211026",
-      "sha256": "944ede3fd0a29471",
       "ticker": "1>0"
     }
   ]
