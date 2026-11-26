@@ -1,0 +1,13 @@
+{
+  "source": "STEGANOGRAPHY_SUCCESS.txt",
+  "weight": {
+    "size_kb": 0.5390625,
+    "entropy": 5.577534672445895,
+    "density": 3.0066397843653654,
+    "hash": "ef2fb337b82fb8ab"
+  },
+  "nft_count": 3,
+  "timestamp": "2026-11-26T18:06:40.414720",
+  "hash": "ef2fb337b82fb8ab",
+  "status": "emitted"
+}
